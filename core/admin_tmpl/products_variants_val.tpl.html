@@ -1,0 +1,37 @@
+<div class="heading"><h1>{$smarty.const.ADMIN_PRODUCTS_VARIANTS}: <b>{$options_name}</b></h1>
+  <div class="buttons"><a class="button b_add" href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=catalog&amp;sub=products_variants&amp;valadd={$edit}"><span>{$smarty.const.ADD_BUTTON}</span></a>{if $products_variants_val}<a class="button b_save"><span>{$smarty.const.SAVE_BUTTON}</span></a>{/if}<a class="button b_del" href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=catalog&amp;sub=products_variants"><span>{$smarty.const.CANCEL_BUTTON}</span></a></div>
+</div>
+
+
+<form method="post" action="./{$smarty.const.CONF_ADMIN_FILE}" name="form">
+	<input type="hidden" value="catalog" name="dpt">
+	<input type="hidden" value="1" name="variant_var_edit"> 
+	<input type="hidden" value="products_variants" name="sub">
+	<input type="hidden" value="{$edit}" name="edit">
+	<table class="widefat" cellspacing="0">
+		<thead>
+			<tr>
+				<th><a><span><strong>{$smarty.const.ADMIN_PRODUCTS_VARIANTS_GROUPS}</strong></span></a></th>
+				<th><a><span><strong>{$smarty.const.ADMIN_SORT_ORDER}</strong></span></a></th>
+				<th><a><span><strong>{$smarty.const.STRING_ACTIONS}</strong></span></a></th>
+			</tr>
+		</thead>
+		<tbody>
+			{foreach from=$products_variants_val item=variant}
+			<tr class="alternate">
+				<td>
+					<input type="text" name="variant[{$variant.variantID}][name]" style="width: 350px;" value="{$variant.name}" />
+				</td>
+				<td>
+					<input type="text" name="variant[{$variant.variantID}][sort_order]" style="text-align:center;" value="{$variant.sort_order}" />
+				</td>
+				<td>
+					<a title="{$smarty.const.DELETE_BUTTON}" href="javascript:confirmDelete('{$smarty.const.DELETE_BUTTON}?','{$smarty.const.CONF_ADMIN_FILE}?dpt=catalog&amp;sub=products_variants&amp;edit={$edit}&amp;del_val={$variant.variantID}');"><img alt="{$smarty.const.DELETE_BUTTON}" src="images/backend/delete.png"></a>
+				</td>
+			</tr>
+			{/foreach}
+		</tbody>
+	</table>
+
+	<input type="submit" id="submit" name="submit" class="button-primary" value="{$smarty.const.SAVE_BUTTON}" />
+</form>

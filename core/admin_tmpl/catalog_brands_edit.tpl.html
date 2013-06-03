@@ -1,0 +1,83 @@
+<div class="heading"><h1>{$smarty.const.STRING_BRANDS}</h1>
+  <div class="buttons"><a class="button b_save"><span>{$smarty.const.SAVE_BUTTON}</span></a><a class="button b_del" href="./{$smarty.const.CONF_ADMIN_FILE}?dpt={$smarty.get.dpt}&amp;sub={$smarty.get.sub}"><span>{$smarty.const.CANCEL_BUTTON}</span></a></div>
+</div>
+<div class="content">
+ <form action="./{$smarty.const.CONF_ADMIN_FILE}" method="post" enctype="multipart/form-data">
+  <div class="box left w70">
+   <table class="form">
+     <tbody>
+       <tr>
+         <td colspan="2">
+           <label for="proizvoditel" class="desc"><span class="rq">*</span> {$smarty.const.STRING_MANUFACTURER}:</label>
+           <input type="text" id="proizvoditel" class="text large" name="brand[name]" value="{$brand_info.name}">
+         </td>
+       </tr>
+       <tr>
+        <td><label for="url" class="desc">URL</label><input type="text" name="brand[hurl]" value="{$brand_info.hurl}" id="url" class="text large"></td>
+       <td><label for="rel-canonical" class="desc">REL CANONICAL</label><input type="text" name="brand[canonical]" value="{$brand_info.canonical}" id="rel-canonical" class="text large"></td>
+      </tr>
+      <tr>
+        <td colspan="2"><label for="kratka_text" class="desc">{$smarty.const.ADMIN_PAGE_BRIEF}</label>
+        <textarea id="brand_text" name="brand[brief]" style="width: 100%;" rows="10">{$brand_info.brief}</textarea> </td>
+      </tr>
+       <tr>
+        <td colspan="2"><label for="kratka_text" class="desc">{$smarty.const.ADMIN_PAGE_TEXT}</label><textarea id="brand_brief" name="brand[description]" style="width: 100%;" rows="10">{$brand_info.description}</textarea></td>
+      </tr>
+     </tbody>
+   </table>
+  </div>
+  <div class="box right w29">
+     <div id="accordion" class="ui-accordion-forms">
+	<h3><a href="#">{$smarty.const.ADMIN_PARAMETERS}</a></h3>
+        <div>
+            <table class="form">
+              <tr>
+                <td><label class='desc' for='sort'>{$smarty.const.ADMIN_SORT_ORDER}</label><input class='text large' type="text" id="sort"  name="brand[sort]" value="{$brand_info.sort}" /></td>
+                <td><label class='desc' for='act'>{$smarty.const.ADMIN_ON}</label><input value=1 id="act" name="brand[enabled]" {if $brand_info.enabled}checked {/if} type="checkbox" /></td>
+              </tr>
+              <tr>
+                <td colspan="2"><label class='desc' for='brand[comment]'>{$smarty.const.ADMIN_BRAND_COMMENT}</label><br />
+	         <input class='text large' type="text" id="brand[comment]" name="brand[comment]" value="{$brand_info.comment}" />
+                </td>
+             </tr>
+             <tr>
+                <td colspan="2"><p><label class='desc' for='photo'>{$smarty.const.ADMIN_CATEGORY_LOGO}:</label></p><input id="photo" name="brand_pic" class="text small file" type="file" /><br /> 
+                {capture assign='brand_pictures'}./products_pictures/{$brand_info.Pict}{/capture}    
+				{if $brand_pictures|file_exists ne '' &&  $brand_info.Pict}
+					<img src="./products_pictures/{$brand_info.Pict}" alt="" />
+					<a href="javascript:confirmDelete('{$smarty.const.QUESTION_DELETE_PICTURE}','{$smarty.const.CONF_ADMIN_FILE}?dpt=catalog&sub=brands&brands={$brand_info.brandID}&picture_remove={$brand_info.brandID}')" style="width: 150px;"><img src="./images/backend/delete.png" alt="" /></a>
+				{else}
+					<img src="./products_pictures/nophoto.jpg" alt="" />
+				{/if}
+                </td>
+             </tr>
+           </table>
+	</div>
+	<h3><a href="#">{$smarty.const.ADMIN_META_TAGS}</a></h3>
+    <div>
+<table class="form">
+ <tr>
+   <td><label class='desc help' for='meta-title' title="Если не указан, генерируется из заголовка">META-TITLE:</label><input class='text large' type="text" id="meta-title" name="brand[meta_title]" value="{$brand_info.meta_title}" /></td>
+ </tr>
+ <tr>
+   <td><label class='desc help' for='meta-keywords' title="Через запятую, 10-15 слов">META-KEYWORDS:</label><textarea class='field textarea small' name="brand[meta_keywords]" id="meta-keywords" rows="" cols="">{$brand_info.meta_keywords}</textarea></td>
+ </tr>
+ <tr>
+   <td><label class='desc help' for='meta-description' title="Не более 250 символов">META-DESCRIPTION:</label><textarea class='field textarea small' name="brand[meta_desc]" id="meta-description" rows="" cols="">{$brand_info.meta_desc}</textarea></td>
+ </tr>
+</table>
+	</div>
+    </div>	
+  </div>
+  <input type="hidden" name="dpt" value="catalog" />
+  <input type="hidden" name="sub" value="brands" />
+  <input type="hidden" name="add_brand" value="{$new_brand}" />  
+  <input type="submit" id="submit" name="submit" class="button-primary" value="{$smarty.const.SAVE_BUTTON}" />
+ </form>
+</div>
+{literal}
+<script type="text/javascript">
+	CKEDITOR.replace( 'brand_text', {filebrowserBrowseUrl : '/core/ckeditor/plugins/elfinder/elfinder.html'});
+	CKEDITOR.replace( 'brand_brief', {filebrowserBrowseUrl : '/core/ckeditor/plugins/elfinder/elfinder.html'});
+</script>
+{/literal}

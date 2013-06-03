@@ -1,0 +1,56 @@
+<div class="box">
+ <div class="top">{$smarty.const.HOT_NEW}</div>
+   <div class="middle">
+
+
+{section name=i1 loop=$new_products}
+
+<div class="border">
+{assign var="id" value=$new_products[i1][0]}
+
+     <table class="prod-bref" style="width: 100%;">
+	<tr>
+	  <td colspan="2" class="title b">
+	    <a href="./{$new_products[i1][6]}">{$new_products[i1][1]}</a>
+	  </td>
+	</tr>
+	<tr>
+	 <td rowspan="8" style="padding: 5px; vertical-align: top" width="{$smarty.const.RESIZE_SMALL_Y}">
+            <a href="./{$new_products[i1][6]}">
+               {if $new_products[i1][3]}
+                   <img src="./products_pictures/{$new_products[i1][3]}" alt="{$new_products[i1][1]|escape}" />                            
+               {else}
+	            <img src="./images/nophoto.jpg" alt="No photo" width="120px" height="120px" />
+               {/if}
+            </a>
+	 </td>
+
+               <tr>  
+                   <td style="padding: 5px; vertical-align: top"><b>{$smarty.const.IN_STOCK}:  </b> 
+	     {if $new_products[i1][4] ne 0}{$new_products[i1][4]}{else}{$smarty.const.IN_STOCK_NO}{/if}</td> 
+	 </tr>
+
+   {if $new_products[i1][2]>0}
+	<tr>
+	  <td style="padding: 5px; vertical-align: top">
+	    <b>{$smarty.const.CURRENT_PRICE}:  <font style="color: #F00; font-size: 14px;">{$new_products[i1][7]}</font></b>
+	  </td>
+	</tr>
+   {/if}
+
+	<tr style="text-align: right;">
+	  <td style="padding: 5px; vertical-align: bottom; text-align: right;">
+  		  <a href="./{$new_products[i1][6]}" class="button"><span>{$smarty.const.MORE_ABOUT_PRODUCT}</span></a>
+              {if $new_products[i1][9]>0}
+		  <a id="tocart_{$new_products[i1][0]}" class="ajaxcart button" href="./add2cart/{$new_products[i1][5]}"><span>{$smarty.const.ADD_TO_CART_STRING}</span></a>
+              {/if}
+	  </td>
+	</tr>
+
+  </table>
+
+</div>
+{/section}
+
+ </div>
+</div>

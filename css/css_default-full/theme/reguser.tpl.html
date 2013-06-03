@@ -1,0 +1,95 @@
+{* customer information form *}
+<div class="box">
+<div class="top">{$smarty.const.STRING_REGISTER_INFORMATION}</div>
+<div class="middle">
+
+{if $email_already_exists ne NULL}
+<div class="a-center">
+  <font  color="#ff0000" class="alert"><b>{$smarty.const.ERROR_EMAIL_ALREADY_EXISTS}</b></font><br />
+  {*<a href="">{$smarty.const.REMEMBER_PASSWORD}</a>*}
+</div>
+{/if}
+
+{if $error}<strong>{$error}</strong>{/if}
+
+<form action="index.php"  name="custinfo_form" id="custinfo_form" method="post" class="wufoo">
+<p>{$smarty.const.STRING_REQUIRED}</p>
+
+<ul>
+{if isset($openID)}
+	  <h1>{$smarty.const.STRING_OTHE_DATE}</h1>
+	  <input type="HIDDEN" style="width: 250px"  name="openID" value="{$openID}"  /> 
+	  <input type="HIDDEN" style="width: 250px"  name="provider" value="{$provider}"  /> 
+{/if}
+
+{if trim($email) && isset($openID)}
+	   <input type="HIDDEN" style="width: 250px"  name="email" id="email" value="{$email}"  /> 
+{else}
+<li><label class='desc' for='email'>{$smarty.const.CUSTOMER_EMAIL}<em>*</em></label>
+	 <div class="left"><input class="field text large" style="width: 250px" maxlength='50' type="text" name="email" id="email" value="{$smarty.post.email}" class="required email" onchange="checkmail();" /> <label for='email' id="mail_div" class="invalid req" style="visibility: hidden;">Образец: my-email@mail.ru</label></div>
+	 <div class="ok" id="mail_pic" style="visibility: hidden;"><img src="./images/ok.png" alt="" /></div></li>
+{/if}
+
+{if trim($first_name) && isset($openID)}
+	   <input style="width: 250px" type="HIDDEN" name="first_name" id="first_name" value="{$first_name}"  /> 
+{else}
+<li><label class='desc' for='first_name'>{$smarty.const.CUSTOMER_FIRST_NAME}<em>*</em></label>
+	 <div class="left"><input class="field text large" style="width: 250px" maxlength='50' type="text" name="first_name" id="first_name" value="{$first_name}" onchange="checkname();" /> <label for='first_name' id="name_div" class="invalid req" style="visibility: hidden;">Только русские и латинские буквы!</label></div>
+	 <div class="ok" id="name_pic" style="visibility: hidden;"><img src="./images/ok.png" alt="" /></div></li>
+{/if}
+
+{if trim($last_name) && isset($openID)}
+	    <input style="width: 250px" type="HIDDEN" name="last_name" id="last_name" value="{$last_name}" />
+{else}
+<li><label class='desc' for='last_name'>{$smarty.const.CUSTOMER_LAST_NAME}<em>*</em></label>
+	 <div class="left"><input class="field text large" type="text" style="width: 250px" maxlength='50' name="last_name" id="last_name" value="{$last_name}" onchange="checksurname();" /> <label for='last_name' id="surname_div" class="invalid req" style="visibility: hidden;">Только русские и латинские буквы!</label></div>
+	 <div class="ok" id="surname_pic" style="visibility: hidden;"><img src="./images/ok.png" alt="" /></div></li>
+{/if}
+
+<li><label class='desc' for='phone'>{$smarty.const.CUSTOMER_PHONE_NUMBER}<em>*</em></label>
+	 <div class="left"><input class="field text large" type="text" style="width: 250px" maxlength="20" name="phone" id="phone" value="{$phone}" onchange="checkphone();" /> <label for="phone" id="phone_div" class="invalid req" style="visibility: hidden;">Образец: +380930000000</label></div>
+	 <div class="ok" id="phone_pic" style="visibility: hidden;"><img src="./images/ok.png" alt="" /></div></li>
+
+{*<li><label class='desc' for='country'>{$smarty.const.CUSTOMER_COUNTRY}</label>
+	 <div class="left"><input class="field text large" type="text" style="width: 250px" name="country" id="country" value="{$country}"  maxlength="20"/></div></li>*}
+
+<li><label class='desc' for='city'>{$smarty.const.CUSTOMER_CITY}<em>*</em></label>
+	 <div class="left"><input class="field text large" type="text" style="width: 250px" maxlength="25" name="city" id="city" value="{$city}" onchange="checkcity();"/><label for="city" id="city_div" class="invalid req" style="visibility: hidden;">Образец: г.Киев</label></div>
+         <div class="ok" id="city_pic" style="visibility: hidden;"><img src="./images/ok.png" alt="" /></div></li>
+
+<li><label class='desc' for='address'>{$smarty.const.CUSTOMER_ADDRESS}<em>*</em></label> 
+         <div class="left"><input class="field text large" type="text" style="width: 250px" maxlength="100" name="address" id="address" onchange="checkadress();"/><label for="address" id="address_div" class="invalid req" style="visibility: hidden;">Образец: ул. Пятницкая 56</label></div>
+         <div class="ok" id="address_pic" style="visibility: hidden;"><img src="./images/ok.png" alt="" /></div></li>
+
+<li><label class='desc' for='zip'>{$smarty.const.CUSTOMER_ZIP}</label>
+	 <div class="left" id="zip"><input class="field text large" type="text" style="width: 250px" name="zip" id="zip" value="{$zip}"  maxlength=7 /></div></li>
+
+
+{if !isset($openID)}
+  <li><label class='desc' for='password1'>{$smarty.const.CUSTOMER_PASSWORD}<em>*</em></label>
+	<div class="left"><input style="width: 150px" type="password" name="password" id="password" value="" maxlength=20 class="required field text" minlength='5'/></div>
+  </li>
+  <li><label class='desc' for='password2'>{$smarty.const.CUSTOMER_PASSWORD2}<em>*</em></label>
+	<div class="left"><input style="width: 150px" type="password" name="password2" id="password2" value="" maxlength=20 class="required field text" equalTo="#password"/></div>
+  </li>
+{/if}
+
+
+<li><label class='desc'>{$smarty.const.STRING_SEND_CAPCHA}<em>*</em></label>
+    <div class="left">
+      <img id="cap" style="vertical-align:bottom;" src="./core/core_captcha.php?bg=F7F7F7" alt="{$smarty.const.STRING_SEND_CAPCHA}" onclick="go_cap()" title="Обновить капчу"/>
+      <input class='required error field text' minlength='3' type="text" name="captcha" />
+    </div>
+</li> 
+
+</ul>
+
+
+<p style="text-align:center; padding:20px;">
+<a onclick="$('#custinfo_form').submit();" class="button"><span>{$smarty.const.STRING_SEND_REGISTER_FORM}</span></a>
+<input type=hidden name="customer_register" value=1/>
+</p>
+
+</form>
+</div>
+</div>

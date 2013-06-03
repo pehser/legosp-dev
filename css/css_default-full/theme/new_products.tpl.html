@@ -1,0 +1,12 @@
+
+   <div style="text-align: center;">
+      {section name=i1 loop=$new_products}
+    		<a href="./{$new_products[i1][6]}">
+		<img src="./products_pictures/{$new_products[i1][3]}" width="130" height="130" alt="{$new_products[i1][1]|escape}" />
+		<br/>{$new_products[i1][1]}</a>
+                <br/>
+             {if $new_products[i1][2] > 0}
+		<b style="font-size: 12px; color: #900;">{$new_products[i1][7]}</b><br/>
+             {/if}
+      {/section}
+   </div>

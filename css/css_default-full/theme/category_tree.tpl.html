@@ -1,0 +1,36 @@
+{if $smarty.const.CONF_SHOW_MENU == 1}
+<div class="top">{$smarty.const.ADMIN_CATEGORY_TITLE}</div>
+<div class="dcjq-vertical-mega-menu box_shadow" id="vertical" style="margin-bottom:20px;">
+<ul id="mega-1" class="menu right">
+  {section name=i loop=$categories_tree}
+    {if $categories_tree[i].level>$categories_tree[i.index_prev].level}<ul>{/if}
+     <li><a href="./{$categories_tree[i].hurl}" {if $categoryID == $categories_tree[i].categoryID} class="selected" {/if}>{$categories_tree[i].name}</a>{if $categories_tree[i].level==$categories_tree[i.index_next].level}</li>{/if}
+     {if $categories_tree[i].level>$categories_tree[i.index_next].level && !$smarty.section.i.last}
+        {math assign=raz equation="x - y" x=$categories_tree[i].level y=$categories_tree[i.index_next].level} 
+        {section name=closed loop=$raz}</ul></li>{/section}
+     {else}
+        {math assign=raz equation="x - y" x=$categories_tree[i].level y=0} 
+        {section name=closed loop=$raz}</ul></li>{/section}
+     {/if}
+   {/section}
+</ul>
+</div>
+
+{else}
+  <div class="top"><img src="./images/icon_cat.png" alt="" /> {$smarty.const.ADMIN_CATEGORY_TITLE}</div>
+  <div id="category" class="middle">
+<ul>    
+{section name=i loop=$categories_tree}
+{if $categories_tree[i].level>$categories_tree[i.index_prev].level}<ul>{/if}
+<li><a href="./{$categories_tree[i].hurl}" {if $categoryID == $categories_tree[i].categoryID} class="selected" {/if}>{$categories_tree[i].name}</a>{if $categories_tree[i].level==$categories_tree[i.index_next].level}</li>{/if}
+{if $categories_tree[i].level>$categories_tree[i.index_next].level && !$smarty.section.i.last}
+{math assign=raz equation="x - y" x=$categories_tree[i].level y=$categories_tree[i.index_next].level} 
+{section name=closed loop=$raz}</ul></li>{/section}
+{else}
+  {math assign=raz equation="x - y" x=$categories_tree[i].level y=0} 
+  {section name=closed loop=$raz}</ul></li>{/section}
+{/if}
+{/section}
+</ul>
+   </div>
+{/if}

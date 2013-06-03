@@ -1,0 +1,49 @@
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+(function (d, w, c) {
+    (w[c] = w[c] || []).push(function() {
+        try {
+            w.yaCounter13148761 = new Ya.Metrika({id:13148761,
+                    webvisor:true,
+                    clickmap:true,
+                    trackLinks:true,
+                    accurateTrackBounce:true});
+        } catch(e) { }
+    });
+
+    var n = d.getElementsByTagName("script")[0],
+        s = d.createElement("script"),
+        f = function () { n.parentNode.insertBefore(s, n); };
+    s.type = "text/javascript";
+    s.async = true;
+    s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js";
+
+    if (w.opera == "[object Opera]") {
+        d.addEventListener("DOMContentLoaded", f, false);
+    } else { f(); }
+})(document, window, "yandex_metrika_callbacks");
+</script>
+<noscript><div><img src="//mc.yandex.ru/watch/13148761" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
+
+
+<a target="_blank" href="http://thehors.com/"><img style="width: 100px; height: 31px" title="TheHORS - самый дешёвый безлимитный хостинг для интернет-магазинов" alt="TheHORS - самый дешёвый безлимитный хостинг для интернет-магазинов" src="http://krimroza.com/images/thehors.png"></a>
+<a target="_blank" href="http://soyzrd.com/"><img style="width: 100px; height: 31px" title="SOYZRD-бесплатный интернет магазин каталог товаров и услуг" alt="SOYZRD-бесплатный интернет магазин каталог товаров и услуг" src="http://krimroza.com/images/soyzrd.png"></a>
+<a target="_blank" href="http://legosp.net"><img style="width: 101px; height: 31px" title="CMS Lego SP " alt="Lego SP лучшая бесплатная система управления интернет-магазино" src="http://krimroza.com/images/lego-sp.png"></a>    
+<!-- HotLog -->
+<script type="text/javascript">
+hotlog_r=""+Math.random()+"&s=2265056&im=39&r="+
+escape(document.referrer)+"&pg="+escape(window.location.href);
+hotlog_r+="&j="+(navigator.javaEnabled()?"Y":"N");
+hotlog_r+="&wh="+screen.width+"x"+screen.height+"&px="+
+(((navigator.appName.substring(0,3)=="Mic"))?screen.colorDepth:screen.pixelDepth);
+hotlog_r+="&js=1.3";
+document.write('<a href="http://click.hotlog.ru/?2265056" target="_blank"><img '+
+'src="http://hit41.hotlog.ru/cgi-bin/hotlog/count?'+
+hotlog_r+'" border="0" width="88" height="31" title="" alt="HotLog"><\/a>');
+</script>
+<noscript>
+<a href="http://click.hotlog.ru/?2265056" target="_blank"><img src="http://hit41.hotlog.ru/cgi-bin/hotlog/count?s=2265056&amp;im=39" alt="HotLog"></a>
+</noscript>
+<!-- /HotLog -->

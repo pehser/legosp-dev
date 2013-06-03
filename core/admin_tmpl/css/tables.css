@@ -1,0 +1,75 @@
+.table {
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    width: 100%;
+}
+.table thead th {
+    background-color: #f7f7f7;
+    color: #2c2c2c;
+    font-weight: bold;
+    text-decoration: none;
+	text-align:left;
+	padding:4px 6px;
+	border-bottom: 1px solid #BDBDBD;
+}
+.table thead th.a-center {text-align:center;}
+.table thead tr th a{
+	color: #2c2c2c; text-decoration:none;
+	
+}
+.table tbody tr td {
+	border-bottom: 1px solid #DDDDDD;
+	border-top: 1px solid #FFFFFF;
+	padding:4px 6px;
+	vertical-align: middle;
+}
+.table tbody tr:nth-child(2n+1) td{
+	background-color: #F0F0F0;
+}
+.table tbody tr:hover td{
+	background-color: #FFF1B5;
+	border-bottom: 1px solid #CACACA;
+	border-top: 1px solid #E2E2E2;
+}
+.table td.icons {
+    width: 126px;
+}
+
+.table tbody tr td.icons img{
+	padding-right: 5px;
+}
+.table .picture img{
+	border: 2px solid #DFDFDF;
+	margin: 7px;
+	padding: 0px;
+}
+.table .picture a:hover img{
+	border-color: #BDBDBD;
+}
+
+.table input, .table select {padding:1px; margin:0;}
+
+.table .a-left {
+    text-align: left;
+}
+.table .a-right {
+    text-align: right;
+}
+.table .a-center {
+    text-align: center;
+}
+
+.table .asc {
+    background: url("/images/asc.png") no-repeat scroll right center transparent;
+    padding-right: 15px;
+}
+.table .desc {
+    background: url("/images/desc.png") no-repeat scroll right center transparent;
+    padding-right: 15px;
+}
+.table tr.filter td {
+    background: none repeat scroll 0 0 #dce4ec!important;
+}
+
+
+

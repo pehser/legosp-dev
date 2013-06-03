@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<!--[if IE 8]>
+	<html xmlns="http://www.w3.org/1999/xhtml" class="ie8" dir="ltr" lang="ru-RU">
+<![endif]-->
+<!--[if !(IE 8) ]><!-->
+	<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="ru-RU">
+<!--<![endif]-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset={$smarty.const.DEFAULT_CHARSET}">
+<title>{$smarty.const.ADMIN_TITLE}</title>
+<script type="text/javascript" src="./core/js/js_jquery.js"></script>
+<script type="text/javascript" src="./core/core_ajaxconst.php"></script>
+<script type="text/javascript" src="./core/admin_tmpl/js/admin.js"></script>
+<script type="text/javascript" src="./core/ckeditor/ckeditor.js"></script>
+<link rel="stylesheet" type="text/css" href="./css/fancybox.css" media="screen" />
+<link rel='stylesheet' href='./core/admin_tmpl/css/reset.css' type='text/css' media='all' />
+<link rel='stylesheet' href='./core/admin_tmpl/css/style.css' type='text/css' media='all' />
+<link rel='stylesheet' id='colors-css'  href='./core/admin_tmpl/css/colors-fresh.css' type='text/css' media='all' />
+<link rel='stylesheet' href='./core/admin_tmpl/css/admin.css' type='text/css' media='all' />
+<link rel='stylesheet' href='./core/admin_tmpl/css/form.css' type='text/css' media='all' />
+<link rel='stylesheet' href='./core/admin_tmpl/css/tables.css' type='text/css' media='all' />
+<link rel='stylesheet' href='./core/admin_tmpl/css/legosp-theme/jquery-ui-1.9.2.custom.css' type='text/css' media='all' />
+<!--[if lte IE 7]>
+	<link rel='stylesheet' id='ie-css'  href='./core/admin_tmpl/css/ie.css' type='text/css' media='all' />
+<![endif]-->
+
+
+
+</head>
+<body>
+
+
+<div id="wrapper">
+	<div id="header">
+  <a title="Панель управления" href="/" class="logo png"></a>
+  <ul class="sf-menu sf-icon sf-js-enabled sf-shadow">
+   <li class="ic_1"><a href="#"></a>
+      <ul style="display: none; visibility: hidden;">
+       <li class="border"><a href="http://legosp.net">Shop Scrip LegoSP</a></li>
+       <li><a href="http://legosp.blogspot.com/" target="_blank">{$smarty.const.STRING_BLOG}</a></li>
+       <li><a href="http://forum.shop-script.org/" target="_blank">{$smarty.const.STRING_FORUM_SUPPORT}</a></li>
+       <li><a href="http://legosp.net/contact/" target="_blank">{$smarty.const.STRING_FEEDBACK}</a></li>
+      </ul>
+   </li>
+   <li class="ic_2"><a title="{$smarty.const.ADD_BUTTON}" href="#"></a>
+      <ul>
+       <li><a href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=catalog&sub=categories_edit">{$smarty.const.ADMIN_MENU_categories}</a></li>
+       <li><a href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=catalog&sub=products_edit{if $smarty.get.categoryID}&categoryID={$smarty.get.categoryID}{/if}">{$smarty.const.ADMIN_PRODUCTS}</a></li>
+       <li><a href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=catalog&sub=products_variants&add=1">{$smarty.const.ADMIN_PRODUCTS_VARIANTS_GROUPS}</a></li>
+       <li><a href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=catalog&sub=brands&addbrands=1">{$smarty.const.STRING_BRANDS}</a></li>
+       <li><a href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=inform&sub=aux_pages">{$smarty.const.ADMIN_MENU_aux_pages}</a></li>
+       <li><a href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=inform&sub=news&addnews=1">{$smarty.const.ADMIN_NEWS}</a></li>
+       <li><a href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=inform&sub=pages">{$smarty.const.ADMIN_PAGES}</a></li>
+       <li><a href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=inform&sub=votes&add=1">{$smarty.const.ADMIN_VOTES}</a></li>
+      </ul>
+   </li>
+   <li class="ic_3"><a title="{$smarty.const.NEW_BUYERS}" href="#"><span title="{$smarty.const.NEW_BUYERS}">8</span></a></li>
+   <li class="ic_4"><a title="{$smarty.const.ADMIN_NEW_ORDERS}" href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=custord&sub=new_orders"><span title="{$smarty.const.ADMIN_NEW_ORDERS}">{$count_new_order}</span></a></li>
+  <!--sf icon--></ul>
+  <div class="welcome">
+   {*<a href="#"><img alt="" src="/images/user/id1_40x40.png" class="right"></a>*}
+{$smarty.const.ADMIN_CUST_WELCOME}, <b>{$login_name}</b><br> {*<a href="#">Профиль</a> |*}<a href='./' tabindex="1" title="{$smarty.const.ADMIN_MENU_go_site} {$smarty.const.CONF_SHOP_NAME}" target="_blank">{$smarty.const.ADMIN_MENU_go_site}</a> | <a href="#">{$smarty.const.STRING_HELP}?</a> | <a href="./{$smarty.const.CONF_ADMIN_FILE}?logout">{$smarty.const.ACCESS_LOGOUT}</a>
+  <!--welcome--></div>
+ </div>
+	<div id="menutop">
+  <ul class="topmenu">
+   <li class=""><a href="./{$smarty.const.CONF_ADMIN_FILE}">{$smarty.const.CONTROL_PANEL}</a>
+   </li>
+   {foreach from=$admin_departments item=admin_menu}
+    <li ><a href="./{$smarty.const.CONF_ADMIN_FILE}?dpt={$admin_menu.id}" {if count($admin_menu.sub_departments)>0}class="sf-with-ul"{/if}>{$admin_menu.name} {if count($admin_menu.sub_departments)>0}<span class="sf-sub-indicator"> »</span>{/if}
+    </a>
+    {if count($admin_menu.sub_departments)>0}
+     <ul>
+      {foreach from=$admin_menu.sub_departments item=admin_menu_sub}
+         <li><a href="./{$smarty.const.CONF_ADMIN_FILE}?dpt={$admin_menu.id}&sub={$admin_menu_sub.id}">{$admin_menu_sub.name}</a></li>
+      {/foreach}
+     </ul>
+    {/if}
+    </li>
+   {/foreach}
+</ul>  
+ <!--menutop--><div class="clr"></div></div>
+	<div class="box left w100">
+		<div style="padding-bottom:70px;">
+		  {include file="$admin_main_content_template"}
+		</div><!-- wpbody -->
+	</div><!-- wpcontent -->
+        {*<script type="text/javascript" src="./core/admin_tmpl/css/work.js"></script>*}
+</div><!-- wpwrap -->
+<div id="footer">
+           <div id="foot">
+		<p id="footer-left" class="alignleft"><span id="footer-thankyou">{$smarty.const.ADMIN_Thank_you_for_using} <a href="http://legosp.net">Shop Script Lego SP</a>.</span></p>
+		<p id="footer-upgrade" class="alignright">{$smarty.const.Version}</p>
+	   </div>
+</div>
+</body>
+</html>

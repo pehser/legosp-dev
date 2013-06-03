@@ -1,0 +1,57 @@
+{* products and categories view *}
+
+{math assign="m" equation="x" x=-1}
+{function name=cats_tree}
+  {math assign="m" equation="x + y" x=$m y=1}
+    {foreach $data as $category}
+      <tr class="alternate">
+         {*<td width="1"><input type="checkbox" value="{$category.categoryID}" name="del_categ[]" class="delcheck"></td>*}
+         <td>{$category.categoryID}</td> 
+         <td align="center"><input type="checkbox" name="category_e[]" value="{$category.categoryID}" {if $category.enabled>0}checked{/if}></td>
+	<td style="padding-left: {math equation="$m*10"}px; {if $m eq 1} font-weight: bold;{/if}"><a href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=catalog&sub=products&categoryID={$category.categoryID}">{$category.name}</a></td>
+	<td align="center">({$category.products_count_admin})</td>
+        <td class="icons a-right"><a href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=catalog&sub=categories_edit&c_id={$category.categoryID}"><img src="./images/backend/edit.png" alt="" /></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" onclick="confirmDelete('{$smarty.const.QUESTION_DELETE_CONFIRMATION}','./{$smarty.const.CONF_ADMIN_FILE}?dpt=catalog&sub=categories&c_id={$category.categoryID}&del')"><img src="./images/backend/delete.png" alt="" /></a></td>
+        {if count($category.subitems)>0}
+          {call name=cats_tree data=$category.subitems m=$m}
+        {/if}
+      </tr>   
+    {/foreach}
+{/function}
+
+
+<div class="heading"><h1>{$smarty.const.ADMIN_CATEGORIES}</h1>
+  <div class="buttons"><a class="button b_add" onclick="location='./{$smarty.const.CONF_ADMIN_FILE}?dpt=catalog&sub=categories_edit'; return false;" href="#"><span>{$smarty.const.ADMIN_NEWS_ADD}</span></a><a class="button b_save"><span>{$smarty.const.SAVE_BUTTON}</span></a></div>
+</div>
+  
+<div class="content">
+  <form id="form" action="./{$smarty.const.CONF_ADMIN_FILE}" method="post" enctype="multipart/form-data">
+	<input type="submit" name="submit" class="button-primary" id="submit" value="{$smarty.const.SAVE_BUTTON}" />
+	<input type="hidden" name="dpt" value="catalog" />
+	<input type="hidden" name="sub" value="categories" />
+	<input type="hidden" name="categories_update" value="1" />
+	<table class="table">
+		<thead>
+			<tr>
+			       {* <th><input type="checkbox" id="delcheckall" name="checkall"></th>*}
+				<th style="width: 20px;"><a><span><strong>ID</strong></span></a></th>
+				<th style="width: 50px;"><a><span><strong>{$smarty.const.ADMIN_ON}</strong></span></a></th>
+				<th><a><span><strong>{$smarty.const.ADMIN_CATEGORIES_NAME}</strong></span></a></th>
+				<th style="width: 100px;"><a><span><strong>{$smarty.const.ADMIN_CATEGORY_COUNT_P}</strong></span></a></th>
+				<th class="a-right"><a><span><strong>{$smarty.const.STRING_ACTIONS}</strong></span></a></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="alternate">
+				<td colspan="2">&nbsp;</td>
+				<td><a href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=catalog&sub=products&categoryID=0" style="font-weight: bold;">{$smarty.const.ADMIN_CATEGORY_ROOT}</a></td>
+				<td align="center">({$products_in_root_category})</td>
+				<td>&nbsp;</td>
+			</tr>
+			{call name=cats_tree data=$categories m=0}
+		</tbody>
+	</table>
+</form>
+</div>
+<div class="heading category" style="border-radius: 0 0 3px 3px;">
+  <div class="buttons"><a class="button b_add" onclick="location='./{$smarty.const.CONF_ADMIN_FILE}?dpt=catalog&sub=categories_edit'; return false;" href="#"><span>{$smarty.const.ADMIN_NEWS_ADD}</span></a><a class="button b_save"><span>{$smarty.const.SAVE_BUTTON}</span></a></div>
+</div>

@@ -1,0 +1,34 @@
+{* pages *}
+<div class="heading"><h1>{$smarty.const.STRING_BRANDS}</h1>
+  <div class="buttons"><a class="button b_add" href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=catalog&sub=brands&addbrands"><span>{$smarty.const.ADMIN_NEWS_ADD}</span></a><a class="button b_save"><span>{$smarty.const.SAVE_BUTTON}</span></a></div>
+</div>
+<div class="content">
+ <form action="./{$smarty.const.CONF_ADMIN_FILE}" method="post" enctype="multipart/form-data">
+   <table class="table" cellspacing="0">
+    <thead>
+     <tr>
+       <th class="a-center" style="width:24px"><b>ID</b></th>
+       <th><a href"">{$smarty.const.STRING_MANUFACTURER}</a></th>
+       <th class="a-center">{$smarty.const.ADMIN_ON}</th>
+       <th>{$smarty.const.ADMIN_SORT_ORDER}</th>
+       <th class="a-right">{$smarty.const.STRING_ACTIONS}</th>
+     </tr>
+    </thead>
+    <tbody>
+    {foreach from=$brand_list item=brand}
+      <tr>
+        <td class="a-center">{$brand.brandID}</td>
+        <td><a href="./{$smarty.const.CONF_ADMIN_FILE}?dpt={$smarty.get.dpt}&sub={$smarty.get.sub}&brands={$brand.brandID}">{$brand.name}</a></td>
+        <td class="a-center"><input type="checkbox" value="1" name="brands_edit[{$brand.brandID}][enabled]" {if $brand.enabled}checked{/if} ></td>
+        <td><input name="brands_edit[{$brand.brandID}][sort]" value="{$brand.sort}" /></td>
+        <td class="icons a-right"><a href="./{$smarty.const.CONF_ADMIN_FILE}?dpt={$smarty.get.dpt}&sub={$smarty.get.sub}&brands={$brand.brandID}"><img src="./images/backend/edit.png" alt="" /></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" onclick="confirmDelete('{$smarty.const.QUESTION_DELETE_CONFIRMATION}','./{$smarty.const.CONF_ADMIN_FILE}?dpt={$smarty.get.dpt}&sub={$smarty.get.sub}&del_brand={$brand.brandID}')"><img src="./images/backend/delete.png" alt="" /></a></td>
+      </tr>
+    {/foreach}
+    </tbody>
+   </table>
+    <input type="hidden" name="dpt" value="catalog" />
+    <input type="hidden" name="sub" value="brands" />
+    <input type="hidden" name="save_brands" value="1" /> 
+    <input type="submit" name="submit" id="submit">
+ </form>
+</div>

@@ -1,0 +1,77 @@
+<div class="heading"><h1>{$smarty.const.ADMIN_NEWS}</h1>
+  <div class="buttons"><a class="button b_save"><span>{$smarty.const.SAVE_BUTTON}</span></a><a class="button b_del" href="./{$smarty.const.CONF_ADMIN_FILE}?dpt={$smarty.get.dpt}&amp;sub={$smarty.get.sub}"><span>{$smarty.const.CANCEL_BUTTON}</span></a></div>
+</div>
+<div class="content">
+<form action="./{$smarty.const.CONF_ADMIN_FILE}?dpt={$smarty.get.dpt}&sub={$smarty.get.sub}" method="post" enctype="multipart/form-data">
+  <div class="box left w70">
+   <table class="form">
+     <tbody>
+       <tr>
+         <td colspan="2">
+           <label for="proizvoditel" class="desc"><span class="rq">*</span> {$smarty.const.ADMIN_NEWS_TITLE}:</label>
+           <input type="text" id="proizvoditel" class="text large" name="news[title]" value="{$newsedit.title}">
+         </td>
+       </tr>
+       <tr>
+        <td><label for="url" class="desc">URL</label><input type="text" name="news[hurl]" value="{$newsedit.hurl}" id="url" class="text large"></td>
+       <td><label for="rel-canonical" class="desc">REL CANONICAL</label><input type="text" name="news[canonical]" value="{$newsedit.canonical}" id="rel-canonical" class="text large"></td>
+      </tr>
+      <tr>
+        <td colspan="2"><label for="kratka_text" class="desc">{$smarty.const.ADMIN_PAGE_BRIEF}</label>
+        <textarea id="text" name="news[brief]" style="width: 100%;" rows="10">{$newsedit.brief}</textarea> </td>
+      </tr>
+       <tr>
+        <td colspan="2"><label for="kratka_text" class="desc">{$smarty.const.ADMIN_PAGE_TEXT}</label><textarea id="brief" name="news[text]" style="width: 100%;" rows="10">{$newsedit.text}</textarea></td>
+      </tr>
+     </tbody>
+   </table>
+  </div>
+   <div class="box right w29">
+     <div id="accordion" class="ui-accordion-forms">
+	<h3><a href="#">{$smarty.const.ADMIN_PARAMETERS}</a></h3>
+        <div>
+            <table class="form">
+              <tr>
+                <td><label class='desc' for='datepicker1'>{$smarty.const.ADMIN_NEWS_DATE}:</label><input name="news[date]"class='text date' style="width:90%" type="text" id="datepicker1" value="{$newsedit.date}" /></td>
+                <td><label class='desc' for='act'>{$smarty.const.ADMIN_ON}</label><br><input value=1 id="act" name="news[enable]" {if $newsedit.enable}checked {/if} type="checkbox" /></td>
+              </tr>
+             <tr>
+                <td colspan="2"><p><label class='desc' for='photo'>{$smarty.const.ADMIN_PAGE_PICTURE}::</label></p><input id="photo" name="news_pic" class="text small file" type="file" /><br /> 
+                {capture assign='news_pictures'}./products_pictures/{$newsedit.Pict}{/capture}    
+				{if $news_pictures|file_exists ne '' &&  $newsedit.Pict}
+					<img src="./products_pictures/{$newsedit.Pict}" alt="" />
+					<a href="javascript:confirmDelete('{$smarty.const.QUESTION_DELETE_PICTURE}','./{$smarty.const.CONF_ADMIN_FILE}?dpt={$smarty.get.dpt}&sub={$smarty.get.sub}&picture_remove={$newsedit.id}')" style="width: 150px;"><img src="./images/backend/delete.png" alt="" /></a>
+				{else}
+					<img src="./products_pictures/nophoto.jpg" alt="" />
+				{/if}
+                </td>
+             </tr>
+           </table>
+	</div>
+	<h3><a href="#">{$smarty.const.ADMIN_META_TAGS}</a></h3>
+    <div>
+<table class="form">
+ <tr>
+   <td><label class='desc help' for='meta-title' title="Если не указан, генерируется из заголовка">META-TITLE:</label><input class='text large' type="text" id="meta-title" name="news[meta_title]" value="{$newsedit.meta_title}" /></td>
+ </tr>
+ <tr>
+   <td><label class='desc help' for='meta-keywords' title="Через запятую, 10-15 слов">META-KEYWORDS:</label><textarea class='field textarea small' name="news[meta_keywords]" id="meta-keywords" rows="" cols="">{$newsedit.meta_keywords}</textarea></td>
+ </tr>
+ <tr>
+   <td><label class='desc help' for='meta-description' title="Не более 250 символов">META-DESCRIPTION:</label><textarea class='field textarea small' name="news[meta_desc]" id="meta-description" rows="" cols="">{$newsedit.meta_desc}</textarea></td>
+ </tr>
+</table>
+	</div>
+    </div>	
+  </div>
+  <input type="hidden" name="add_news" value="{$newsedit.id}" />  
+  <input type="submit" id="submit" name="submit" class="button-primary" value="{$smarty.const.SAVE_BUTTON}" />
+ </form>
+</div>
+{literal}
+<script type="text/javascript">
+	CKEDITOR.replace( 'text', {filebrowserBrowseUrl : '/core/ckeditor/plugins/elfinder/elfinder.html'});
+	CKEDITOR.replace( 'brief', {filebrowserBrowseUrl : '/core/ckeditor/plugins/elfinder/elfinder.html'});
+</script>
+{/literal}
+</dib>
