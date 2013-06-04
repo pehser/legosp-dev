@@ -61,19 +61,26 @@
 			#while ($i<count($_SESSION["gids"])
                         /*if (!CONF_SHOW_ADD2CART_INSTOCK) 
                          if $is-*/ 
-                        for ($i=0; $i<count($_SESSION["gids"]); $i++)
+                        $i=0;
+                        foreach ($_SESSION["gids"] as $key => $ar_gids)
+                        {
+                          if ($ar_gids==$get_add2cart && $_SESSION["opt"][$key] == $_GET['opt']) break;
+                          $i++;
+                        }
+                        /*for ($i=0; $i<count($_SESSION["gids"]); $i++)
                         {  
+                          
                          if (($_SESSION["gids"][$i] == $get_add2cart) and ($_SESSION["opt"][$i] == $_GET['opt'])) 
                          {
                            
                            break;
                           }
                          
-                        } 
+                        } */
 			if ($i < count($_SESSION["gids"])) //increase current product's quantity
 			{
-				if (!CONF_SHOW_ADD2CART_INSTOCK) if (($is-$_SESSION["counts"][$i]-$pcount)<0) {echo "-1"; return 0;}
-				$_SESSION["counts"][$i]+=$pcount;
+				if (!CONF_SHOW_ADD2CART_INSTOCK) if (($is-$_SESSION["counts"][$key]-$pcount)<0) {echo "-1"; return 0;}
+				$_SESSION["counts"][$key]+=$pcount;
 			}
 			else //no item - add it to $gids array
 			{
@@ -115,9 +122,17 @@
 
 		if (isset($_GET["remove"]) && $_GET["remove"] > 0) //remove from cart product with productID == $remove
 		{
+		        #session_unset();
+		        echo "<pre>";
+		        print_r($_SESSION);  
+		        echo "</pre>";
+		        if (isset($_SESSION["gids"]) && count($_SESSION["gids"])>0)
 		        $k=array_search((int)$_GET["remove"],$_SESSION["gids"]);
+		        #echo "d";
+		        #exit;
 		        if ($k!==FALSE)
 		        unset($_SESSION["gids"][$k],$_SESSION["count"][$k],$_SESSION["opt"][$k],$_SESSION["min_q"][$k],$_SESSION["newprice"][$k]);
+		        
 /* !ajax */		if (!$ajax_flag) 
                          if (CONF_CHPU) header("Location: http://".CONF_SHOP_URL."/cart/");
                          else header("Location: http://".CONF_SHOP_URL."/index.php?shopping_cart=yes");
@@ -249,15 +264,14 @@
 		{
 			$k = 0; $rk=0; //total cart value 
 			$products = Array(); $opt=$_SESSION["opt"]; $variants='';
-                        
-			for ($i=0; $i<count($_SESSION["gids"]); $i++)
-			  if ($_SESSION["gids"][$i])
+                        foreach ($_SESSION["gids"] as $key => $cat_gids)
+			  if ($cat_gids)
 			  {
-				$q = db_query("SELECT name, Price, product_code, hurl, picture,min_qunatity FROM ".PRODUCTS_TABLE." WHERE productID='".$_SESSION["gids"][$i]."'") or die (db_error());
+				$q = db_query("SELECT name, Price, product_code, hurl, picture,min_qunatity FROM ".PRODUCTS_TABLE." WHERE productID='".$cat_gids."'") or die (db_error());
 				if ($r = db_fetch_row($q))
 				{
 
-				if ($r[3] != "") {$r[3] = REDIRECT_PRODUCT."/".$r[3];} else {$r[3] = "index.php?productID=".$_SESSION["gids"][$i];}
+				if ($r[3] != "") {$r[3] = REDIRECT_PRODUCT."/".$r[3];} else {$r[3] = "index.php?productID=".$cat_gids;}
 				if (file_exists("./products_pictures/".$r[4]) && preg_match('/\.(jpg|jpeg|gif|png)$/i', $r[4],$fend))
 				  {
 				    $s=preg_replace('/\.(jpg|jpeg|gif|png)$/i','',$r[4]);
@@ -265,11 +279,11 @@
 				  }
 				else
 				  {$r[4] = "";}
-                                $_SESSION['min_q'][$i]=$r[5];
-                                if ($_SESSION["opt"][$i])
+                                $_SESSION['min_q'][$key]=$r[5];
+                                if ($_SESSION["opt"][$key])
                                 { 
                                   
-                                  preg_match_all("'(?P<option>\w+):(?P<variant>\d+)'",$_SESSION["opt"][$i],$tmp);
+                                  preg_match_all("'(?P<option>\w+):(?P<variant>\d+)'",$_SESSION["opt"][$key],$tmp);
                                   $variants='(';
                                   for( $ti=0; $ti<count($tmp['option']); $ti++)
                                   {
@@ -279,7 +293,7 @@
                                    $v=db_query("select name from ".PRODUCT_OPTIONS_VAL_TABLE." where variantID=".$tmp['variant'][$ti]);   
                                    $ro = db_fetch_row($v);   
                                    $variants .=':'.$ro[0]; 
-                                   $v=db_query("select picture from ".PRODUCT_OPTIONS_V_TABLE." where variantID=".$tmp['variant'][$ti]." and productID=".$_SESSION["gids"][$i]); 
+                                   $v=db_query("select picture from ".PRODUCT_OPTIONS_V_TABLE." where variantID=".$tmp['variant'][$ti]." and productID=".$cat_gids); 
                                    $ro = db_fetch_row($v); 
                                    if (isset($ro[1]) && !trim($ro[1]) && (file_exists("./products_pictures/".$ro[0].'-SC.jpg'))) $r[4]=$ro[0].'-SC.jpg';
                                      
@@ -293,17 +307,17 @@
                                  }
                                 $real_p=$r[1]; 
 
-                                if ($r[1]!=$_SESSION['newprice'][$i] && $_SESSION['newprice'][$i]) { $r[1]=$_SESSION['newprice'][$i] ; $real_p=$_SESSION['newprice'][$i];}
+                                if ($r[1]!=$_SESSION['newprice'][$key] && $_SESSION['newprice'][$key]) { $r[1]=$_SESSION['newprice'][$key] ; $real_p=$_SESSION['newprice'][$key];}
                                 $r[1]=$r[1]/CURRENCY_val; 
                                 
                                
                                 if (!isset($variants)) $variants='';
-				$tmp = array("id"=>$_SESSION["gids"][$i], "name"=>$r[0].$variants, "quantity"=>$_SESSION["counts"][$i], "cost"=>show_price($_SESSION["counts"][$i]*$r[1]), "product_code"=>$r[2], "hurl"=>$r[3], "picture"=>$r[4],"min_q"=>$r[5]);
+				$tmp = array("id"=>$cat_gids, "name"=>$r[0].$variants, "quantity"=>$_SESSION["counts"][$key], "cost"=>show_price($_SESSION["counts"][$key]*$r[1]), "product_code"=>$r[2], "hurl"=>$r[3], "picture"=>$r[4],"min_q"=>$r[5]);
                                 unset($variants);
 				$products[] = $tmp;
 
-				$k += $_SESSION["counts"][$i]*$r[1];
-                                $rk += $_SESSION["counts"][$i]*$real_p;
+				$k += $_SESSION["counts"][$key]*$r[1];
+                                $rk += $_SESSION["counts"][$key]*$real_p;
 				}
                                 
                           #preg_match_all("'(^|;)*($|:)'",$_SESSION["opt"][$i],$tmp);
