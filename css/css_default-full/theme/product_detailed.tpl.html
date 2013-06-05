@@ -9,34 +9,28 @@
     </div>
     <div class="middle">
 <div id="products_example">
-<div id="products">
-  <div class="slides_container">
-    {if $product_info[5] || $p_default}
+<div class="product_pictures">
+<ul id="pikame" >
+  <li>
+  {if $product_info[5] || $p_default}
       <a id="adpdp{$product_info[11]}" href="./products_pictures/{if $p_default}{$p_default}-B.jpg{else}{$product_info[9]}{/if}" rel="example_group"><img src="./products_pictures/{if $p_default}{$p_default}.jpg{else}{$product_info[5]}{/if}" alt="{$product_info[1]}" id="dp{$product_info[11]}"></a>
     {else}
       <img src="./products_pictures/nophoto.jpg" id="dp{$product_info[11]}" style="margin-bottom: 3px;" alt="{$product_info[1]}" rel="thickbox"/>
-    {/if}  
-    {if $product_thumb[0] ne NULL}
-      {section name=i loop=$product_thumb}
-	    <a href="./products_thumb/{$product_thumb[i]}" title="{$product_desc[i]}" rel="example_group">
-	      <img  src="./products_thumb/{$product_thumb[i]}" alt="{$product_desc[i]}" id="dp{$product_info[11]}"/>
-	    </a>
-       {/section} 
-     {/if}
-  </div>
-  {if $product_thumb[0] ne NULL}
-  <div class="product_thumb">
-  <ul class="pagination">
-   {if $product_info[5] || $p_default}
-    <li><a href="#"><img src="./products_pictures/{if $p_default}{$p_default}.jpg{else}{$product_info[5]}{/if}" alt="1144953 3 2x"></a></li>
-   {/if}
-    
-      {section name=i loop=$product_thumb}
-        <li><a href="#"><img src="./products_thumb/P_{$product_thumb[i]}"  alt="1144953 1 2x"></a></li>
-      {/section} 
-   </ul>
-   </div>
    {/if}  
+  </li>
+  {if $product_thumb[0] ne NULL}
+      {section name=i loop=$product_thumb}
+	    <li>
+	      <a href="./products_thumb/{$product_thumb[i]}" title="{$product_desc[i]}" rel="example_group">
+	        <img  src="./products_thumb/P_{$product_thumb[i]}" alt="{$product_desc[i]}" id="dp{$product_info[11]}"/>
+	      </a>
+	    </li>
+       {/section} 
+  {/if}
+  
+</ul>
+</div>
+  
 <div class="product_d_info">
   <b>{$smarty.const.STRING_MANUFACTURER}:&nbsp;</b><a href="./{$product_info[19]}">{$product_info[20]}</a><br>
   <b>{$smarty.const.STRING_MODEL}:&nbsp;</b>{$product_info[1]}<br />
@@ -97,7 +91,7 @@
    {/if}
 </div>
 </div>
-</div>
+
 
 <div class="tabs">
 	<a rel="#tab_description">{$smarty.const.ADMIN_PRODUCT_DESC}</a>

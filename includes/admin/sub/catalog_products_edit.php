@@ -99,7 +99,7 @@ if (!strcmp($sub, "products_edit")) {
                     $new_picthumb_name = $info['filename'] . '_' . $p_thumb_id . '.' . $info['extension'];
                     move_uploaded_file($_FILES["file"]["tmp_name"][$fi], "./products_thumb/" . $new_picthumb_name);
                     SetRightsToUploadedFile('./products_thumb/' . $new_picthumb_name);
-                    img_resize("./products_thumb/" . $new_picthumb_name, "./products_thumb/P_" . $new_picthumb_name, RESIZE_SMALL_X, RESIZE_SMALL_Y, CONF_IMAGE_COLOR);
+                    img_resize("./products_thumb/" . $new_picthumb_name, "./products_thumb/P_" . $new_picthumb_name, RESIZE_NORMAL_X, RESIZE_NORMAL_Y, CONF_IMAGE_COLOR);
                     $thumb_pic['picture'] = $new_picthumb_name;
                     update_field(THUMB_TABLE, $thumb_pic, 'thumbID=' . $p_thumb_id);
                 }

@@ -482,3 +482,8 @@ input.text, textarea.textarea, .firefox select.select{border-top:1px solid #7c7c
         background: none;
      
 }
+
+#products_example .product_pictures{
+  float: left;
+  margin-right: 25px;
+}

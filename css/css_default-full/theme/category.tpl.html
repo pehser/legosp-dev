@@ -1,4 +1,5 @@
-{* category view *}<div class="box">
+{* category view *}
+<div class="box">
 <div class="top">{$selected_category[9]}</div>
 <div class="middle">
 {* description *}
@@ -14,13 +15,16 @@
 {/if}
 </div>
 
-{include file="subcateg.tpl.html"}
+
 
 {* sort odrer *}
 	<div style="text-align: right;">
 	  {$smarty.const.SORT}:&nbsp;&nbsp;
 	  <select class="select" name="orderby" onchange="location='http://{$smarty.const.CONF_SHOP_URL}/'+this.value">
-	    {html_options values=$sort_options.sort_values output=$sort_options.sort_names selected=$sort_options.sort_selected}
+	   {foreach from=$sort_options.sort_values key=k item=v}
+	    <option {if $v==$sort_options.sort_selected}selected{/if} value="{$v}">{$sort_options.sort_names[$k]}</option>
+	    
+	   {/foreach} 
 	  </select>
 	</div>
 {* eof sort order *}

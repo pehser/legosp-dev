@@ -4,17 +4,18 @@
 <p style="font-size: 14px; font-weight: bold">{if $newstext}{$newstext[0]}{else}{$newslist[j][1]}{/if}</p>
 {if $newslist}
 {section name=j loop=$newslist}
-{if $newslist[j][5]>0}
-{if $newslist[j][4]}
- <a href="./{$newslist[j][6]}"><img src="./products_pictures/{$newslist[j][4]}" class="f-left" style="width:100px;" alt="" /></a>
-{/if}
-<p><span style="font-size: 14px; font-weight: bold"><a href="./{$newslist[j][6]}">{$newslist[j][1]}</a></span><br />
-<span style="color:#878787; font-size: 10px">[{$newslist[j][2]}]</span></p>
-<p>{$newslist[j][3]}</p>
-<div align="right"><a href="./{$newslist[j][6]}">{$smarty.const.ADMIN_NEWS_READ}</a></div>
-<hr />
-{/if}
+  {if $newslist[j][5]>0}
+     {if $newslist[j][4]}
+        <a href="./{$newslist[j][6]}"><img src="./products_pictures/{$newslist[j][4]}" class="f-left" style="width:100px;" alt="" /></a>
+     {/if}
+     <p><span style="font-size: 14px; font-weight: bold"><a href="./{$newslist[j][6]}">{$newslist[j][1]}</a></span><br />
+     <span style="color:#878787; font-size: 10px">[{$newslist[j][2]}]</span></p>
+     <p>{$newslist[j][3]}</p>
+     <div align="right"><a href="./{$newslist[j][6]}">{$smarty.const.ADMIN_NEWS_READ}</a></div>
+     <hr />
+   {/if}
 {/section}
+{$catalog_navigator}
 {elseif $newstext}
 {if $newstext[4]}
 <div class="f-left a-center" style="margin:2px 6px 6px 0px;"><a href="./products_pictures/{$newstext[4]}" class="thickbox"><img width="{$smarty.const.RESIZE_SMALL_Y}" src="./products_pictures/{$newstext[4]}" alt="" /></a><br />
