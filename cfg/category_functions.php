@@ -38,7 +38,37 @@ function processCategories($level, $path, $sel) {
     }
     return $out;
 } //processCategories
+function All_list_Categories($parent, $enabled = 1) {
+    $sql = 'SELECT categoryID, name, products_count, products_count_admin, parent, picture, hurl,enabled FROM ' . CATEGORIES_TABLE . ' WHERE categoryID>0';
+    if ($enabled)
+    {
+      $sql.= ' and enabled=1';
+      if (isset($_SESSION["cust_id"])) $sql.= ' and hidden!=2';
+      else $sql.= ' and hidden!=1';
+    }
+    $sql.= ' ORDER BY ' . CONF_SORT_CATEGORY . " " . CONF_SORT_CATEGORY_BY;
+    $sqlresult =  mysql_query($sql); unset($sql);
+    $raw = array();
+      while( $item = mysql_fetch_assoc( $sqlresult ) ){
+       $item['subitems'] = array();
+       if ($item['hurl'] != "" && CONF_CHPU) $item['hurl'] = REDIRECT_CATALOG . "/" . $item['hurl'];
+       else  $item['hurl'] = "index.php?categoryID=" . $item['categoryID'];
+       $raw[ $item['categoryID'] ] = $item;
+    }
+    // строим само дерево
+    $tree = array();
+    foreach($raw as $id=>&$item)
+    if(array_key_exists($item['parent'], $raw )  )  // если есть родительская вершина в дереве
+      $raw[ $item['parent'] ]['subitems'][ $id ] =& $item;
+    else // иначе - это вершина верхнего уровня
+      $tree[ $id ] =& $item;
+    unset($raw);  
+    // дерево построенно, возвращаем его из ф-ии
+    return $tree;
+}
 function All_Categories($parent, $level, $enabled = 1) {
+ 
+ 
     $sql = 'SELECT categoryID, name, products_count, products_count_admin, parent, picture, hurl,enabled FROM ' . CATEGORIES_TABLE . ' WHERE categoryID>0 and parent=' . $parent;
     if ($enabled)
     {

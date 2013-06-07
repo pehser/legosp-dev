@@ -7,7 +7,7 @@
  ****************************************************************************/
 if (CONF_SHOW_MENU==1)
 {
-   $c = All_Categories(0,0);
+   $c = All_list_Categories(0,1);
    $smarty->assign("categories_tree",$c);
    unset($c);
 }
