@@ -1,4 +1,10 @@
 <?php
+/*****************************************************************************
+ *                                                                           *
+ * Lego SP - legosp.net                                                      *
+ * Copyright (c) 2012 Sergey Piekhota. All rights reserved.                  *
+ *                                                                           *
+ ****************************************************************************/  
 if (isset($_GET["order_history"]) && isset($_SESSION["cust_id"]))
 {
    

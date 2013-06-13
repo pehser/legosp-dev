@@ -32,7 +32,7 @@ if (isset($_GET["news"]))
 	$row[1] = ADMIN_NEWS;
 	$path[] = $row;
 
-        $q = db_query("SELECT title, text, date, brief, Pict, enable, meta_title, meta_keywords, meta_desc, hurl, canonical FROM ".NEWS_TABLE." WHERE hurl='".$_GET["news"]."' OR id='".mysql_real_escape_string($_GET["news"])."'") or die (db_error());
+        $q = db_query("SELECT title, text, date, brief, Pict, enable, meta_title, meta_keywords, meta_desc, hurl, canonical FROM ".NEWS_TABLE.' WHERE hurl='.int_text($_GET["news"]).' OR id='.(int)($_GET["news"])."'") or die (db_error());
         $p = db_fetch_row($q);
 
 	if (!$p) {
@@ -78,6 +78,7 @@ if (isset($_GET["news"]))
 		if ($p[6] != "" && CONF_CHPU) {$p[6] = REDIRECT_NEWS."/".$p[6];} else {$p[6]="index.php?news=".$p[0];}
                 $news[] = $p;
              }
+        
         showNavigator($g_count, $offset, CONF_NEWS_PER_PAGE, $row[0]."&amp;",$navigator);
 
         

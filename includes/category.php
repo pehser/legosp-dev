@@ -32,8 +32,10 @@ if (isset($categoryID) && !isset($productID) && $categoryID) {
         $smarty->assign("meta_desc", $row[6]);
         if ($row[8] != '') $smarty->assign("rel_canonical", $row[8]);
         //sort options
+       
         $sort_options['sort_values'] = Array($row[7] . "&amp;sort=name&amp;order=ASC", $row[7] . "&amp;sort=name&amp;order=DESC", $row[7] . "&amp;sort=Price&amp;order=ASC", $row[7] . "&amp;sort=Price&amp;order=DESC", $row[7] . "&amp;sort=customers_rating&amp;order=DESC", $row[7] . "&amp;sort=in_stock&amp;order=DESC", $row[7] . "&amp;sort=in_stock&amp;order=ASC", $row[7] . "&amp;sort=product_code&amp;order=ASC");
         $sort_options['sort_names'] = Array(ADMIN_SORT_BY_NAME_ASC, ADMIN_SORT_BY_NAME_DESC, ADMIN_SORT_BY_PRICE_ASC, ADMIN_SORT_BY_PRICE_DESC, ADMIN_SORT_BY_RATING, ADMIN_SORT_BY_IN_STOCK, ADMIN_SORT_BY_IN_STOCK_ASC, ADMIN_SORT_BY_CODE);
+        $sort_options['sort_names2'] = $sort_options['sort_names'];
         $sort_options['sort_selected'] = $row[7] . "&amp;sort=" . $_SESSION["sort"] . "&amp;order=" . $_SESSION["order"];
         $smarty->assign("sort_options", $sort_options);
     } else {

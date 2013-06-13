@@ -11,7 +11,7 @@ if (isset($_GET["tagID"]) || isset($_POST["tagID"])) $tagID = isset($_GET["tagID
 else $tagID = '';
 if (isset($tagID) && !isset($productID) && $tagID) {
     //get selected tag info
-    $q = db_query("SELECT pid, tag, hurl, canonical FROM " . TAGS_TABLE . " WHERE tag='" . mysql_real_escape_string($tagID) . "'") or die(db_error());
+    $q = db_query("SELECT pid, tag, hurl, canonical FROM " . TAGS_TABLE . ' WHERE tag='.int_text($tagID)) or die(db_error());
     $row = db_fetch_row($q);
     if (!$row) {
         //header("HTTP/1.1 404 Not Found");

@@ -1,4 +1,10 @@
 <?php
+/*****************************************************************************
+ *                                                                           *
+ * Lego SP - legosp.net                                                      *
+ * Copyright (c) 2012 Sergey Piekhota. All rights reserved.                  *
+ *                                                                           *
+ ****************************************************************************/  
 	//show online contacts
 if (CONF_ONLINE_ON)
 { 

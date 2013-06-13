@@ -12,7 +12,7 @@
 	{
 		if ($_GET["category"])
 			{
-			$q = db_query("SELECT categoryID, name, about, meta_title, meta_keywords, meta_desc, hurl FROM ".CATEGORIES_TABLE." WHERE categoryID='".mysql_real_escape_string($_GET["category"])."' OR hurl='".$_GET["category"]."'") or die (db_error());
+			$q = db_query("SELECT categoryID, name, about, meta_title, meta_keywords, meta_desc, hurl FROM ".CATEGORIES_TABLE.' WHERE categoryID='.(int)$_GET["category"].' OR hurl='.int_text($_GET["category"])) or die (db_error());
 			$p = db_fetch_row($q);
 
 			$path = Array();
@@ -28,7 +28,7 @@
 			}
 		if ($_GET["brands"])
 			{
-			$q = db_query("SELECT brandID, name, description, meta_title, meta_keywords, meta_desc, hurl FROM ".BRAND_TABLE." WHERE brandID='".mysql_real_escape_string($_GET["brands"])."' OR hurl='".$_GET["brands"]."'") or die (db_error());
+			$q = db_query("SELECT brandID, name, description, meta_title, meta_keywords, meta_desc, hurl FROM ".BRAND_TABLE.' WHERE brandID='.(int)$_GET["brands"].' OR hurl='.int_text($_GET["brands"])) or die (db_error());
 			$p = db_fetch_row($q);
 
 			$path = Array();

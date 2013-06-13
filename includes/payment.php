@@ -28,7 +28,7 @@ if (isset($_GET["payment"]))
 	//price
 	$payment['id'] = $_SESSION["order_id"];
 
-	$q = db_query("SELECT Price, Quantity FROM ".ORDERED_CARTS_TABLE." WHERE orderID='".$_SESSION["order_id"]."'") or die(db_error());
+	$q = db_query("SELECT Price, Quantity FROM ".ORDERED_CARTS_TABLE.' WHERE orderID='.(int)$_SESSION["order_id"]) or die(db_error());
         while ($row = db_fetch_row($q)) $total += $row[0]*$row[1];
 
 	$addprice = round($total/100*$tmp_arr[$payment_type."_addprice"], 2);

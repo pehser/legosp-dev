@@ -2,17 +2,14 @@
       
 if (!isset($_SESSION['cust_id']) && isset($_COOKIE['cust_id']))
 {
-  $sql="SELECT * FROM ".CUST_TABLE." WHERE custID='".(int)$_COOKIE['cust_id']."'";  
+  $sql="SELECT * FROM ".CUST_TABLE.' WHERE custID='.(int)$_COOKIE['cust_id'];  
   $r = db_assoc($sql);
   $_SESSION['cust_id'] = $r['custID'];
   $_SESSION['cust_login'] = "yes";
   unset($r['custID'],$r['cust_password']); 
   if (!$r['openID']) unset($r['openID']);
   $_SESSION['userinf']=$r;
-  
 }
-
-
 	//	LOGOUT
 	if (isset($_GET["cust_logout"]))
 	{
@@ -26,7 +23,7 @@ if (!isset($_SESSION['cust_id']) && isset($_COOKIE['cust_id']))
 	elseif (isset($_POST["cust_login"]) && isset($_POST["cust_email"]) && isset($_POST["cust_password"]))
 	{
 
-	        $sql="SELECT * FROM ".CUST_TABLE." WHERE (openID IS NULL or openID='') and  cust_email='".validate_form_string($_POST["cust_email"])."'";  
+	        $sql="SELECT * FROM ".CUST_TABLE." WHERE (openID IS NULL or openID='') and  cust_email=".int_text($_POST["cust_email"]);  
 	        $r = db_assoc($sql);
 		// and cust_password='".$_POST["cust_password"]."'
 		if ($r) 
@@ -60,7 +57,7 @@ if (!isset($_SESSION['cust_id']) && isset($_COOKIE['cust_id']))
 	elseif (isset($custID) && ($custID>0)) 
 	{
 	
-	                $sql='SELECT * FROM '.CUST_TABLE.' WHERE openID='.$authData['uid'];  
+	                $sql='SELECT * FROM '.CUST_TABLE.' WHERE openID='.(int)$authData['uid'];  
                         $r = db_assoc($sql);
                         $_SESSION['cust_id'] = $r['custID'];
                         unset($r['custID'],$r['cust_password'],$r['openID'],$r['provider']); 

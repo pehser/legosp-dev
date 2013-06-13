@@ -15,7 +15,7 @@
 	{
 		if (!isset($_SESSION["vote_completed"][ $productID ]) && isset($_POST["mark"]) && $_POST["mark"])
 		{
-			$q = db_query("UPDATE ".PRODUCTS_TABLE." SET customers_rating=(customers_rating*customer_votes+'".(int)$_POST["mark"]."')/(customer_votes+1), customer_votes=customer_votes+1 WHERE productID='".$productID."'") or die (db_error());
+			$q = db_query("UPDATE ".PRODUCTS_TABLE." SET customers_rating=(customers_rating*customer_votes+'".(int)$_POST["mark"]."')/(customer_votes+1), customer_votes=customer_votes+1 WHERE productID=".(int)$productID) or die (db_error());
 		}
 		$_SESSION["vote_completed"][ $productID ] = 1;
 	}

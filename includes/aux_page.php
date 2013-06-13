@@ -52,7 +52,7 @@
 
 	if (isset($_GET["aux_pages"]))
 	{
-		$q = db_query("SELECT id, title, text, meta_title, meta_keywords, meta_desc, hurl, canonical FROM ".AUX_TABLE." WHERE hurl='".$_GET["aux_pages"]."' OR id='".mysql_real_escape_string($_GET["aux_pages"])."'") or die (db_error());
+		$q = db_query("SELECT id, title, text, meta_title, meta_keywords, meta_desc, hurl, canonical FROM ".AUX_TABLE.' WHERE hurl='.int_text($_GET["aux_pages"]).' OR id='.(int)$_GET["aux_pages"]) or die (db_error());
 		$p = mysql_fetch_row($q);
 
 		if (!$p) {

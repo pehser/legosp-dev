@@ -38,7 +38,7 @@ if (isset($_GET["pages"]))
 	$row[1] = ADMIN_PAGES;
 	$path[] = $row;
 
-        $q = db_query("SELECT title, text, date, brief, Pict, enable, meta_title, meta_keywords, meta_desc, hurl, canonical FROM ".PAGES_TABLE." WHERE hurl='".$_GET["pages"]."' OR id='".mysql_real_escape_string($_GET["pages"])."'") or die (db_error());
+        $q = db_query("SELECT title, text, date, brief, Pict, enable, meta_title, meta_keywords, meta_desc, hurl, canonical FROM ".PAGES_TABLE.' WHERE hurl='.int_text($_GET["pages"]).' OR id='.(int)$_GET["pages"]) or die (db_error());
         $p = mysql_fetch_row($q);
 
 

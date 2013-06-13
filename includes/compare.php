@@ -28,7 +28,7 @@ if (isset($_GET["compare"])) {
 	$num = count($_SESSION["comp"]);
 	for ($i = 0; $i < $num; $i++) {
 		if ($_SESSION["comp"][$i] != 0) {
-			$q = db_query("SELECT productID, name, customers_rating, Price, picture, big_picture, hurl FROM ".PRODUCTS_TABLE." WHERE productID='".mysql_real_escape_string($_SESSION["comp"][$i])."'") or die (db_error());
+			$q = db_query("SELECT productID, name, customers_rating, Price, picture, big_picture, hurl FROM ".PRODUCTS_TABLE.' WHERE productID='.(int)$_SESSION["comp"][$i]) or die (db_error());
 			$row = db_fetch_row($q);
 			$row[2] = round($row[2]+0.49);
 			$row[3] = show_price($row[3]);
@@ -72,7 +72,7 @@ if (isset($_SESSION["comp"])) {
 	$num = count($_SESSION["comp"]);
 	for ($i = 0; $i < $num; $i++) {
 		if ($_SESSION["comp"][$i] != 0) {
-			$q = db_query("SELECT productID, name, customers_rating, Price, picture, big_picture, hurl FROM ".PRODUCTS_TABLE." WHERE productID='".mysql_real_escape_string($_SESSION["comp"][$i])."'") or die (db_error());
+			$q = db_query("SELECT productID, name, customers_rating, Price, picture, big_picture, hurl FROM ".PRODUCTS_TABLE.' WHERE productID='.(int)$_SESSION["comp"][$i]) or die (db_error());
 			$row = db_fetch_row($q);
 			$row[2] = round($row[2]+0.49);
 			$row[3] = show_price($row[3]);

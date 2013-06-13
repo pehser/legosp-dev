@@ -1,10 +1,10 @@
 <?php
 /*****************************************************************************
  *                                                                           *
- * Shop-Script FREE                                                          *
- * Copyright (c) 2005 WebAsyst LLC. All rights reserved.                     *
+ * Lego SP - legosp.net                                                      *
+ * Copyright (c) 2012 Sergey Piekhota. All rights reserved.                  *
  *                                                                           *
- ****************************************************************************/
+ ****************************************************************************/  
 
 
 	//last order step - providing customer information

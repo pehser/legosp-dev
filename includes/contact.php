@@ -20,7 +20,7 @@ if (isset($_GET["contact"]) || isset($_GET["send_result"])) //show 'send result'
 	$path[] = $row;
 
 	$smarty->assign("product_category_path",$path);
-	$smarty->assign("send_result", $_GET["send_result"]);
+	$smarty->assign("send_result", htmlspecialchars($_GET["send_result"]));
 	$smarty->assign("main_content_template", "contact.tpl.html");
   }
 
@@ -34,9 +34,9 @@ if (isset($_POST["send_mail"]))
 
 	$smarty->assign("product_category_path",$path);
 
-	$Name = $_POST['send_name'];
-	$From = $_POST['send_email'];
-	$Body = $_POST['send_text'];
+	$Name = strip_tags($_POST['send_name']);
+	$From = strip_tags($_POST['send_email']);
+	$Body = strip_tags($_POST['send_text']);
 
 		if (($Name=="") or ($From=="") or ($Body=="") or (!preg_match("/[-0-9a-z_]+@[-0-9a-z_]+\.[a-z]{2,6}/i",$From)) or ($_POST["captcha"]<>$_SESSION["captcha"])) 
 			{$send_result=0;}
