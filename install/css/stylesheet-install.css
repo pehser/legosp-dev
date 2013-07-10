@@ -1,0 +1,142 @@
+body {
+  font: 12px/1.7em 'Open Sans', arial, sans-serif;
+  background: #fafafa;
+}
+/*------------------------------------------------------------------
+Layout: Wrapper
+------------------------------------------------------------------- */
+html, body {height: 100%;}
+#wrapper {min-height: 100%; height: auto !important; height: 100%; margin: 0 auto -61px;}
+.push {height: 60px;}
+
+/*------------------------------------------------------------------
+Layout: Header strip
+------------------------------------------------------------------- */
+#header-strip {
+  position: relative;
+  z-index: 91;
+  padding:10px 0;
+  background: #1d354d;
+  -webkit-box-shadow:0 0 10px #969696;
+  -moz-box-shadow:0 0 10px #969696;
+  box-shadow:0 0 10px #969696;
+  margin-bottom:20px;
+}
+#header-strip .container {
+  position: relative;
+}
+#header-strip .brand {
+  position: relative;
+  float:left;
+  display: block;
+  overflow: hidden;
+  width: 130px;
+  height: 39px;
+  margin-right: .75em;
+  color: #FFF;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 600;
+  background: url(../images/brand-1.png) no-repeat 0 0;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+/*------------------------------------------------------------------
+Layout: login-strip
+------------------------------------------------------------------- */
+#login-strip {
+  position: relative;
+  margin:50px 0;
+}
+#login-strip .brand {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  width: 130px;
+  height: 39px;
+  color: #FFF;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 600;
+  background: url(../images/brand-3.png) no-repeat 0 0;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  margin-bottom:10px;
+}
+
+
+/*------------------------------------------------------------------
+Layout: Content strip
+------------------------------------------------------------------- */
+.navbar a {font-weight:bold;}
+
+img.pull-left { margin-right:12px; margin-bottom:12px; }
+
+.license {
+	background: #EEEEEE;
+	height:250px;
+	line-height:20px;
+	margin-top: 10px;
+	padding: 5px 10px;
+	border: 1px solid silver;
+	overflow: auto;
+}
+
+.wizardcontrols {margin:20px 0 10px;overflow:hidden;}
+
+.req {color:#f00;}
+
+/*------------------------------------------------------------------
+Layout: Footer strip
+------------------------------------------------------------------- */
+#footer-strip {
+  padding:20px 0;
+  color: #ffffff;
+  background: #1d354d;
+  border-top: 1px solid #000000;
+  -webkit-box-shadow:0 0 10px #969696, inset 0 1px 0 #2b4e72;
+  -moz-box-shadow:0 0 10px #969696, inset 0 1px 0 #2b4e72;
+  box-shadow:0 0 10px #969696, inset 0 1px 0 #2b4e72;
+}
+#footer-strip a {
+  color: #80a7cf;
+}
+#footer-strip a:hover {
+  color: #80a7cf;
+  text-decoration: underline;
+}
+#footer-strip #footer-upgrade {
+  text-align: right;
+}
+
+
+
+/*------------------------------------------------------------------
+Layout: Responsive
+------------------------------------------------------------------- */
+/* Большой дисплей */
+@media (min-width: 1200px) {
+
+}
+ 
+/* От портретного планшета до ландшафтного экрана и настольных дисплеев */
+@media (min-width: 768px) and (max-width: 979px) {
+
+}
+ 
+/* От ландшафтного экрана телефона до потретного планшета */
+@media (max-width: 767px) {
+  #header-strip, #menu-strip, #container-strip, #footer-strip {
+    
+    padding-right: 20px;
+    padding-left: 20px;
+    margin-right: -20px;
+    margin-left: -20px;
+  }
+  #footer-strip #footer-upgrade {
+	text-align:left;
+  }
+}
+ 
+/* Landscape - телефоны */
+@media (max-width: 480px) {
+
+}
