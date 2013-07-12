@@ -25,6 +25,13 @@ $(document).on("click", "ul.select_list li", function(){
 $(document).ready(function(){
 	$("a.fancybox").fancybox();
 	$("a.thickbox").fancybox();
+	$("input[name$='insert_type']").click(function(){
+          var radio_value = $(this).val();
+        if(radio_value=='2') 
+          $("#pamans_update").show(1000);
+        else   
+          $("#pamans_update").hide(500);
+        });
 	$('.b_save').click(function(){
           $('.button-submit').click();
           return false;
