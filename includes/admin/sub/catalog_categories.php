@@ -31,6 +31,7 @@ if(!defined('WORKING_THROUGH_ADMIN_SCRIPT'))
 			deleteSubCategories($_GET["c_id"]);
 			update_products_Count_Value_For_Categories(0);
 			header("Location: ".CONF_ADMIN_FILE."?dpt=catalog&sub=categories");
+			exit;
 		}
 		//calculate how many products are there in the root category
 		$cnt = db_r("SELECT count(*) FROM ".PRODUCTS_TABLE." WHERE categoryID=0");

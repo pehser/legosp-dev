@@ -4,7 +4,51 @@ if (!defined('WORKING_THROUGH_ADMIN_SCRIPT')) {
 }
 if (!isset($_GET["productID"]))
     $_GET["productID"] = 0;
+else $_GET["productID"]=(int)$_GET["productID"];
 if (!strcmp($sub, "products_edit")) {
+    if (isset($_GET['brand_list'])) 
+    { 
+      $fest=array("name"=>'&nbsp', "id"=>0);
+      $json_data['brand_list']= db_arAll("SELECT name,brandID id FROM " . BRAND_TABLE);
+      array_unshift($json_data['brand_list'], $fest);
+      echo json_safe_encode($json_data);
+      exit;
+    }
+    elseif (isset($_GET['category_root']))
+    {
+      $cats = fillTheCList(0, 0); $rez=array();
+      $rez[]=array("name"=>ADMIN_CATEGORY_ROOT, "id"=>'0');
+      for ($i = 0; $i < count($cats); $i++) {
+        $a = "";
+        for ($j = 0; $j < $cats[$i][5]; $j++)
+            $a .= "&nbsp;&nbsp;";
+        $a .= $cats[$i][1];
+        
+        $rez[]=array("name"=>$a, "id"=>$cats[$i][0]);
+        #$cats[$i][1] = $a;
+      }
+      $json_data['brand_list']=$rez;
+      echo json_safe_encode($json_data);
+      exit;
+    }
+    elseif (isset($_GET['category_root_a']))
+    {
+      $cats = fillTheCList(0, 0); $rez=array();
+      for ($i = 0; $i < count($cats); $i++) {
+        $a = "";
+        for ($j = 0; $j < $cats[$i][5]; $j++)
+            $a .= "&nbsp;&nbsp;";
+        $a .= $cats[$i][1];
+        
+        $rez[]=array("name"=>$a, "id"=>$cats[$i][0]);
+        #$cats[$i][1] = $a;
+      }
+      $json_data['brand_list']=$rez;
+      echo json_safe_encode($json_data);
+      exit;
+    }
+    
+    
     if (isset($_POST["save_product"])) {
         $_POST["save_product"] = (int) $_POST["save_product"];
         if (!isset($_POST["price"]) || !$_POST["price"] || $_POST["price"] < 0)
@@ -36,7 +80,6 @@ if (!strcmp($sub, "products_edit")) {
             $updateproduct['accompanyID']       = $_POST["accompany"];
             $updateproduct['list_price']        = $_POST["list_price"];
             $updateproduct['product_code']      = $_POST["product_code"];
-            $updateproduct['brandID']           = $_POST["brand"];
             $updateproduct['canonical']         = $_POST["canonical"];
             $updateproduct                      = $updateproduct + $_POST['product_info'];
             if (!$updateproduct['h1'])
@@ -141,7 +184,6 @@ if (!strcmp($sub, "products_edit")) {
             $addproduct['brief_description'] = $_POST["brief_description"];
             $addproduct['list_price']        = $_POST["list_price"];
             $addproduct['product_code']      = $_POST["product_code"];
-            $addproduct['brandID']           = $_POST["brand"];
             $addproduct['canonical']         = $_POST["canonical"];
             $addproduct                      = $addproduct + $_POST['product_info'];
             if (!$addproduct['h1'])
@@ -305,6 +347,7 @@ if (!strcmp($sub, "products_edit")) {
             }
         }
         header("Location: " . CONF_ADMIN_FILE . "?dpt=catalog&sub=products&categoryID=" . $_POST['product_info']['categoryID']);
+        exit;
     } 
         if ($_GET["productID"]) {
             $_GET["productID"] = (int) $_GET["productID"];
@@ -338,7 +381,7 @@ if (!strcmp($sub, "products_edit")) {
                     unlink("./products_thumb/P_" . $_GET["thumb_delete"]);
                 $q = db_query("DELETE FROM " . THUMB_TABLE . " WHERE picture='" . $_GET["thumb_delete"] . "'") or die(db_error());
             }
-            $sql_product = "SELECT categoryID, name, description, customers_rating, Price, picture, in_stock, thumbnail, big_picture, brief_description, list_price, product_code, hurl, accompanyID, productID, brandID, meta_title, meta_keywords, meta_desc, canonical, h1,min_qunatity,managerID FROM " . PRODUCTS_TABLE . " WHERE productID=" . (int) $_GET["productID"];
+            $sql_product = "SELECT categoryID, P.name, P.description, customers_rating, Price, picture, in_stock, thumbnail, big_picture, brief_description, list_price, product_code, P.hurl, accompanyID, productID, P.brandID, P.meta_title, P.meta_keywords, P.meta_desc, P.canonical, P.h1,min_qunatity,managerID,B.name bname FROM " . PRODUCTS_TABLE . ' as P LEFT JOIN ' . BRAND_TABLE.' as B USING (brandID)  WHERE productID=' . (int) $_GET["productID"];
             if ($_SESSION['access'] == 1 && isset($_SESSION['manager_id']))
                 $sql_product .= ' and (managerID=\'-1\' or  managerID is NULL or managerID=' . (int) $_SESSION['manager_id'] . ')';
             $sql_product .= " ORDER BY productID ASC";
@@ -405,15 +448,7 @@ if (!strcmp($sub, "products_edit")) {
     $smarty->assign("product_title", $title);
     $smarty->assign("product_tags", $tags);
      
-    $cats = fillTheCList(0, 0);
-    for ($i = 0; $i < count($cats); $i++) {
-        $a = "";
-        for ($j = 0; $j < $cats[$i][5]; $j++)
-            $a .= "&nbsp;&nbsp;";
-        $a .= $cats[$i][1];
-        $cats[$i][1] = $a;
-    }
-    $smarty->assign("cat_list", $cats);
+    
     $accompany = array();
     $i         = 0;
     $in        = '';
@@ -471,6 +506,7 @@ if (!strcmp($sub, "products_edit")) {
         $brand[$i][1] = $row[1];
         $i++;
     }
+    
     $smarty->assign("brand_list", $brand);
     $qc                = db_query('select * from ' . CATEGORIY_PRODUCT_TABLE . ' where productID=' . (int) $_GET["productID"]);
     $appended_category = array();
