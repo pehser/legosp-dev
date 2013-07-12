@@ -1,20 +1,25 @@
-<div class="heading"><h1>{$smarty.const.STRING_BRANDS}</h1>
-  <div class="buttons"><a class="button b_save"><span>{$smarty.const.SAVE_BUTTON}</span></a><a class="button b_del" href="./{$smarty.const.CONF_ADMIN_FILE}?dpt={$smarty.get.dpt}&amp;sub={$smarty.get.sub}"><span>{$smarty.const.CANCEL_BUTTON}</span></a></div>
-</div>
-<div class="content">
+<div class="row">
+	<div class="span12">
+		<div class="widget">
+			<div class="widget-header"><i class="icon-folder-open"></i><h3>{$smarty.const.STRING_BRANDS}</h3>
+			  <div class="buttons"><a class="btn btn-small btn-success"><strong>{$smarty.const.SAVE_BUTTON}</strong></a>&nbsp;<a class="btn btn-small" href="./{$smarty.const.CONF_ADMIN_FILE}?dpt={$smarty.get.dpt}&amp;sub={$smarty.get.sub}"><strong>{$smarty.const.CANCEL_BUTTON}</strong></a></div>
+			</div>
+			<div class="widget-content">
+			
+
  <form action="./{$smarty.const.CONF_ADMIN_FILE}" method="post" enctype="multipart/form-data">
-  <div class="box left w70">
-   <table class="form">
+  
+   <table class="table table-condensed">
      <tbody>
        <tr>
          <td colspan="2">
            <label for="proizvoditel" class="desc"><span class="rq">*</span> {$smarty.const.STRING_MANUFACTURER}:</label>
-           <input type="text" id="proizvoditel" class="text large" name="brand[name]" value="{$brand_info.name}">
+           <input type="text" id="proizvoditel" style="width: 98%;" name="brand[name]" value="{$brand_info.name}">
          </td>
        </tr>
        <tr>
-        <td><label for="url" class="desc">URL</label><input type="text" name="brand[hurl]" value="{$brand_info.hurl}" id="url" class="text large"></td>
-       <td><label for="rel-canonical" class="desc">REL CANONICAL</label><input type="text" name="brand[canonical]" value="{$brand_info.canonical}" id="rel-canonical" class="text large"></td>
+        <td><label for="url" class="desc">URL</label><input type="text" name="brand[hurl]" value="{$brand_info.hurl}" id="url" style="width: 96%;"></td>
+       <td><label for="rel-canonical" class="desc">REL CANONICAL</label><input type="text" name="brand[canonical]" value="{$brand_info.canonical}" id="rel-canonical" style="width: 96%;"></td>
       </tr>
       <tr>
         <td colspan="2"><label for="kratka_text" class="desc">{$smarty.const.ADMIN_PAGE_BRIEF}</label>
@@ -25,12 +30,10 @@
       </tr>
      </tbody>
    </table>
-  </div>
-  <div class="box right w29">
-     <div id="accordion" class="ui-accordion-forms">
+  
 	<h3><a href="#">{$smarty.const.ADMIN_PARAMETERS}</a></h3>
-        <div>
-            <table class="form">
+     
+            <table class="table table-condensed">
               <tr>
                 <td><label class='desc' for='sort'>{$smarty.const.ADMIN_SORT_ORDER}</label><input class='text large' type="text" id="sort"  name="brand[sort]" value="{$brand_info.sort}" /></td>
                 <td><label class='desc' for='act'>{$smarty.const.ADMIN_ON}</label><input value=1 id="act" name="brand[enabled]" {if $brand_info.enabled}checked {/if} type="checkbox" /></td>
@@ -41,43 +44,53 @@
                 </td>
              </tr>
              <tr>
-                <td colspan="2"><p><label class='desc' for='photo'>{$smarty.const.ADMIN_CATEGORY_LOGO}:</label></p><input id="photo" name="brand_pic" class="text small file" type="file" /><br /> 
+                <td colspan="2">
+{$smarty.const.ADMIN_CATEGORY_LOGO}:
+<div class="fileupload fileupload-new" data-provides="fileupload">
+<div class="input-append">
+<div class="uneditable-input span3"><i class="icon-file fileupload-exists"></i> <span class="fileupload-preview"></span></div><span class="btn btn-file"><span class="fileupload-new">Select file</span><span class="fileupload-exists">Change</span><input type="file" name="brand_pic"></span><a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
+</div>
+</div>
                 {capture assign='brand_pictures'}./products_pictures/{$brand_info.Pict}{/capture}    
 				{if $brand_pictures|file_exists ne '' &&  $brand_info.Pict}
-					<img src="./products_pictures/{$brand_info.Pict}" alt="" />
-					<a href="javascript:confirmDelete('{$smarty.const.QUESTION_DELETE_PICTURE}','{$smarty.const.CONF_ADMIN_FILE}?dpt=catalog&sub=brands&brands={$brand_info.brandID}&picture_remove={$brand_info.brandID}')" style="width: 150px;"><img src="./images/backend/delete.png" alt="" /></a>
+					<img src="./products_pictures/{$brand_info.Pict}" alt="" style="width: 150px;" class="img-polaroid">
+					<a href="javascript:confirmDelete('{$smarty.const.QUESTION_DELETE_PICTURE}','{$smarty.const.CONF_ADMIN_FILE}?dpt=catalog&sub=brands&brands={$brand_info.brandID}&picture_remove={$brand_info.brandID}')" title="Удалить текущее изображение!" class="btn btn-small btn-danger"><i class="icon-trash icon-white"></i></a>
 				{else}
-					<img src="./products_pictures/nophoto.jpg" alt="" />
+					<img src="http://www.placehold.it/100x100/EFEFEF/AAAAAA&text=no+image" class="img-polaroid">
 				{/if}
                 </td>
              </tr>
            </table>
-	</div>
+	
 	<h3><a href="#">{$smarty.const.ADMIN_META_TAGS}</a></h3>
-    <div>
-<table class="form">
+    
+<table class="table table-condensed">
  <tr>
-   <td><label class='desc help' for='meta-title' title="Если не указан, генерируется из заголовка">META-TITLE:</label><input class='text large' type="text" id="meta-title" name="brand[meta_title]" value="{$brand_info.meta_title}" /></td>
+   <td><label class='desc help' for='meta-title' title="Если не указан, генерируется из заголовка">META-TITLE:</label><input style="width: 98%;" type="text" id="meta-title" name="brand[meta_title]" value="{$brand_info.meta_title}" /></td>
  </tr>
  <tr>
-   <td><label class='desc help' for='meta-keywords' title="Через запятую, 10-15 слов">META-KEYWORDS:</label><textarea class='field textarea small' name="brand[meta_keywords]" id="meta-keywords" rows="" cols="">{$brand_info.meta_keywords}</textarea></td>
+   <td><label class='desc help' for='meta-keywords' title="Через запятую, 10-15 слов">META-KEYWORDS:</label><textarea class='field textarea small' name="brand[meta_keywords]" id="meta-keywords" rows="4" cols="" style="width: 98%;">{$brand_info.meta_keywords}</textarea></td>
  </tr>
  <tr>
-   <td><label class='desc help' for='meta-description' title="Не более 250 символов">META-DESCRIPTION:</label><textarea class='field textarea small' name="brand[meta_desc]" id="meta-description" rows="" cols="">{$brand_info.meta_desc}</textarea></td>
+   <td><label class='desc help' for='meta-description' title="Не более 250 символов">META-DESCRIPTION:</label><textarea class='field textarea small' name="brand[meta_desc]" id="meta-description" rows="4" cols="" style="width: 98%;">{$brand_info.meta_desc}</textarea></td>
  </tr>
 </table>
-	</div>
-    </div>	
-  </div>
+		
+  
   <input type="hidden" name="dpt" value="catalog" />
   <input type="hidden" name="sub" value="brands" />
   <input type="hidden" name="add_brand" value="{$new_brand}" />  
-  <input type="submit" id="submit" name="submit" class="button-primary" value="{$smarty.const.SAVE_BUTTON}" />
+  <input type="submit" id="submit" name="submit" class="btn btn-success" value="{$smarty.const.SAVE_BUTTON}">
  </form>
-</div>
+
 {literal}
 <script type="text/javascript">
 	CKEDITOR.replace( 'brand_text', {filebrowserBrowseUrl : '/core/ckeditor/plugins/elfinder/elfinder.html'});
 	CKEDITOR.replace( 'brand_brief', {filebrowserBrowseUrl : '/core/ckeditor/plugins/elfinder/elfinder.html'});
 </script>
 {/literal}
+
+			</div>
+		</div>
+	</div>
+</div>

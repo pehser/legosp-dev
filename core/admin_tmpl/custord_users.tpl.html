@@ -1,6 +1,9 @@
 {* new orders list *}
-
-<div id="icon-users" class="icon32"><br /></div><h2>{$smarty.const.ADMIN_USERS}</h2>
+<div class="row">
+	<div class="span12">
+		<div class="widget">
+			<div class="widget-header"><i class="icon-folder-open"></i><h3>{$smarty.const.ADMIN_USERS}</h3></div>
+			<div class="widget-content">
 
 {if count($users) ne 0}
 	<div class="tablenav top">
@@ -16,42 +19,38 @@
 		<br class="clear" />
 	</div>
 
-<table class="widefat" cellspacing="0">
+<table class="table table-striped table-condensed table-hover">
 	<thead>
 		<tr>
-			
-			<th width="16"><a><span>ID</span></a></th>
-			<th><a><span>{$smarty.const.STRING_USER_NAME}</span></a></th>
-			<th><a><span>{$smarty.const.ADMIN_COMPANY_PHONE}</span></a></th>
-			<th><a><span>E-mail</span></a></th>
-			<th><a><span>{$smarty.const.STRING_ACTIONS}</span></a></th>
+			<th width="16">ID</th>
+			<th>{$smarty.const.STRING_USER_NAME}</th>
+			<th>{$smarty.const.ADMIN_COMPANY_PHONE}</th>
+			<th>E-mail</span></a></th>
+			<th style="text-align:right;">{$smarty.const.STRING_ACTIONS}</th>
 		</tr>
 	</thead>
 	
 	<tfoot>
 		<tr>
-			
-			<th width="16"><a><span>ID</span></a></th>
-			<th><a><span>{$smarty.const.STRING_USER_NAME}</span></a></th>
-			<th><a><span>{$smarty.const.ADMIN_COMPANY_PHONE}</span></a></th>
-			<th><a><span>E-mail</span></a></th>
-			<th><a><span>{$smarty.const.STRING_ACTIONS}</span></a></th>
+			<th width="16">ID</th>
+			<th>{$smarty.const.STRING_USER_NAME}</th>
+			<th>{$smarty.const.ADMIN_COMPANY_PHONE}</th>
+			<th>E-mail</span></a></th>
+			<th style="text-align:right;">{$smarty.const.STRING_ACTIONS}</th>
 		</tr>
 	</tfoot>
 
 	<tbody>
 		{foreach from=$users item=user}
-		<tr class="alternate">
+		<tr>
 			{*<th class='check-column'><input type='checkbox' name='users[]' value='1' /></th>*}
 			<td>{$user.custID}</td>
-			<td class="username column-username"><strong><a>{$user.cust_lastname} {$user.cust_firstname}</a></strong><div class="row-actions"><span class='edit'><a href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=custord&amp;sub=users&amp;eu_id={$user.custID}">Изменить</a></span></div></td>
-			<td class="name column-name">{$user.cust_phone}</td>
-			<td class="email column-email"><a href='mailto:{$user.cust_email}' title='E-mail: {$user.cust_email}'>{$user.cust_email}</a></td>
-			<td class="role column-role">
-				<a href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=custord&amp;sub=users&amp;eu_id={$user.custID}"><img alt="" src="./images/backend/edit.png"></a>&nbsp;&nbsp;&nbsp;
-				{if !$user.grup}<a href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=custord&amp;sub=users&amp;user={$user.custID}&amp;complite"><img title="Проверен" src="./images/backend/complite.png"></a>&nbsp;&nbsp;&nbsp;{/if}
-				<a href="javascript:confirmDelete('{$smarty.const.QUESTION_DELETE_CONFIRMATION}','{$smarty.const.CONF_ADMIN_FILE}?dpt=custord&amp;sub=users&amp;delete={$user.custID}');"><img alt="Отмена" src="./images/backend/delete.png"></a>
-			</td>
+			<td><strong>{$user.cust_lastname} {$user.cust_firstname}</strong></td>
+			<td>{$user.cust_phone}</td>
+			<td><a href='mailto:{$user.cust_email}' title='E-mail: {$user.cust_email}'>{$user.cust_email}</a></td>
+			<td style="text-align:right;"><div class="btn-group">
+				<a href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=custord&amp;sub=users&amp;eu_id={$user.custID}" class="btn btn-mini"><i class="icon-edit"></i></a>{if !$user.grup}<a href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=custord&amp;sub=users&amp;user={$user.custID}&amp;complite" class="btn btn-mini"><i class="icon-ok"></i></a>{/if}<a href="javascript:confirmDelete('{$smarty.const.QUESTION_DELETE_CONFIRMATION}','{$smarty.const.CONF_ADMIN_FILE}?dpt=custord&amp;sub=users&amp;delete={$user.custID}');" class="btn btn-mini"><i class="icon-trash"></i></a>
+			</div></td>
 		</tr>
 		{/foreach}
 	</tbody>
@@ -75,4 +74,7 @@
     <b>{$smarty.const.STRING_NO_USERS}</b>
 {/if}
 
-<br class="clear" />
+			</div>
+		</div>
+	</div>
+</div>

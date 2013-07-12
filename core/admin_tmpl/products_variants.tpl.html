@@ -1,40 +1,51 @@
-<div class="heading"><h1>{$smarty.const.ADMIN_PRODUCTS_VARIANTS_GROUPS}</h1>
-  <div class="buttons"><a class="button b_add" href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=catalog&amp;sub=products_variants&amp;add=1"><span>{$smarty.const.ADD_BUTTON}</span></a>{if $products_variants}<a class="button b_save"><span>{$smarty.const.SAVE_BUTTON}</span></a>{/if}</div>
-</div>
-
+<div class="row">
+	<div class="span12">
+		<div class="widget">
+			<div class="widget-header"><i class="icon-folder-open"></i><h3>{$smarty.const.ADMIN_PRODUCTS_VARIANTS_GROUPS}</h3>
+				<div class="buttons"><a class="btn btn-small btn-primary" href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=catalog&amp;sub=products_variants&amp;add=1"><strong>{$smarty.const.ADD_BUTTON}</strong></a>{if $products_variants}&nbsp;<a class="btn btn-small btn-success"><strong>{$smarty.const.SAVE_BUTTON}</strong></a>{/if}</div>
+			</div>
+			<div class="widget-content">
+			
 <form method="post" action="./{$smarty.const.CONF_ADMIN_FILE}" name="form">
 	<input type="hidden" value="catalog" name="dpt">
 	<input type="hidden" value="1" name="variant_edit"> 
 	<input type="hidden" value="products_variants" name="sub">
-	<table class="widefat" cellspacing="0">
+	<table class="table table-striped table-condensed table-hover">
 		<thead>
 			<tr>
-				<th><a><span><strong>{$smarty.const.ADMIN_PRODUCTS_VARIANTS_GROUPS}</strong></span></a></th>
-				<th><a><span><strong>{$smarty.const.ADMIN_SORT_ORDER}</strong></span></a></th>
-				<th><a><span><strong>{$smarty.const.TABLE_PRODUCT_QUANTITY}</strong></span></a></th>
-				<th><a><span><strong>{$smarty.const.STRING_ACTIONS}</strong></span></a></th>
+				<th>{$smarty.const.ADMIN_PRODUCTS_VARIANTS_GROUPS}</th>
+				<th>{$smarty.const.ADMIN_SORT_ORDER}</th>
+				<th>{$smarty.const.TABLE_PRODUCT_QUANTITY}</th>
+				<th>{$smarty.const.STRING_ACTIONS}</th>
 			</tr>
 		</thead>
 		<tbody>
 			{foreach from=$products_variants item=variant}
-			<tr class="alternate">
+			<tr>
 				<td>
-					<input type="text" name="variant[{$variant.optionID}][name]" value="{$variant.name}" style="width: 350px;" />
+					<input type="text" name="variant[{$variant.optionID}][name]" value="{$variant.name}" class="input-xxlarge">
 				</td>
 				<td>
-					<input type="text" name="variant[{$variant.optionID}][sort_order]" value="{$variant.sort_order}" style="text-align:center;" />
+					<input type="text" name="variant[{$variant.optionID}][sort_order]" value="{$variant.sort_order}" class="input-small">
 				</td>
 				<td>
 					({$variant.kol})   
 				</td>
-				<td style="text-align:center;width: 50px;">
-					<a title="{$smarty.const.PRODUCT_ADMIN_REVIEW_EDIT}" href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=catalog&amp;sub=products_variants&amp;edit={$variant.optionID}"><img alt="" src="./images/backend/edit.png"></a>&nbsp;&nbsp;
-					<a title="{$smarty.const.DELETE_BUTTON}" href="javascript:confirmDelete('{$smarty.const.DELETE_BUTTON}?','./{$smarty.const.CONF_ADMIN_FILE}?dpt=catalog&amp;sub=products_variants&amp;del={$variant.optionID}')"><img alt="{$smarty.const.DELETE_BUTTON}" src="images/backend/delete.png"></a>
+				<td style="text-align:center;width: 50px;"><div class="btn-group">
+					<a title="{$smarty.const.PRODUCT_ADMIN_REVIEW_EDIT}" href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=catalog&amp;sub=products_variants&amp;edit={$variant.optionID}" class="btn btn-mini"><i class="icon-edit"></i></a>
+					<a title="{$smarty.const.DELETE_BUTTON}" href="javascript:confirmDelete('{$smarty.const.DELETE_BUTTON}?','./{$smarty.const.CONF_ADMIN_FILE}?dpt=catalog&amp;sub=products_variants&amp;del={$variant.optionID}')" class="btn btn-mini"><i class="icon-trash"></i></a></div>
 				</td>
 			</tr>
 			{/foreach}
 		</tbody>
 	</table>
 
-	<p><input id="submit" type="submit" name="submit" class="button-primary" value="{$smarty.const.SAVE_BUTTON}" /></p>
+	<input id="submit" type="submit" name="submit" class="button-primary" value="{$smarty.const.SAVE_BUTTON}">
 </form>
+
+
+
+			</div>
+		</div>
+	</div>
+</div>

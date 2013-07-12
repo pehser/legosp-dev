@@ -1,30 +1,38 @@
-<div class="heading"><h1>{if isset($val)}{$smarty.const.ADMIN_ADD_VALUE}{else}{$smarty.const.ADMIN_ADD_NEW_OPTION}{/if}</h1>
-  <div class="buttons"><a class="button b_add" href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=catalog&amp;sub=products_variants"><span>{$smarty.const.ADD_BUTTON}</span></a><a class="button b_save"><span>{$smarty.const.SAVE_BUTTON}</span></a><a class="button b_del" href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=catalog&amp;sub=products_variants"><span>{$smarty.const.CANCEL_BUTTON}</span></a></div>
-</div>
-
-
+<div class="row">
+	<div class="span12">
+		<div class="widget">
+			<div class="widget-header"><i class="icon-folder-open"></i><h3>{if isset($val)}{$smarty.const.ADMIN_ADD_VALUE}{else}{$smarty.const.ADMIN_ADD_NEW_OPTION}{/if}</h3>
+				<div class="buttons"><a class="btn btn-small btn-primary" href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=catalog&amp;sub=products_variants"><strong>{$smarty.const.ADD_BUTTON}</strong></a>&nbsp;<a class="btn btn-small btn-success b_save"><strong>{$smarty.const.SAVE_BUTTON}</strong></a>&nbsp;<a class="btn btn-small" href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=catalog&amp;sub=products_variants"><strong>{$smarty.const.CANCEL_BUTTON}</strong></a></div>
+			</div>
+			<div class="widget-content">
 
 <form method="post" action="./{$smarty.const.CONF_ADMIN_FILE}" name="form">
+        <input type="submit" name="submit" class="button-submit" value="{$smarty.const.SAVE_BUTTON}" />  
 	<input type="hidden" value="catalog" name="dpt">
 	<input type="hidden" value="1" name="add_variant">
 	{if isset($val)}
 		<input type="hidden" value="{$val}" name="edit">
 	{/if} 
 	<input type="hidden" value="products_variants" name="sub">
-	<table class="widefat" cellspacing="0">
+	<table class="table table-condensed">
 		<thead>
 			<tr>
-				<th><a><span><strong>{$smarty.const.ADMIN_PRODUCT_NAME}:</strong></span></a></th>
-				<th><a><span><strong>{$smarty.const.ADMIN_SORT_ORDER}:</strong></span></a></th>
+				<th>{$smarty.const.ADMIN_PRODUCT_NAME}:</th>
+				<th>{$smarty.const.ADMIN_SORT_ORDER}:</th>
 			</tr>
 		</thead>
 		<tbody>
-			<tr class="alternate">
-				<td><input type="text" name="variant[name]" style="width: 350px;" /></td>
-				<td><input type="text" name="variant[sort_order]" value="0" style="text-align:center;" /></td>
+			<tr>
+				<td><input type="text" name="variant[name]" class="input-xxlarge"></td>
+				<td><input type="text" name="variant[sort_order]" value="0"  class="input-mini"></td>
 			</tr>
 		</tbody>
 	</table>
 
-	<input type="submit" id="submit" name="submit" class="button-primary" value="{$smarty.const.SAVE_BUTTON}" />
+	<input type="submit" id="submit" name="submit" class="button-primary" value="{$smarty.const.SAVE_BUTTON}">
 </form>
+
+			</div>
+		</div>
+	</div>
+</div>

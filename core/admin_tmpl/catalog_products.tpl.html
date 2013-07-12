@@ -1,18 +1,43 @@
 {* products view *}
-<div class="heading">
- <h1>
-  {foreach name=patch from=$patch_category item=category}
-  {if !$smarty.foreach.patch.last}<a href=./{$smarty.const.CONF_ADMIN_FILE}?dpt=catalog&sub=products&categoryID={$category.categoryID}>{$category.name}</a>&nbsp;&raquo;{else}{$category.name}{/if}
-  {/foreach}
- </h1>
- <div class="buttons"><a class="button b_add" href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=catalog&amp;sub=products_edit&amp;categoryID={$categoryID}"><span>{$smarty.const.ADMIN_NEWS_ADD}</span></a>{if $products_count>0}<a class="button b_save"><span>{$smarty.const.SAVE_BUTTON}</span></a>{/if}</div>
+
+<div class="row">
+	<div class="span12">
+		<div class="widget">
+			<div class="widget-header"><i class="icon-folder-open"></i><h3>{$smarty.const.ADMIN_PRODUCTS}&nbsp;&raquo;
+			  {foreach name=patch from=$patch_category item=category}
+			  {if !$smarty.foreach.patch.last}{$category.name}&nbsp;&raquo;{else}{$category.name}{/if}
+			  {/foreach}</h3>
+			  <div class="buttons"><a class="btn btn-small btn-primary" href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=catalog&amp;sub=products_edit&amp;categoryID={$categoryID}"><strong>{$smarty.const.ADMIN_NEWS_ADD}</strong></a>{if $products_count>0}&nbsp;<a class="btn btn-small btn-success b_save"><strong>{$smarty.const.SAVE_BUTTON}</strong></a>{/if}</div>
+			</div>
+			<div class="widget-content">
+
+
+
+<div class="dropdown scrolling" style="margin-bottom:10px;">
+	<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">{$smarty.const.ADMIN_CATEGORY_TITLE_PR}:  {if !$smarty.foreach.patch.last}{$smarty.const.ADMIN_CATEGORY_ROOT}{else}{$category.name}{/if} <b class="caret"></b></a>
+	<ul class="dropdown-menu">
+		<li><a style="padding-left: 10px; font-weight: bold;" href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=catalog&sub=products&categoryID=0">{$smarty.const.ADMIN_CATEGORY_ROOT} ({$products_in_root_category})</a></li>
+	{math assign="m" equation="x" x=-1}
+	{function name=cats_tree}
+	  {math assign="m" equation="x + y" x=$m y=1}
+		{foreach $data as $category}
+		<li><a style="padding-left: {math equation="$m*10"}px; {if $m eq 1} font-weight: bold;{/if}" href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=catalog&sub=products&categoryID={$category.categoryID}">{$category.name} ({$category.products_count_admin})</a></li>
+		{if count($category.subitems)>0}
+          {call name=cats_tree data=$category.subitems m=$m}
+        {/if}
+		{/foreach}
+	{/function}
+	{call name=cats_tree data=$categories m=0}
+	</ul>
+	<a href="#" rel="tooltip" data-original-title="{$smarty.const.TOOLTIP_VIBOR_CAT}" title="{$smarty.const.TOOLTIP_VIBOR_CAT}"><i class="icon-question-sign"></i></a>
 </div>
-<div class="content">
+
+
+
+
 {math assign=count_pages equation="ceil(x / y)" x=$products_count y=$smarty.session.products_limit} 
 {if $count_pages>1}
 <div class="tablenav top">
- 
-
         <div class='pages_list'>
          {if $smarty.post.pages>1}  
           <input type="button" title="{$smarty.const.ADMIN_PAGES_FIRST}" value="&lt;&lt;" name="navig_first" id="navig_first">
@@ -46,65 +71,26 @@
 </div>
 <br class="clear" />
 {/if}
+
 <form action="./{$smarty.const.CONF_ADMIN_FILE}" method="post" enctype="multipart/form-data" id="form">
-        <input type="submit" name="submit" id="submit" class="button-primary" value="{$smarty.const.SAVE_BUTTON}" /> 
+        <input type="submit" name="submit" class="button-submit" value="{$smarty.const.SAVE_BUTTON}" /> 
+    <!--<input type="submit" name="submit" id="submit" class="button-primary" value="{$smarty.const.SAVE_BUTTON}" />-->
 	<input type="hidden" name="dpt" value="catalog" />
 	<input type="hidden" name="sub" value="products" />
 	<input type="hidden" name="products_update" value="1" />
 	<input type="hidden" name="categoryID" value="{$categoryID}" />
-	
-	<table cellspacing="0">
-		<thead>
-			<tr>
-				<th id="div_category_title" style="{if !$categoryID==0} display: none;{/if}"><a><span><strong>{$smarty.const.ADMIN_CATEGORIES}</strong></span></a><a title='{$smarty.const.STRING_CATEGORY_HIDE}' class='mouseclic' onclick="$('#div_category').hide(); $('#div_category_title').hide(); $('#cat_show').show();"><img src="./core/admin_tmpl/images/bd_firstpage.png" align="right" alt="" /></a></th>
-				<th><a onclick="$('#div_category').show(); $('#div_category_title').show(); $('#cat_show').hide();" class='mouseclic' id="cat_show" title='{$smarty.const.STRING_CATEGORY_SHOW}'><img src="./core/admin_tmpl/images/bd_lastpage.png" align="left" alt="" /></a>&nbsp;&nbsp;<a><span><strong>{$smarty.const.ADMIN_PRODUCT_TITLE}</strong></span></a></th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr class="alternate">
-				<td style="vertical-align: top;width: 250px;padding: 3px;{if $smarty.get.categoryID != 0}display: none;{/if}" id="div_category">
-					<table class="table" cellspacing="0" style="width: 250px;">
+					<table class="table table-striped table-condensed table-hover">
 						<thead>
 							<tr>
-								<th><a><span><strong><a href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=catalog&sub=products&categoryID=0">{$smarty.const.ADMIN_CATEGORY_ROOT}</a></strong></span></a></th>
-								<th><a><span><strong>({$products_in_root_category})</strong></span></a></th>
-                                                                <th></th>
-							</tr>
-						</thead>
-						<tbody>
-{math assign="m" equation="x" x=-1}
-{function name=cats_tree}
-  {math assign="m" equation="x + y" x=$m y=1}
-    {foreach $data as $category}
-      <tr class="alternate">
-	<td style="padding-left: {math equation="$m*10"}px; {if $m eq 1} font-weight: bold;{/if}"><a href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=catalog&sub=products&categoryID={$category.categoryID}">{$category.name}</a></td>
-	<td>({$category.products_count_admin})</td>
-        <td><a href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=catalog&sub=categories_edit&c_id={$category.categoryID}"><img src="./images/backend/edit.png" alt="" /></a></td>
-        {if count($category.subitems)>0}
-          {call name=cats_tree data=$category.subitems m=$m}
-        {/if}
-      </tr>   
-    {/foreach}
-{/function}
-{call name=cats_tree data=$categories m=0}
-
-					</tbody>
-					</table>
-				</td>
-                                
-				<td style="vertical-align: top; padding: 3px;{if $smarty.get.categoryID == 0 && !$products_new}display: none;{/if}" width="100%">
-					<table class="table" cellspacing="0">
-						<thead>
-							<tr>
-								<th style="width: 20px;text-align:center;"><a><span><strong>{$smarty.const.ADMIN_ENABLED}</strong></span></a></th>
-								<th style="width: 20px;text-align:center;"><a><span><strong>YML</strong></span></a></th>
-								<th><a><span><strong>{$smarty.const.ADMIN_PRODUCT_CODE}</strong></span></a></th>
-								<th><a><span><strong>{$smarty.const.ADMIN_PRODUCT_NAME}</strong></span></a></th>
-								<th style="text-align:center;"><a><span><strong>{$smarty.const.ADMIN_PRODUCT_RATING}</strong></span></a></th>
-								<th style="text-align:center;"><a><span><strong>{$smarty.const.ADMIN_PRODUCT_PRICE}, {$currency_iso_3}</strong></span></a></th>
-								<th style="text-align:center;"><a><span><strong>{$smarty.const.ADMIN_PRODUCT_INSTOCK}</strong></span></a></th>
-								<th style="width: 50px;text-align:center;"><a><span><strong>{$smarty.const.ADMIN_PAGE_PICTURE}</strong></span></a></th>
-								<th style="width: 85px;text-align:center;"><a><span><strong>{$smarty.const.STRING_ACTIONS}</strong></span></a></th>
+								<th style="width: 20px;text-align:center;">{$smarty.const.ADMIN_ENABLED}</th>
+								<th style="width: 20px;text-align:center;">YML</th>
+								<th>{$smarty.const.ADMIN_PRODUCT_CODE}</th>
+								<th>{$smarty.const.ADMIN_PRODUCT_NAME}</th>
+								<th style="text-align:center;">{$smarty.const.ADMIN_PRODUCT_RATING}</th>
+								<th style="text-align:center;">{$smarty.const.ADMIN_PRODUCT_PRICE}, {$currency_iso_3}</th>
+								<th style="text-align:center;">{$smarty.const.ADMIN_PRODUCT_INSTOCK}</th>
+								<th style="width: 50px;text-align:center;">{$smarty.const.ADMIN_PAGE_PICTURE}</th>
+								<th style="width: 85px;text-align:center;">{$smarty.const.STRING_ACTIONS}</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -132,29 +118,27 @@
 			                                         {/if}
 								</td>
 								<td style="text-align:center;">
-									<input type="text" name="p[{$product.productID}][Price]" size=5 value="{$product.Price}" />
+									<input type="text" name="p[{$product.productID}][Price]" value="{$product.Price}" class="input-mini">
 								</td>
 								<td style="text-align:center;">
-									<input type="text" name="p[{$product.productID}][in_stock]" size="5" value="{$product.in_stock}" />
+									<input type="text" name="p[{$product.productID}][in_stock]" value="{$product.in_stock}" class="input-mini">
 								</td>
 								<td style="text-align:center;">
-									{if $products_pictures|file_exists ne '' && $product.picture}<a class="thickbox" href="./products_pictures/{$product.picture}">{$smarty.const.ANSWER_YES}</a>{else}<font color=red>{$smarty.const.ANSWER_NO}</font>{/if}
+									{if $products_pictures|file_exists ne '' && $product.picture}<a class="thickbox label label-info" href="./products_pictures/{$product.picture}">{$smarty.const.ANSWER_YES}</a>{else}<font class="label">{$smarty.const.ANSWER_NO}</font>{/if}
 								</td>
-								<td style="text-align:right;">
+								<td style="text-align:right;"><div class="btn-group">
 								{if $products_pictures|file_exists ne ''}
-  				                                   <a href="admin.php?dpt=catalog&sub=special&new_offer={$product.productID}" title="{$smarty.const.ADMIN_ADD_SPECIAL_OFFERS}"><img src="images/backend/special.png" border=0 alt="{$smarty.const.ADMIN_ADD_SPECIAL_OFFERS}"></a>
+  				                                   <a href="admin.php?dpt=catalog&sub=special&new_offer={$product.productID}" title="{$smarty.const.ADMIN_ADD_SPECIAL_OFFERS}" class="btn btn-mini"><i class="icon-star"></i></a>
 			                                        {/if}
-								<a href="javascript:confirmDelete('{$smarty.const.QUESTION_DELETE_CONFIRMATION}','{$smarty.const.CONF_ADMIN_FILE}?dpt=catalog&sub=products&categoryID={$categoryID}&terminate={$product.productID}');"><img src="images/backend/delete.png" alt="{$smarty.const.DELETE_BUTTON}" /></a>&nbsp;&nbsp;<a href="{$smarty.const.CONF_ADMIN_FILE}?dpt=catalog&sub=products&categoryID={$categoryID}&dublicate_product={$product.productID}" title="{$smarty.const.ADMIN_PRODUCT_COPY}"><img src="./images/backend/copy.png" alt="{$smarty.const.ADMIN_PRODUCT_COPY}" /></a>&nbsp;&nbsp;<a href="{$smarty.const.CONF_ADMIN_FILE}?dpt=catalog&sub=present&new_present={$product.productID}" title="{$smarty.const.STRING_PRESENT}"><img src="./images/backend/present.png" alt="{$smarty.const.STRING_PRESENT}" /></a></td>
+								<a href="javascript:confirmDelete('{$smarty.const.QUESTION_DELETE_CONFIRMATION}','{$smarty.const.CONF_ADMIN_FILE}?dpt=catalog&sub=products&categoryID={$categoryID}&terminate={$product.productID}');" title="{$smarty.const.DELETE_BUTTON}" class="btn btn-mini"><i class="icon-trash"></i></a><a href="{$smarty.const.CONF_ADMIN_FILE}?dpt=catalog&sub=products&categoryID={$categoryID}&dublicate_product={$product.productID}" title="{$smarty.const.ADMIN_PRODUCT_COPY}" class="btn btn-mini"><i class="icon-file"></i></a><a href="{$smarty.const.CONF_ADMIN_FILE}?dpt=catalog&sub=present&new_present={$product.productID}" title="{$smarty.const.STRING_PRESENT}" class="btn btn-mini"><i class="icon-heart"></i></a></div></td>
 							</tr>
 						{/foreach}
 						</tbody>
 					</table>
-				</td>
-			</tr>
-		</tbody>
-	</table>
-</form>
-</div>
-<div class="heading" style="border-radius: 0 0 3px 3px;">
- <div class="buttons"><a class="button b_add" href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=catalog&amp;sub=products_edit&amp;categoryID={$categoryID}"><span>{$smarty.const.ADMIN_NEWS_ADD}</span></a>{if $products_count>0}<a class="button b_save"><span>{$smarty.const.SAVE_BUTTON}</span></a>{/if}</div>
+					</form>
+			
+				<a class="btn btn-small btn-primary" href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=catalog&amp;sub=products_edit&amp;categoryID={$categoryID}"><strong>{$smarty.const.ADMIN_NEWS_ADD}</strong></a>{if $products_count>0}&nbsp;<a class="btn btn-small btn-success b_save"><strong>{$smarty.const.SAVE_BUTTON}</strong></a>{/if}
+			</div>
+		</div>
+	</div>
 </div>

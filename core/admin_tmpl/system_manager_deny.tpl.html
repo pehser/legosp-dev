@@ -1,24 +1,39 @@
-<div id="icon-plugins" class="icon32"><br /></div><h2>{$smarty.const.admin_menedger_deny}</h2>
-<br class="clear" />
+<div class="row">
+	<div class="span12">
+		<div class="widget">
+			<div class="widget-header"><i class="icon-user"></i><h3>{$smarty.const.admin_menedger_deny}</h3>
+				<div class="buttons"><a class="btn btn-small btn-success" href="#"><strong>{$smarty.const.SAVE_BUTTON}</strong></a></div>
+			</div>
+			<div class="widget-content">
 
 <form method="post" id="form_file">
-	<div style="padding: 5px; border: #CCC solid 1px;">
-		<input type='checkbox' onclick='var o=$("#form_file input[type=checkbox]");for(var i=0;i<o.length;i++)if(o[i].type="checkbox")o[i].checked=this.checked' /> Выбрать всё.
-	</div>
+	<span class="btn btn-small">
+		<label class="checkbox">
+			<input type='checkbox' onclick='var o=$("#form_file input[type=checkbox]");for(var i=0;i<o.length;i++)if(o[i].type="checkbox")o[i].checked=this.checked' /> Выбрать всё&nbsp;
+		</label>
+	</span>
 	<input type="hidden" value="{$smarty.get.deny}" name="menedger_id">
+	<ul class="unstyled">
 	{foreach from=$admin_departments item=dpt}
-		<li style="float: left;list-style:none;padding: 0 10px;">
-			<h2>{$dpt.name}</h2>
-			<ul>
+		<li style="float: left;padding: 0 10px;">
+			<h4>{$dpt.name}</h4>
+			<ul class="unstyled">
 			{foreach from=$dpt.sub_departments  item=sub}
 				<li>
+					<label class="checkbox">
 					{assign var="sear" value="`$dpt.id`_`$sub.id`"}
-					<input type="checkbox" {if array_search($sear,$mdeny)}checked="checked"{/if} name="file[]" class="file" value="{$dpt.id}_{$sub.id}" />{$sub.name}
+					<input type="checkbox" {if array_search($sear,$mdeny)}checked="checked"{/if} name="file[]" class="file" value="{$dpt.id}_{$sub.id}" /> {$sub.name}</label>
 				</li>
 			{/foreach}
 			</ul>
 		</li>
 	{/foreach}
-	<br class="clear" />
-	<p><input type="submit" name="submit" class="button-primary" value="{$smarty.const.SAVE_BUTTON}" /></p>
+	</ul>
+	<div class="clearfix"></div><br>
+	<input type="submit" name="submit" class="btn btn-success" value="{$smarty.const.SAVE_BUTTON}">
 </form>
+
+			</div>
+		</div>
+	</div>
+</div>

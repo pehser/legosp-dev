@@ -1,34 +1,42 @@
 {* pages *}
-<div class="heading"><h1>{$smarty.const.STRING_BRANDS}</h1>
-  <div class="buttons"><a class="button b_add" href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=catalog&sub=brands&addbrands"><span>{$smarty.const.ADMIN_NEWS_ADD}</span></a><a class="button b_save"><span>{$smarty.const.SAVE_BUTTON}</span></a></div>
-</div>
-<div class="content">
+<div class="row">
+	<div class="span12">
+		<div class="widget">
+			<div class="widget-header"><i class="icon-folder-open"></i><h3>{$smarty.const.STRING_BRANDS}</h3> <div class="buttons"><a class="btn btn-small btn-primary" href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=catalog&sub=brands&addbrands"><strong>{$smarty.const.ADMIN_NEWS_ADD}</strong></a>&nbsp;<a class="btn btn-small btn-success"><strong>{$smarty.const.SAVE_BUTTON}</strong></a></div></div>
+			<div class="widget-content">
+				
  <form action="./{$smarty.const.CONF_ADMIN_FILE}" method="post" enctype="multipart/form-data">
-   <table class="table" cellspacing="0">
+   <table class="table table-striped table-condensed table-hover">
     <thead>
      <tr>
-       <th class="a-center" style="width:24px"><b>ID</b></th>
-       <th><a href"">{$smarty.const.STRING_MANUFACTURER}</a></th>
-       <th class="a-center">{$smarty.const.ADMIN_ON}</th>
-       <th>{$smarty.const.ADMIN_SORT_ORDER}</th>
-       <th class="a-right">{$smarty.const.STRING_ACTIONS}</th>
+       <th style="width:24px">ID</th>
+       <th>{$smarty.const.STRING_MANUFACTURER}</th>
+       <th style="text-align:center;">{$smarty.const.ADMIN_ON}</th>
+       <th style="text-align:center;">{$smarty.const.ADMIN_SORT_ORDER}</th>
+       <th style="text-align:right;">{$smarty.const.STRING_ACTIONS}</th>
      </tr>
     </thead>
     <tbody>
     {foreach from=$brand_list item=brand}
       <tr>
-        <td class="a-center">{$brand.brandID}</td>
+        <td>{$brand.brandID}</td>
         <td><a href="./{$smarty.const.CONF_ADMIN_FILE}?dpt={$smarty.get.dpt}&sub={$smarty.get.sub}&brands={$brand.brandID}">{$brand.name}</a></td>
-        <td class="a-center"><input type="checkbox" value="1" name="brands_edit[{$brand.brandID}][enabled]" {if $brand.enabled}checked{/if} ></td>
-        <td><input name="brands_edit[{$brand.brandID}][sort]" value="{$brand.sort}" /></td>
-        <td class="icons a-right"><a href="./{$smarty.const.CONF_ADMIN_FILE}?dpt={$smarty.get.dpt}&sub={$smarty.get.sub}&brands={$brand.brandID}"><img src="./images/backend/edit.png" alt="" /></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" onclick="confirmDelete('{$smarty.const.QUESTION_DELETE_CONFIRMATION}','./{$smarty.const.CONF_ADMIN_FILE}?dpt={$smarty.get.dpt}&sub={$smarty.get.sub}&del_brand={$brand.brandID}')"><img src="./images/backend/delete.png" alt="" /></a></td>
+        <td style="text-align:center;"><input type="checkbox" value="1" name="brands_edit[{$brand.brandID}][enabled]" {if $brand.enabled}checked{/if} ></td>
+        <td style="text-align:center;"><input type="text" name="brands_edit[{$brand.brandID}][sort]" value="{$brand.sort}" class="input-mini"></td>
+        <td style="text-align:right;"><div class="btn-group"><a href="./{$smarty.const.CONF_ADMIN_FILE}?dpt={$smarty.get.dpt}&sub={$smarty.get.sub}&brands={$brand.brandID}" class="btn btn-mini"><i class="icon-edit"></i></a><a href="#" onclick="confirmDelete('{$smarty.const.QUESTION_DELETE_CONFIRMATION}','./{$smarty.const.CONF_ADMIN_FILE}?dpt={$smarty.get.dpt}&sub={$smarty.get.sub}&del_brand={$brand.brandID}')" class="btn btn-mini" title="{$smarty.const.DELETE_BUTTON}"><i class="icon-trash"></i></a></div></td>
       </tr>
     {/foreach}
     </tbody>
    </table>
-    <input type="hidden" name="dpt" value="catalog" />
-    <input type="hidden" name="sub" value="brands" />
-    <input type="hidden" name="save_brands" value="1" /> 
+    <input type="hidden" name="dpt" value="catalog">
+    <input type="hidden" name="sub" value="brands">
+    <input type="hidden" name="save_brands" value="1"> 
     <input type="submit" name="submit" id="submit">
  </form>
+				
+			</div>
+		</div>
+	</div>
 </div>
+
+

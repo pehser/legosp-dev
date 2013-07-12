@@ -1,36 +1,49 @@
 {* admin login/pass : template *}
-<div id="icon-plugins" class="icon32"><br /></div><h2>{$smarty.const.ADMIN_LOGIN_PASSWORD}</h2>
-<br class="clear" />
+<div class="row">
+	<div class="span12">
+		<div class="widget">
+			<div class="widget-header"><i class="icon-user"></i><h3>{$smarty.const.ADMIN_LOGIN_PASSWORD}</h3>
+				<div class="buttons"><a class="btn btn-small btn-success" href="#"><strong>{$smarty.const.SAVE_BUTTON}</strong></a></div>
+			</div>
+			<div class="widget-content">
 
 <form action="./{$smarty.const.CONF_ADMIN_FILE}" method="post">
 	<input type="hidden" name="dpt" value="system">
 	<input type="hidden" name="sub" value="login_pass">
 	<input type="hidden" name="save_login_pass" value="1">
-	<table class="widefat" cellspacing="0">
+	
+	{if $configuration_saved eq 1}<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">&times;</button>{$smarty.const.ADMIN_UPDATE_SUCCESSFUL}</div>{else}{if $error ne NULL}
+	<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">&times;</button>{$error}</div>{/if}{/if}	
+	
+	<table class="table table-condensed">
 		<thead>
 			<tr>
-				<th width="370"><a><span><strong>{$smarty.const.ADMIN_CHANGE_LOGINPASSWORD}</strong></span></a></th>
-				<th>{if $configuration_saved eq 1}<strong>{$smarty.const.ADMIN_UPDATE_SUCCESSFUL}</strong>{else}{if $error ne NULL}<font color="red"><strong>{$error}</strong></font>{/if}{/if}</th>
+				<th colspan="2">{$smarty.const.ADMIN_CHANGE_LOGINPASSWORD}</th>
 			</tr>
 		</thead>
 		<tbody>
-			<tr class="alternate">
+			<tr>
 				<td>{$smarty.const.ADMIN_CURRENT_LOGIN}:</td>
-				<td><input style="width: 200px;" type="text" name="new_login" value="{$curr_log}"></td>
+				<td><input class="input-xlarge" type="text" name="new_login" value="{$curr_log}"></td>
 			</tr>
-			<tr class="alternate">
+			<tr>
 				<td>{$smarty.const.ADMIN_OLD_PASS}:</td>
-				<td><input style="width: 200px;" type="password" name="old_pass" value=""></td>
+				<td><input class="input-xlarge" type="password" name="old_pass" value=""></td>
 			</tr>
-			<tr class="alternate">
+			<tr>
 				<td>{$smarty.const.ADMIN_NEW_PASS}:</td>
-				<td><input style="width: 200px;" type="password" name="new_pass" value=""></td>
+				<td><input class="input-xlarge" type="password" name="new_pass" value=""></td>
 			</tr>
-			<tr class="alternate">
+			<tr>
 				<td>{$smarty.const.ADMIN_NEW_PASS_CONFIRM}:</td>
-				<td><input style="width: 200px;" type="password" name="new_passconfirm" value=""></td>
+				<td><input class="input-xlarge" type="password" name="new_passconfirm" value=""></td>
 			</tr>
 		</tbody>
 	</table>
-	<p><input type="submit" name="submit" class="button-primary" value="{$smarty.const.SAVE_BUTTON}" /></p>
+	<input type="submit" name="submit" class="btn btn-success" value="{$smarty.const.SAVE_BUTTON}">
 </form>
+
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,83 +1,84 @@
 {* pages *}
-<div class="heading"><h1>{$smarty.const.ADMIN_VOTES}</h1>
-  <div class="buttons"><a class="button b_add" onclick="location='./{$smarty.const.CONF_ADMIN_FILE}?dpt=inform&sub=votes&add=1'; return false;" href="#"><span>{$smarty.const.ADMIN_NEWS_ADD}</span></a><a class="button b_save"><span>{$smarty.const.SAVE_BUTTON}</span></a></div>
-</div>
-<div class="content">
 <form action="./{$smarty.const.CONF_ADMIN_FILE}" method="post" enctype="multipart/form-data">
 	<input type="hidden" name="dpt" value="inform" />
 	<input type="hidden" name="sub" value="votes" />
 	<input type="hidden" name="add_vote" value="{$votes.votesID}" />
-	<table class="widefat" cellspacing="0">
+<div class="row">
+	<div class="span8">
+		<div class="widget">
+			<div class="widget-header"><i class="icon-folder-open"></i><h3>{$smarty.const.ADMIN_VOTES}</h3><div class="buttons"><a onclick="location='./{$smarty.const.CONF_ADMIN_FILE}?dpt=inform&sub=votes&add=1'; return false;" href="#" class="btn btn-small btn-primary"><strong>{$smarty.const.ADMIN_NEWS_ADD}</strong></a>&nbsp;<a class="btn btn-small btn-success" href="#"><strong>{$smarty.const.SAVE_BUTTON}</strong></a></div></div>
+			<div class="widget-content">
+
+	<table class="table table-condensed">
 		<thead>
 			<tr>
-				<th colspan="2"><a><span><strong>{if isset($smarty.get.news)}{$smarty.const.ADMIN_VOTES_EDIT}{else}{$smarty.const.ADMIN_VOTES_ADD}{/if}</strong></span></a></th>
+				<th colspan="2">{if isset($smarty.get.news)}{$smarty.const.ADMIN_VOTES_EDIT}{else}{$smarty.const.ADMIN_VOTES_ADD}{/if}</th>
 				<th>&nbsp;</th>
 			</tr>
 		</thead>
 		<tbody>
-			<tr class="alternate">
-				<td colspan="2"><strong>{$smarty.const.ADMIN_VOTES_NOW}</strong></td>
-				<td rowspan="12" style="vertical-align: top;width: 250px;">
-					<div style="width: 250px; height: 550px; overflow: auto;">
-						<table class="widefat" cellpadding="0" cellspacing="0" width="100%">
-							<thead>
-								<tr><th colspan="3"><strong>{$smarty.const.ADMIN_VOTES_ALL}</strong></th></tr>
-							</thead>
-							<tbody>
-								<tr class="alternate">
-									<td>&nbsp;</td>
-									<td colspan="2"><strong>{$smarty.const.ADMIN_VOTES_ARCHIVE}</strong></td>
-								</tr>
-								{section name=i loop=$votes_list_count}
-								<tr class="alternate">
-									<td><a href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=inform&sub=votes&archive={$votes_list[0][i]}&incomplite"><img src="./images/backend/incomplite.png" title="{$smarty.const.ADMIN_VOTES_INCOMPLITE}" alt="" /></a></td>
-									<td><a href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=inform&sub=votes&votes={$votes_list[0][i]}">{$votes_list[1][i]}</a></td>
-									<td><a href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=inform&sub=votes&del_votes={$votes_list[0][i]}"><img border="0" src="./images/backend/delete.png" alt="[{$smarty.const.ADMIN_PAGE_DELETE}]" /></a></td>
-								</tr>
-								{/section}
-							</tbody>
-						</table>
-					</div>
-				</td>
-			</tr>
-			<tr class="alternate">
-				<td style="width: 200px;">{$smarty.const.ADMIN_PAGE_TITLE}:</td>
+			<tr>
+				<td style="width: 100px;">{$smarty.const.ADMIN_PAGE_TITLE}:</td>
 				<td><input type="text" name="votes_title" value="{$votes.title}" style="width: 90%;" />&nbsp;&nbsp;&nbsp;<a href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=inform&sub=votes&archive={$votes.votesID}&complite"><img src="./images/backend/complite.png" title="{$smarty.const.ADMIN_VOTES_COMPLITE}" alt="" /></a></td>
 			</tr>
 			{assign var="allr" value=0}
 			{section name=i loop=10}
-			<tr class="alternate">
+			<tr >
 				<td>{$smarty.const.ADMIN_VOTES_QUEST} {$smarty.section.i.index}:</td>
-				<td><input type="text" name="votes_quest_{if $votes_results[i].ID}{$votes_results[i].ID}{else}{$smarty.section.i.index}{/if}" value="{$votes_results[i].question}" style="width: 90%;" />&nbsp;&nbsp;<input type="text" name="votes_res_{$votes_results[i].ID}" value="{$votes_results[i].result}" style="width: 30px;" /></td>
+				<td><input type="text" name="votes_quest_{if $votes_results[i].ID}{$votes_results[i].ID}{else}{$smarty.section.i.index}{/if}" value="{$votes_results[i].question}" class="input-xlarge" />&nbsp;&nbsp;<input type="text" name="votes_res_{$votes_results[i].ID}" value="{$votes_results[i].result}" style="width: 30px;" /></td>
 				{assign var="allr" value=$allr+$votes_results[i].result}
 			</tr>
 			{/section}
 		</tbody>
 	</table>
-	<br class="clear" />
-
-	<table cellspacing="0" style="width: 100%;"><tr><td>
-		<table class="widefat" cellspacing="0" style="width: 100%;float:left;">
+	
+		<table class="table table-condensed">
 			<thead>
-				<tr><th colspan="2"><a><span><strong>{$smarty.const.ADMIN_VOTES_RESULT}</strong></span></a></th></tr>
+				<th clospan="2">{$smarty.const.ADMIN_VOTES_RESULT}</th>
 			</thead>
 			<tbody>
-				{section name=i loop=$votes_results_count}
-					{if $allr}
-					<tr class="alternate">
-						<td style="width: 250px;">{$votes_results[i].question}</td>
-						<td>
-							<div style="background: #FD5300; height: 15px; margin: 2px; text-align: center; width: {if $allr>0}{$votes_results[i].result*520/$allr+50|string_format:"%d"}{else}0{/if}px">{if $allr>0}{$votes_results[i].result*100/$allr|string_format:"%d"}{else}0{/if}%</div>
-						</td>
-					</tr>
-					{/if}
-				{/section}
+		{section name=i loop=$votes_results_count}
+			{if $allr}
+				<tr>
+					<td style="width:30%;">{$votes_results[i].question}</td>
+					<td>
+						<div class="progress">
+						<div class="bar" style="width:{if $allr>0}{$votes_results[i].result*100/$allr|string_format:"%d"}{else}0{/if}%">{if $allr>0}{$votes_results[i].result*100/$allr|string_format:"%d"}{else}0{/if}%</div>
+						</div>
+					</td>
+				</tr>
+			{/if}
+		{/section}
 			</tbody>
 		</table>
-	</td><td style="vertical-align: top;width: 360px;">
-		<table class="widefat" cellspacing="0" style="width: 350px;float:right;">
+<input type="submit" id="submit" name="submit" class="button-primary" value="{$smarty.const.SAVE_BUTTON}" />
+<a class="btn btn-small btn-primary" onclick="location='./{$smarty.const.CONF_ADMIN_FILE}?dpt=inform&sub=votes&add=1'; return false;" href="#">{$smarty.const.ADMIN_NEWS_ADD}</a>&nbsp;<a class="btn btn-small btn-success">{$smarty.const.SAVE_BUTTON}</a>
+			</div>
+		</div>
+	</div>
+	<div class="span4">
+		<div class="widget">
+			<div class="widget-header"><i class="icon-folder-open"></i><h3>{$smarty.const.ADMIN_VOTES_ALL}</h3></div>
+				<div class="widget-content">
+						<table class="table table-striped table-condensed">
+							<thead>
+								<tr>
+									<th colspan="3">{$smarty.const.ADMIN_VOTES_ARCHIVE}</th>
+								</tr>
+							</thead>
+							<tbody>
+								{section name=i loop=$votes_list_count}
+								<tr>
+									<td><a href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=inform&sub=votes&archive={$votes_list[0][i]}&incomplite"><img src="./images/backend/incomplite.png" title="{$smarty.const.ADMIN_VOTES_INCOMPLITE}" alt="" /></a></td>
+									<td><a href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=inform&sub=votes&votes={$votes_list[0][i]}">{$votes_list[1][i]}</a></td>
+									<td style="text-align:right;"><a href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=inform&sub=votes&del_votes={$votes_list[0][i]}" title="{$smarty.const.ADMIN_PAGE_DELETE}" class="btn btn-mini"><i class="icon-trash"></i></a></td>
+								</tr>
+								{/section}
+							</tbody>
+						</table>
+		<table class="table table-condensed">
 			<thead>
-				<tr><th colspan="2"><a><span><strong>{$smarty.const.ADMIN_SETTINGS}</strong></span></a></th></tr>
+				<tr><th colspan="2">{$smarty.const.ADMIN_SETTINGS}</th></tr>
 			</thead>
 			<tbody>
 				<tr class="alternate">
@@ -94,11 +95,13 @@
 				</tr>*}
 			</tbody>
 		</table>
-	</td></tr></table>
-
-	<input type="submit" id="submit" name="submit" class="button-primary" value="{$smarty.const.SAVE_BUTTON}" />
+		
+			</div>
+		</div>
+	</div>
+</div>
 </form>
-</div>
-<div class="heading category" style="border-radius: 0 0 3px 3px;">
-  <div class="buttons"><a class="button b_add" onclick="location='./{$smarty.const.CONF_ADMIN_FILE}?dpt=inform&sub=votes&add=1'; return false;" href="#"><span>{$smarty.const.ADMIN_NEWS_ADD}</span></a><a class="button b_save"><span>{$smarty.const.SAVE_BUTTON}</span></a></div>
-</div>
+
+
+
+

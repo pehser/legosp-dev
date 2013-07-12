@@ -1,22 +1,35 @@
 {* general configurations template *}
-<div id="icon-options-general" class="icon32"><br /></div><h2>{$smarty.const.ADMIN_PRICING}</h2>
-<br class="clear" />
+<div class="row">
+	<div class="span12">
+		<div class="widget">
+			<div class="widget-header"><i class="icon-wrench"></i><h3>{$smarty.const.ADMIN_PRICING}</h3>
+				<div class="buttons"><a class="btn btn-small btn-success" href="#"><strong>{$smarty.const.SAVE_BUTTON}</strong></a></div>
+			</div>
+			<div class="widget-content">
 
 <form action="./{$smarty.const.CONF_ADMIN_FILE}" method="post">
 	<input type="hidden" name="dpt" value="conf">
 	<input type="hidden" name="sub" value="pricing">
 	<input type="hidden" name="save_pricing" value="1">
-	<table class="widefat" cellspacing="0">
+	
+			{if $configuration_saved eq 1}
+			<div class="alert alert-success">
+				<button type="button" class="close" data-dismiss="alert">&times;</button>
+				{$smarty.const.ADMIN_UPDATE_SUCCESSFUL}
+			</div>
+			{/if}
+	
+	<table class="table table-condensed">
 		<thead>
 			<tr>
-				<th style="width: 200px;"><a><span><strong>{$smarty.const.ADMIN_PRICING_TITLE}</strong></span></a></th>
-				<th>{if $configuration_saved eq 1}<strong>{$smarty.const.ADMIN_UPDATE_SUCCESSFUL}</strong>{/if}</th>
+				<th style="width: 160px;">{$smarty.const.ADMIN_PRICING_TITLE}</th>
+				<th>&nbsp;</th>
 				<th>&nbsp;</th>
 				<th>&nbsp;</th>
 			</tr>
 		</thead>
 		<tbody>
-			<tr class="alternate">
+			<tr>
 				<td>{$smarty.const.ADMIN_PRICING_PROCECCING}:</td>
 				<td>
 					<select name="pricing_process">
@@ -34,17 +47,17 @@
 					</select>
 				</td> 
 			</tr>
-			<tr class="alternate">
+			<tr>
 				<td>{$smarty.const.ADMIN_PRICING_VALUE}:</td>
 				<td colspan="3">
 					<input type="text" name="pricing_value" value="" />
-					<select name="pricing_type">
+					<select name="pricing_type" class="input-small">
 						<option value="3">{$smarty.const.CONF_CURRENCY_ID_RIGHT}{$smarty.const.CONF_CURRENCY_ID_LEFT}</option>
 						<option value="4">%</option>
 					</select>
 				</td>
 			</tr>
-			<tr class="alternate">
+			<tr>
 				<td>{$smarty.const.ADMIN_PRICING_OPTION}:</td>
 				<td colspan="3">
 					<select name="pricing_option">
@@ -57,5 +70,10 @@
 		</tbody>
 	</table>
 
-	<p><input type="submit" name="submit" class="button-primary" value="{$smarty.const.SAVE_BUTTON}" /></p>
+	<input type="submit" name="submit" class="btn btn-success" value="{$smarty.const.SAVE_BUTTON}">
 </form>
+
+			</div>
+		</div>
+	</div>
+</div>

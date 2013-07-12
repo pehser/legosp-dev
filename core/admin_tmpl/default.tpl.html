@@ -1,56 +1,69 @@
 {* default admin page*}
 {if $totals}
-<div class="heading"><h1>{$smarty.const.LINK_TO_HOMEPAGE}</h1></div>
-<div class="content">
-{$smarty.const.ADMIN_WELCOME}
-	<table class="widefat" cellspacing="0">
-		<thead><tr><th colspan="2"><a><span><strong>{$smarty.const.ADMIN_STAT_SHOP}</strong></span></a></th></tr></thead>
-		<tbody>
-			<tr class="alternate">
-				<td style="width:50%;">
-					<table class="widefat" cellspacing="0">
-						<thead><tr><th colspan="2"><a><span><strong>{$smarty.const.ADMIN_ORDERS}</strong></span></a></th></tr></thead>
+<div class="row">
+	<div class="span12">
+		<div class="widget">
+			<div class="widget-header"><i class="icon-home"></i><h3>{$smarty.const.LINK_TO_HOMEPAGE}</h3></div>
+			<div class="widget-content">
+				<h5>{$smarty.const.ADMIN_WELCOME}</h5>
+			</div>
+		</div>
+	</div>
+	
+	<div class="span6">
+		<div class="widget">
+			<div class="widget-header"><i class="icon-star"></i><h3>{$smarty.const.ADMIN_ORDERS}</h3></div>
+			<div class="widget-content">
+					<table class="table stat-table">
 						<tbody>
-							<tr class="alternate">
-								<td width="120">{$smarty.const.ADMIN_today}:</td>
-								<td>{if $totals.orders_today>0}<strong>{/if}{$totals.orders_today} {$smarty.const.ADMIN_ORDER_ov} ({$totals.revenue_today|print_price}){if $totals.orders_today>0}</strong>{/if}</td>
+							<tr>
+								<td class="full">{$smarty.const.ADMIN_today}:</td>
+								<td class="value">{if $totals.orders_today>0}{/if}{$totals.orders_today} </td>
+								<td class="full">{$smarty.const.ADMIN_ORDER_ov} ({$totals.revenue_today|print_price}){if $totals.orders_today>0}{/if}</td>
 							</tr>
-							<tr class="alternate">
-								<td>{$smarty.const.ADMIN_yesterday}:</td>
-								<td><strong>{$totals.orders_yesterday}</strong> {$smarty.const.ADMIN_ORDER_ov} ({$totals.revenue_yesterday|print_price})</td>
+							<tr>
+								<td class="full">{$smarty.const.ADMIN_yesterday}:</td>
+								<td class="value">{$totals.orders_yesterday}</td>
+								<td class="full">{$smarty.const.ADMIN_ORDER_ov} ({$totals.revenue_yesterday|print_price})</td>
 							</tr>
-							<tr class="alternate">
-								<td>{$smarty.const.ADMIN_This_month}:</td>
-								<td><strong>{$totals.orders_thismonth}</strong> {$smarty.const.ADMIN_ORDER_ov} ({$totals.revenue_thismonth|print_price})</td>
+							<tr>
+								<td class="full">{$smarty.const.ADMIN_This_month}:</td>
+								<td class="value">{$totals.orders_thismonth}</td>
+								<td class="full">{$smarty.const.ADMIN_ORDER_ov} ({$totals.revenue_thismonth|print_price})</td>
 							</tr>
-							<tr class="alternate">
-								<td>{$smarty.const.ADMIN_only}:</td>
-								<td><strong>{$totals.orders}</strong> {$smarty.const.ADMIN_ORDER_ov} ({$totals.revenue})</td>
+							<tr>
+								<td class="full">{$smarty.const.ADMIN_only}:</td>
+								<td class="value">{$totals.orders}</td>
+								<td class="full">{$smarty.const.ADMIN_ORDER_ov} ({$totals.revenue})</td>
 							</tr>
 						</tbody>
 					</table>
-				</td>
-				<td style="width:50%;vertical-align:top;">
-					<table class="widefat" cellspacing="0">
-						<thead><tr><th colspan="2"><a><span><strong>{$smarty.const.ADMIN_products}</strong></span></a></th></tr></thead>
+			</div>
+		</div>
+	</div>
+	<div class="span6">
+		<div class="widget">
+			<div class="widget-header"><i class="icon-star"></i><h3>{$smarty.const.ADMIN_products}</h3></div>
+			<div class="widget-content">
+					<table class="table stat-table">
 						<tbody>
-							<tr class="alternate">
-								<td>{$smarty.const.ADMIN_total_number_products}:</td>
-								<td width="50"><strong>{$totals.products}</strong></td>
+							<tr>
+								<td class="full">{$smarty.const.ADMIN_total_number_products}:</td>
+								<td class="value">{$totals.products}</td>
 							</tr>
-							<tr class="alternate">
-								<td>{$smarty.const.ADMIN_products_for_client}:</td>
-								<td><strong>{$totals.products_enabled}</strong></td>
+							<tr>
+								<td class="full">{$smarty.const.ADMIN_products_for_client}:</td>
+								<td class="value">{$totals.products_enabled}</td>
 							</tr>
-							<tr class="alternate">
-								<td>{$smarty.const.ADMIN_category_products}:</td>
-								<td><strong>{$totals.categories}</strong></td>
+							<tr>
+								<td class="full">{$smarty.const.ADMIN_category_products}:</td>
+								<td class="value">{$totals.categories}</td>
 							</tr>
 						</tbody>
 					</table>
-				</td>
-			</tr>
-		</tbody>
-	</table>
+			</div>
+		</div>
+	</div>
 </div>
+
 {/if}

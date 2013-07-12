@@ -1,37 +1,93 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
- <meta http-equiv="Content-Type" content="text/html; charset={$smarty.const.DEFAULT_CHARSET}" />
- <title>{$smarty.const.ACCESS} - Shop-Script LegoSP</title>
- <meta name="description" content="" />
- <meta name="keywords" content="" />
- <link rel="icon" href="/favicon.ico" type="image/x-icon" />
- <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
- <link rel="stylesheet" type="text/css" href="./core/admin_tmpl/css/admin_login.css" />
- <script type="text/javascript" src="./core/js/js_jquery.js"></script>
-  
-</head>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="{$smarty.const.DEFAULT_CHARSET}">
+    <title>{$smarty.const.ACCESS} - Shop-Script LegoSP</title>
+    <meta name="author" content="">
+
+    <!-- Le styles -->
+    <link href="./core/js/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link href="./core/js/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
+	<link href="./core/admin_tmpl/css/stylesheet-login.css" rel="stylesheet">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
 
 <body>
 
-<table id="loginbox"><tr><td align="center">
- <div class="r2"><div class="r3"><div class="r1"><div class="r4">
-  <div class="logo"><a href="http://lego.shop-script.org" title="Shop-Script LegoSP"><img src="./core/admin_tmpl/images/login/logo-4.png" alt="Shop-Script LegoSP" /></a></div>
-  <div class="left"><img src="./core/admin_tmpl/images/login/login.png" alt="" /></div>
-  <div class="right">
-   <div id="login_result">{$errorStr}</div>
-   <form action="access_admin.php" method="post" enctype="multipart/form-data" id="form">
-    <input type="hidden" value="1" name="authorize">
-    <label class="desc">{$smarty.const.ACCESS_LOGIN} / Login :</label>
-    <input name="login" type="text" id="input_username" class="text" style="width:182px;" />
-    <label class="desc">{$smarty.const.ACCESS_PASS} / Password :</label>
-    <input name="password" type="password"  class="text" style="width:182px;" />
-    <button class="button button_login"><span>{$smarty.const.ACCESS_ENTER} / Enter</span></button>
-   </form>
-  </div>
- <div class="clr"></div></div></div></div></div>
- <div class="copy">Powered By Shop-Script <a href="http://legosp.net">LegoSP</a></div>
-</td></tr></table>
+<div id="wrapper">
+
+	<div id="header-strip">
+		<div class="container">
+		
+			<a href="./{$smarty.const.CONF_ADMIN_FILE}" class="brand">LegoSP Admin</a>
+				
+				<ul id="main-top" class="nav nav-pills">
+					<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">{$smarty.const.STRING_HELP} <b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li><a href="http://legosp.blogspot.com/" target="_blank">{$smarty.const.STRING_BLOG}</a></li>
+							<li><a href="http://forum.shop-script.org/" target="_blank">{$smarty.const.STRING_FORUM_SUPPORT}</a></li>
+							<li><a href="http://legosp.net/contact/" target="_blank">{$smarty.const.STRING_FEEDBACK}</a></li>
+							<li class="divider"></li>
+							<li><a href="http://legosp-themes.ru" target="_blank">{$smarty.const.ADMIN_THEMES_SANYOK}</a></li>
+						</ul>
+					</li>
+				</ul>
+
+		</div> <!-- /.container -->
+	</div> <!-- /#header -->
+	
+<div id="login-strip">
+	<div class="container">
+
+    <div class="row">
+    <div class="span4 offset4">
+    <div class="well">
+    
+	<legend>{$smarty.const.ADMIN_VOYTI}</legend>
+	
+    {$errorStr}
+	
+	<form action="access_admin.php" method="post" enctype="multipart/form-data" id="form">
+	<input type="hidden" value="1" name="authorize">
+		<div class="input-prepend">
+			<span class="add-on"><i class="icon-user"></i></span><input placeholder="{$smarty.const.ACCESS_LOGIN} / Login" type="text" name="login">
+		</div>
+		<div class="input-prepend">
+			<span class="add-on">*</span><input placeholder="{$smarty.const.ACCESS_PASS} / Password" type="password" name="password">
+		</div>
+    <button class="btn-info btn" type="submit">{$smarty.const.ACCESS_ENTER} / Enter</button>
+	</form>
+    </div>
+    </div>
+    </div>
+	
+	</div>
+</div>
+
+	<div class="push"></div>
+</div> <!-- /#wrapper -->
+
+<div id="footer-strip">	
+	<div class="container">
+		<div class="row">
+			<div class="span6">
+				<span id="footer-thankyou">{$smarty.const.ADMIN_Thank_you_for_using} <a href="http://legosp.net">LegoSP</a>.</span>
+			</div> <!-- /span6 -->
+			<div id="footer-upgrade" class="span6">
+				{$smarty.const.Version}			
+			</div> <!-- /.span6 -->
+		</div> <!-- /row -->
+	</div> <!-- /container -->
+</div> <!-- /#footer -->
+
+    <!-- javascript
+    ================================================== -->
+    <script type="text/javascript" src="./core/js/js_jquery.js"></script>
+    <script src="./core/admin_tmpl/js/bootstrap.js"></script>
 
 </body>
 </html>

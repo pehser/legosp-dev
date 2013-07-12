@@ -1,8 +1,13 @@
 {* special offers on the homepage *}
-<div class="heading"><h1>{$smarty.const.ADMIN_IMPORT}</h1>
-  <div class="buttons"><a class="button import" onclick="$('#form').submit();" href="#"><span>Import</span></a><a class="button export" onclick="$('#form_export').submit();" href="#"><span>Export</span></a></div>
-</div>
-<div class="content">
+<div class="row">
+	<div class="span12">
+		<div class="widget">
+			<div class="widget-header"><i class="icon-folder-open"></i><h3>{$smarty.const.ADMIN_PRESENTS}</h3>
+			  <div class="buttons"><a class="btn btn-small" onclick="$('#form').submit();" href="#"><strong>Import</strong></a>&nbsp;<a class="btn btn-small" onclick="$('#form_export').submit();" href="#"><strong>Export</strong></a></div>
+			</div>
+			<div class="widget-content">
+
+			
 <form action="./{$smarty.const.CONF_ADMIN_FILE}" method="post" id="form_export">
 	<input type="hidden" name="dpt" value="catalog">
 	<input type="hidden" name="sub" value="import">
@@ -13,62 +18,72 @@
 	<input type="hidden" name="dpt" value="catalog">
 	<input type="hidden" name="sub" value="import">
 	<input type="hidden" name="save_import" value="yes">
-	<table class="widefat" cellspacing="0">
+	<table class="table table-condensed">
 		<thead>
-			<tr><th colspan="2"><a><span><strong>{$smarty.const.ADMIN_IMPORT_TITLE}</strong></span></a></th></tr>
+			<tr><th colspan="2">{$smarty.const.ADMIN_IMPORT_TITLE}</th></tr>
 		</thead>
 		<tbody>
 			{if $sql_result}
-			<tr class="alternate">
+			<tr>
 				<td colspan="2"><font style="color: green;"><strong>{$smarty.const.ADMIN_IMPORT_RESULT}{$sql_result}</strong></font></td>
 			</tr>
 			{/if}
-			<tr class="alternate">
+			<tr>
 				<td>{$smarty.const.ADMIN_IMPORT_FILE}:</td>
-				<td><input type="file" name="csv_file" style="width: 220px;" size="22" /></td>
+				<td>
+					<div class="fileupload fileupload-new" data-provides="fileupload">
+					<div class="input-append">
+					<div class="uneditable-input span3"><i class="icon-file fileupload-exists"></i> <span class="fileupload-preview"></span></div><span class="btn btn-file"><span class="fileupload-new">Select file</span><span class="fileupload-exists">Change</span><input type="file" name="csv_file"></span><a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
+					</div>
+					</div>
+				</td>
 			</tr>
 			{if $import_files}
-			<tr class="alternate">
+			<tr>
 				<td>{$smarty.const.ADMIN_CATEGORY_IMPORT_DIR}:</td>
 				<td><select name="file_import"><option value="0">Не выбрано</option>{html_options values=$import_files output=$import_files}</select></td>
 			</tr>
 			{/if} 
 		</tbody>
 	</table>
-	<br class="clear" />
-
-	<table class="widefat" cellspacing="0">
+	
+		{if $sql_result}
+			<div class="alert alert-success">
+				<button type="button" class="close" data-dismiss="alert">x</button>
+				{$smarty.const.ADMIN_IMPORT_RESULT}{$sql_result}
+			</div>
+		{/if}
+		
+	<table class="table table-condensed">
 		<thead>
 			<tr>
-				<th colspan="2"><a><span><strong>{$smarty.const.ADMIN_IMPORT_METHOD}</strong></span></a></th>
+				<th>{$smarty.const.ADMIN_IMPORT_METHOD}</th>
 			</tr>
 		</thead>
 		<tbody>
-			{if $sql_result}
-			<tr class="alternate">
-				<td colspan="2"><font style="color: green;"><strong>{$smarty.const.ADMIN_IMPORT_RESULT}{$sql_result}</strong></font></td>
-			</tr>
-			{/if}
-			<tr class="alternate">
-				<td style="width: 50px;text-align:center;"><input type="radio" name="insert_type" value="0" checked="checked" /></td><td>{$smarty.const.ADMIN_IMPORT_NEW}</td>
-			</tr>
-			<tr class="alternate">
-				<td style="text-align:center;"><input type="radio" name="insert_type" value="1" /></td><td>{$smarty.const.ADMIN_IMPORT_UPDATE}</td>
-			</tr>
-			<tr class="alternate">
-				<td style="text-align:center;"><input type="radio" name="insert_type" value="2" /></td><td>{$smarty.const.ADMIN_IMPORT_UPDATE_PES}</td>
+			<tr>
+				<td>
+					<label class="radio">
+						<input type="radio" name="insert_type" value="0" checked="checked">{$smarty.const.ADMIN_IMPORT_NEW}
+					</label>
+					<label class="radio">
+						<input type="radio" name="insert_type" value="1" checked="checked">{$smarty.const.ADMIN_IMPORT_UPDATE}
+					</label>
+					<label class="radio">
+						<input type="radio" name="insert_type" value="2" checked="checked">{$smarty.const.ADMIN_IMPORT_UPDATE_PES}
+					</label>
+				</td>
 			</tr>
 		</tbody>
 	</table>
-	<br class="clear" />
 
-	<table id="pamans_update" style="display: none;width: 100%;"><tr><td style="width: 50%;">
-		<table class="widefat" cellspacing="0">
+	<table id="pamans_update" style="display:none; width:100%;"><tr><td style="width: 50%;">
+		<table class="table table-condensed">
 			<thead>
-				<tr><th><a><span><strong>Состояние товара</strong></span></a></th></tr>
+				<tr><th>Состояние товара</th></tr>
 			</thead>
 			<tbody>
-				<tr class="alternate">
+				<tr>
 					<td>
 						<input type="checkbox" name="Price" checked="checked">&nbsp;Цена (Price)<br />
 						<input type="checkbox" name="in_stock">&nbsp;Наличие продукта (in_stock)<br />
@@ -79,12 +94,12 @@
 			</tbody>
 		</table>
 	</td><td style="width: 50%;">
-		<table class="widefat" cellspacing="0">
+		<table class="table table-condensed">
 			<thead>
-				<tr><th><a><span><strong>Описание товара</strong></span></a></th></tr>
+				<tr><th>Описание товара</th></tr>
 			</thead>
 			<tbody>
-				<tr class="alternate">
+				<tr>
 					<td>
 						<input type="checkbox" name="name">&nbsp;Название (name)<br />
 						<input type="checkbox" name="description">&nbsp;Описание (description)<br />
@@ -95,12 +110,12 @@
 			</tbody>
 		</table>
 	</td></tr><tr><td>
-		<table class="widefat" cellspacing="0">
+		<table class="table table-condensed">
 			<thead>
-				<tr><th><a><span><strong>Параметры товара</strong></span></a></th></tr>
+				<tr><th>Параметры товара</th></tr>
 			</thead>
 			<tbody>
-				<tr class="alternate">
+				<tr>
 					<td>
 						<input type="checkbox" name="categoryID">&nbsp;ID Kатегории (categoryID)<br />
 						<input type="checkbox" name="customers_rating">&nbsp;Оценка клиента (customers_rating)<br />
@@ -111,12 +126,12 @@
 			</tbody>
 		</table>
 	</td><td style="vertical-align:top;">
-		<table class="widefat" cellspacing="0">
+		<table class="table table-condensed">
 			<thead>
-				<tr><th><a><span><strong>Картинки товара</strong></span></a></th></tr>
+				<tr><th>Картинки товара</th></tr>
 			</thead>
 			<tbody>
-				<tr class="alternate">
+				<tr>
 					<td>
 						<input type="checkbox" name="picture">&nbsp;Картинка (picture)<br />
 						<input type="checkbox" name="thumbnail">&nbsp;Маленькая картинка (thumbnail)<br />
@@ -129,4 +144,7 @@
        
 </form>
 
+			</div>
+		</div>
+	</div>
 </div>

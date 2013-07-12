@@ -1,20 +1,23 @@
-<div class="heading"><h1>{$smarty.const.ADMIN_NEWS}</h1>
-  <div class="buttons"><a class="button b_save"><span>{$smarty.const.SAVE_BUTTON}</span></a><a class="button b_del" href="./{$smarty.const.CONF_ADMIN_FILE}?dpt={$smarty.get.dpt}&amp;sub={$smarty.get.sub}"><span>{$smarty.const.CANCEL_BUTTON}</span></a></div>
-</div>
-<div class="content">
+<div class="row">
+	<div class="span12">
+		<div class="widget">
+			<div class="widget-header"><i class="icon-folder-open"></i><h3>{if isset($smarty.get.news)}Редактирование{else}Добавление новой{/if} новости</h3><div class="buttons"><a class="btn btn-small btn-success"><strong>{$smarty.const.SAVE_BUTTON}</strong></a>&nbsp;<a class="btn btn-small" href="./{$smarty.const.CONF_ADMIN_FILE}?dpt={$smarty.get.dpt}&amp;sub={$smarty.get.sub}"><strong>{$smarty.const.CANCEL_BUTTON}</strong></a></div></div>
+			<div class="widget-content">
+
+
 <form action="./{$smarty.const.CONF_ADMIN_FILE}?dpt={$smarty.get.dpt}&sub={$smarty.get.sub}" method="post" enctype="multipart/form-data">
-  <div class="box left w70">
-   <table class="form">
+  
+   <table class="table table-condensed">
      <tbody>
        <tr>
          <td colspan="2">
            <label for="proizvoditel" class="desc"><span class="rq">*</span> {$smarty.const.ADMIN_NEWS_TITLE}:</label>
-           <input type="text" id="proizvoditel" class="text large" name="news[title]" value="{$newsedit.title}">
+           <input type="text" id="proizvoditel" style="width: 98%;" name="news[title]" value="{$newsedit.title}">
          </td>
        </tr>
        <tr>
-        <td><label for="url" class="desc">URL</label><input type="text" name="news[hurl]" value="{$newsedit.hurl}" id="url" class="text large"></td>
-       <td><label for="rel-canonical" class="desc">REL CANONICAL</label><input type="text" name="news[canonical]" value="{$newsedit.canonical}" id="rel-canonical" class="text large"></td>
+        <td><label for="url" class="desc">URL</label><input type="text" name="news[hurl]" value="{$newsedit.hurl}" id="url" style="width: 96%;"></td>
+       <td><label for="rel-canonical" class="desc">REL CANONICAL</label><input type="text" name="news[canonical]" value="{$newsedit.canonical}" id="rel-canonical" style="width: 96%;"></td>
       </tr>
       <tr>
         <td colspan="2"><label for="kratka_text" class="desc">{$smarty.const.ADMIN_PAGE_BRIEF}</label>
@@ -25,45 +28,51 @@
       </tr>
      </tbody>
    </table>
-  </div>
-   <div class="box right w29">
-     <div id="accordion" class="ui-accordion-forms">
-	<h3><a href="#">{$smarty.const.ADMIN_PARAMETERS}</a></h3>
-        <div>
-            <table class="form">
+  
+   
+
+            <table class="table table-condensed">
+			<thead>
+				<tr>
+					<th colspan="2">{$smarty.const.ADMIN_PARAMETERS}</th>
+				</tr>
+			</thead>
               <tr>
                 <td><label class='desc' for='datepicker1'>{$smarty.const.ADMIN_NEWS_DATE}:</label><input name="news[date]"class='text date' style="width:90%" type="text" id="datepicker1" value="{$newsedit.date}" /></td>
-                <td><label class='desc' for='act'>{$smarty.const.ADMIN_ON}</label><br><input value=1 id="act" name="news[enable]" {if $newsedit.enable}checked {/if} type="checkbox" /></td>
+                <td><div class="Status"><input value="1" name="news[enable]" {if $newsedit.enable}checked {/if} type="checkbox" id="StatusInput" /></div></td>
               </tr>
              <tr>
-                <td colspan="2"><p><label class='desc' for='photo'>{$smarty.const.ADMIN_PAGE_PICTURE}::</label></p><input id="photo" name="news_pic" class="text small file" type="file" /><br /> 
-                {capture assign='news_pictures'}./products_pictures/{$newsedit.Pict}{/capture}    
+                <td colspan="2"><p><label class='desc' for='photo'>{$smarty.const.ADMIN_PAGE_PICTURE}::</label></p>
+<div class="fileupload fileupload-new" data-provides="fileupload">
+<div class="input-append">
+<div class="uneditable-input span3"><i class="icon-file fileupload-exists"></i> <span class="fileupload-preview"></span></div><span class="btn btn-file"><span class="fileupload-new">Select file</span><span class="fileupload-exists">Change</span><input type="file" name="news_pic"></span><a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
+</div>
+</div>
+				{capture assign='news_pictures'}./products_pictures/{$newsedit.Pict}{/capture}    
 				{if $news_pictures|file_exists ne '' &&  $newsedit.Pict}
-					<img src="./products_pictures/{$newsedit.Pict}" alt="" />
-					<a href="javascript:confirmDelete('{$smarty.const.QUESTION_DELETE_PICTURE}','./{$smarty.const.CONF_ADMIN_FILE}?dpt={$smarty.get.dpt}&sub={$smarty.get.sub}&picture_remove={$newsedit.id}')" style="width: 150px;"><img src="./images/backend/delete.png" alt="" /></a>
+					<img src="./products_pictures/{$newsedit.Pict}" alt="" style="width: 150px;" class="img-polaroid">
+					<a href="javascript:confirmDelete('{$smarty.const.QUESTION_DELETE_PICTURE}','./{$smarty.const.CONF_ADMIN_FILE}?dpt={$smarty.get.dpt}&sub={$smarty.get.sub}&picture_remove={$newsedit.id}')" title="Удалить текущее изображение!" class="btn btn-small btn-danger"><i class="icon-trash icon-white"></i></a>
 				{else}
-					<img src="./products_pictures/nophoto.jpg" alt="" />
+					<img src="http://www.placehold.it/100x100/EFEFEF/AAAAAA&text=no+image" class="img-polaroid">
 				{/if}
                 </td>
              </tr>
            </table>
-	</div>
+	
 	<h3><a href="#">{$smarty.const.ADMIN_META_TAGS}</a></h3>
-    <div>
-<table class="form">
+
+<table class="table table-condensed">
  <tr>
-   <td><label class='desc help' for='meta-title' title="Р•СЃР»Рё РЅРµ СѓРєР°Р·Р°РЅ, РіРµРЅРµСЂРёСЂСѓРµС‚СЃСЏ РёР· Р·Р°РіРѕР»РѕРІРєР°">META-TITLE:</label><input class='text large' type="text" id="meta-title" name="news[meta_title]" value="{$newsedit.meta_title}" /></td>
+   <td><label class='desc help' for='meta-title' title="Если не указан, генерируется из заголовка">META-TITLE:</label><input type="text" id="meta-title" name="news[meta_title]" value="{$newsedit.meta_title}" style="width: 98%;"></td>
  </tr>
  <tr>
-   <td><label class='desc help' for='meta-keywords' title="Р§РµСЂРµР· Р·Р°РїСЏС‚СѓСЋ, 10-15 СЃР»РѕРІ">META-KEYWORDS:</label><textarea class='field textarea small' name="news[meta_keywords]" id="meta-keywords" rows="" cols="">{$newsedit.meta_keywords}</textarea></td>
+   <td><label class='desc help' for='meta-keywords' title="Через запятую, 10-15 слов">META-KEYWORDS:</label><textarea name="news[meta_keywords]" id="meta-keywords" rows="4" cols="" style="width: 98%;">{$newsedit.meta_keywords}</textarea></td>
  </tr>
  <tr>
-   <td><label class='desc help' for='meta-description' title="РќРµ Р±РѕР»РµРµ 250 СЃРёРјРІРѕР»РѕРІ">META-DESCRIPTION:</label><textarea class='field textarea small' name="news[meta_desc]" id="meta-description" rows="" cols="">{$newsedit.meta_desc}</textarea></td>
+   <td><label class='desc help' for='meta-description' title="Не более 250 символов">META-DESCRIPTION:</label><textarea name="news[meta_desc]" id="meta-description" rows="4" cols="" style="width: 98%;">{$newsedit.meta_desc}</textarea></td>
  </tr>
 </table>
-	</div>
-    </div>	
-  </div>
+
   <input type="hidden" name="add_news" value="{$newsedit.id}" />  
   <input type="submit" id="submit" name="submit" class="button-primary" value="{$smarty.const.SAVE_BUTTON}" />
  </form>
@@ -72,6 +81,14 @@
 <script type="text/javascript">
 	CKEDITOR.replace( 'text', {filebrowserBrowseUrl : '/core/ckeditor/plugins/elfinder/elfinder.html'});
 	CKEDITOR.replace( 'brief', {filebrowserBrowseUrl : '/core/ckeditor/plugins/elfinder/elfinder.html'});
+$(window).load(function () {
+	$('.Status :checkbox').iphoneStyle({ checkedLabel: 'Вкл.', uncheckedLabel: 'Вык.' });
+});
 </script>
 {/literal}
-</dib>
+
+
+			</div>
+		</div>
+	</div>
+</div>
