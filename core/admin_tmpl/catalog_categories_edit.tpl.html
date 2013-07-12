@@ -8,26 +8,7 @@ function checkautores() {
 		document.getElementById('thumbnail').disabled=""; document.getElementById('big_picture').disabled="";
 	}
 }
-var tabs = ['tab1','tab2'];
-function hide(){
-for (i in tabs){
-document.getElementById(tabs[i]).style.display='none';
-}
-}
-function show(id){
-hide();
-document.getElementById(id).style.display='block';
-}
 
-function add_file(id, i) {
- if (document.getElementById(id + '_' + i).innerHTML.search('uploadinputbutton') == -1) {
- document.getElementById(id + '_' + i).innerHTML = '<input type="file" class="uploadinputbutton" maxsize="" name="' + id + '[]" onchange="return add_file(\'' + id + '\', ' + (i+1) + ');" /><br /><span id="' + id + '_' + (i+1) + '"><\/span>\n';
- } 
- if (document.getElementById('thumb_desc_' + i).innerHTML.search('thumb_desc') == -1) { 
- document.getElementById('thumb_desc_' + i).innerHTML = '<input type="text" name="thumb_desc[]" id="thumb_desc" style="width: 245px;" /><br /><span id="' + 'thumb_desc_' + (i+1) + '"><\/span>\n';
- 
- }
-}
 
 function checkmanual() {
    if (document.getElementById('manual_input_switch').checked)
@@ -43,7 +24,7 @@ function checkmanual() {
 <div class="row">
 	<div class="span12">
 		<div class="widget">
-			<div class="widget-header"><i class="icon-folder-open"></i><h3>{if $cat_edit}{$cat_edit.name}{else}{$smarty.const.ADMIN_CATEGORY_NEW}{/if}</h3><div class="buttons"><a class="btn btn-small btn-success"><strong>{$smarty.const.SAVE_BUTTON}</strong></a>&nbsp;<a class="btn btn-small" href="#"><strong>{$smarty.const.CANCEL_BUTTON}</strong></a></div></div>
+			<div class="widget-header"><i class="icon-folder-open"></i><h3>{if $cat_edit}{$cat_edit.name}{else}{$smarty.const.ADMIN_CATEGORY_NEW}{/if}</h3><div class="buttons"><a class="btn btn-small btn-success"><strong>{$smarty.const.SAVE_BUTTON}</strong></a>&nbsp;<a class="btn btn-small" href="./{$smarty.const.CONF_ADMIN_FILE}?dpt={$smarty.get.dpt}"><strong>{$smarty.const.CANCEL_BUTTON}</strong></a></div></div>
 			<div class="widget-content">
 				<form class="form-horizontal" action="./{$smarty.const.CONF_ADMIN_FILE}" method="post" enctype="multipart/form-data">
 					<input type="hidden" name="dpt" value="catalog">
@@ -147,7 +128,8 @@ function checkmanual() {
 	</table>
 
 	<input type="submit" name="submit" class="btn btn-success" value="{$smarty.const.SAVE_BUTTON}" />
-	<input type="reset" class="btn" value="{$smarty.const.CANCEL_BUTTON}" />
+	{*<input type="reset" class="btn" value="{$smarty.const.CANCEL_BUTTON}" />*}
+	<a class="btn btn-small" href="./{$smarty.const.CONF_ADMIN_FILE}?dpt={$smarty.get.dpt}"><strong>{$smarty.const.CANCEL_BUTTON}</strong></a>
 	
 					</fieldset>
 				</form>
