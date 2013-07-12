@@ -261,17 +261,17 @@ define('ADMIN_CURRENT_LOGIN', 'Логин');
 define('ADMIN_OLD_PASS', 'Старый пароль');
 define('ADMIN_NEW_PASS', 'Новый пароль');
 define('ADMIN_NEW_PASS_CONFIRM', 'Подтвердите новый пароль');
-define('ADMIN_UPDATE_SUCCESSFUL', '<font style="color: red"><b>Обновление прошло успешно!</b></font>');
+define('ADMIN_UPDATE_SUCCESSFUL', 'Обновление прошло успешно!');
 define('ADMIN_UPDATE_ERROR', '<font style="color: red;"><b>Нет прав для переименования файла '.CONF_ADMIN_FILE.' и/или '.CONF_ADMIN_FILE_ACCESS.' переименуйте их в ручную.</b></font>');
 define('ADMIN_NO_SPECIAL_OFFERS', 'Спец-предложения не выбраны');
 define('ADMIN_NO_PRESENT', 'Подарки не выбраны');
 define('ADMIN_ADD_SPECIAL_OFFERS', 'Добавить в список спец-предложений');
 define('ADMIN_SPECIAL_OFFERS_DESC', 'Спец-предложения показываются на витрине Вашего магазина.<br>
 Выбрать товарные позиции, которые будут показаны как спец-предложения<br>
-Вы можете в подразделе <a href="admin.php?dpt=catalog&sub=products">"Товары"</a>, кликнув по значку <img src="./images/backend/special.png" border=0> в таблице товаров.<br>
+Вы можете в подразделе <a href="admin.php?dpt=catalog&sub=products">"Товары"</a>, кликнув по значку <span class="btn btn-mini"><i class="icon-star"></i></span> в таблице товаров.<br>
 В спец-предложения можно выбрать только товары с фотографией.');
 define('ADMIN_PRESENT_DESC', 'Подарки автоматически добавляются в корзину при достижении заданной общей суммы заказа<br>Добавить товар в подарки
-Вы можете в подразделе <a href="admin.php?dpt=catalog&sub=products">"Товары"</a>, кликнув по значку <img src="./images/backend/present.png" border=0> в таблице товаров.<br>');
+Вы можете в подразделе <a href="admin.php?dpt=catalog&sub=products">"Товары"</a>, кликнув по значку <span class="btn btn-mini"><i class="icon-heart"></i></span> в таблице товаров.<br>');
 define('ADMIN_ROOT_WARNING', '<font style="color: #F00">Все товары, находящиеся в корне, не видны пользователям!</font>');
 define('ADMIN_ABOUT_PRICES', 'цены актуальны на момент заказа и указаны без налога');
 define('ADMIN_SHOP_NAME', 'Название магазина');
@@ -359,7 +359,7 @@ define('ADMIN_COMPANY_BANK_BIK', 'БИК');
 // Переименование админ файлов
 define('ADMIN_FILE', 'Имя админ файла:');
 define('ADMIN_FILE_ACCESS', 'Имя админ файла 2 (форма авторизации):');
-define('ADMIN_FILE_INFO', '<img src="./images/zn.png" style="float: left;padding-right: 10px;">Если вы видите ошибки при переименовании админ файла (красные надписи под полями ввода), введите новые имена, сохраните, а потом в ручную переименуйте указанные в ошибках файлы, иначе после обновления странички вы не сможете попасть в админку.');
+define('ADMIN_FILE_INFO', '<i class="icon-warning-sign"></i> Если вы видите ошибки при переименовании админ файла (красные надписи под полями ввода), введите новые имена, сохраните, а потом в ручную переименуйте указанные в ошибках файлы, иначе после обновления странички вы не сможете попасть в админку.');
 define('ADMIN_MSG0', "<font color='red'>Для переименования файла, нужно в ручную переименовать файл ".CONF_ADMIN_FILE.".</font>");
 define('ADMIN_MSG1', "<font color='red'>Для переименования файла, нужно в ручную переименовать файл ".CONF_ADMIN_FILE_ACCESS.".</font>");
 define('ADMIN_MSG2', "<font color='red'>Для переименования админ файлов, нужно в ручную править файл .htaccess а именно строчки<br /><b>#administration url's<br />
@@ -429,7 +429,7 @@ define('ADMIN_REVIEW_GOOD','Одобрить комментарий');
 //errors
 
 define('ERROR_FAILED_TO_UPLOAD_FILE', '<b><font style="color: #F00">Не удалось закачать файл на сервер. Убедитесь,<br>что включены права на создание файлов на сервере в папке products_pictures/</font></b>');
-define('ERROR_CANT_FIND_REQUIRED_PAGE', '<h4>Извините, запрашиваемый документ не был найден на сервере</h4>');
+define('ERROR_CANT_FIND_REQUIRED_PAGE', '<div class="alert alert-error">Извините, запрашиваемый документ не был найден на сервере</div>');
 define('ERROR_INPUT_EMAIL', 'Пожалуйста, введите email');
 define('ERROR_INPUT_PHONE', 'Пожалуйста, введите номер телефона');
 define('ERROR_INPUT_NAME', 'Пожалуйста, введите Ваши ФИО');
@@ -809,5 +809,11 @@ define('download_lego','Скачать Shop Script LegoSP 6.1');
 
 define('ADMIN_PARAMETERS','Параметры');
 define('ADMIN_META_TAGS','Мета-данные');
+
+define('ADMIN_OFF', 'Вкл.');
+define('ADMIN_VOYTI','Введите логин и пароль');
+define('ADMIN_THEMES_SANYOK','Шаблоны LegoSP от Sanyok');
+define('ADMIN_EDIT_PROFILE','Изменить профиль');
+define('TOOLTIP_VIBOR_CAT','Выберите категорию для просмотра товаров, которые принадлежат выбранной категории.');
 
 ?>
