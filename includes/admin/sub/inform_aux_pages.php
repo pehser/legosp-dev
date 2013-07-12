@@ -1,10 +1,10 @@
 <?php
 /*****************************************************************************
  *                                                                           *
- * Shop-Script FREE                                                          *
- * Copyright (c) 2009 Supme. All rights reserved.                     *
+ * LegoSP - legosp.net                                                       *
+ * Copyright (c) 2013 Sergey Piekhota. All rights reserved.                  *
  *                                                                           *
- ****************************************************************************/
+ ****************************************************************************/ 
 
 if(!defined('WORKING_THROUGH_ADMIN_SCRIPT'))
 {
@@ -17,7 +17,7 @@ if(!defined('WORKING_THROUGH_ADMIN_SCRIPT'))
 
 		if (isset($_GET["del_aux"])) // delete page
 		{
-			$q = db_query("DELETE FROM ".AUX_TABLE." WHERE id='".$_GET["del_aux"]."'") or die (db_error());
+			$q = db_query("DELETE FROM ".AUX_TABLE.' WHERE id='.(int)$_GET["del_aux"]) or die (db_error());
 
 			header("Location: admin.php?dpt=inform&sub=aux_pages");
 		}
@@ -26,35 +26,22 @@ if(!defined('WORKING_THROUGH_ADMIN_SCRIPT'))
 		{
 			$q = db_query("SELECT id, title, text, meta_title, meta_keywords, meta_desc, hurl, canonical FROM ".AUX_TABLE." WHERE id='".$_GET["aux"]."'") or die (db_error());
 			$row = db_fetch_row($q);
-
-			$smarty->assign("new_aux", $_GET["aux"]);
 			$smarty->assign("aux_page", $row);
 		}
-		else
-		{
-			$smarty->assign("new_aux", "0");
-		}
+		
 
 		if (isset($_POST["add_aux"]))
 		{
-			if ($_POST["hurl"]=="") {$new_hurl=to_url($_POST["aux_title"])."/";} else {$new_hurl=$_POST["hurl"];}
-
-			if ($_POST["add_aux"])
-			{
-				//save ubdate
-				db_query("UPDATE ".AUX_TABLE." SET title='".rusDoubleQuotes($_POST["aux_title"])."', text='".$_POST["aux_text"]."', meta_title='".rusDoubleQuotes($_POST["meta_title"])."', meta_keywords='".rusDoubleQuotes($_POST["meta_keywords"])."', meta_desc='".rusDoubleQuotes($_POST["meta_desc"])."', hurl='".$new_hurl."', canonical='".$_POST["canonical"]."' WHERE id='".$_POST["add_aux"]."'");
-			}
+			if ($_POST['aux']["hurl"]=="") $_POST['aux']["hurl"]=to_url($_POST["aux_title"])."/";
+			if ($_POST["add_aux"]) update_field(AUX_TABLE, $_POST['aux'],'id='.(int)$_POST["add_aux"]);
 			else //save new page
 			{
-			   if ($_POST["aux_title"])
-			   {
-				db_query("INSERT INTO ".AUX_TABLE." (title, text, enable, meta_title, meta_keywords, meta_desc, hurl, canonical) VALUES ('".rusDoubleQuotes($_POST["aux_title"])."','".$_POST["aux_text"]."','1', '".rusDoubleQuotes($_POST["meta_title"])."', '".rusDoubleQuotes($_POST["meta_keywords"])."', '".rusDoubleQuotes($_POST["meta_desc"])."', '".$new_hurl."', '".$_POST["canonical"]."');") or die (db_error());
-				$pid = db_insert_id();
-				$_POST["add_aux"] = $pid;
-			   }
+			   add_field(AUX_TABLE, $_POST['aux']);
+			   $pid = db_insert_id();
+		           $_POST["add_aux"] = $pid;
 			}
-
 			header("Location: admin.php?dpt=inform&sub=aux_pages&aux=".$_POST["add_aux"]);
+			exit;
 		}
 
 
