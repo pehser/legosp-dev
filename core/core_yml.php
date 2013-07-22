@@ -64,7 +64,7 @@
         if ($share>0) $delivery='TRUE'; else $delivery='FALSE';
         currency();  
         $currency_iso_3 = (defined('CONF_CURRENCY_ISO3')) ? CONF_CURRENCY_ISO3 : "USD" ;
-	$q = db_query("SELECT  pt.productID, ct.name as catname, pt.name as prodname, pt.description, pt.Price, pt.picture, pt.in_stock, pt.categoryID, brand.name brand_name, pt.hurl FROM ".PRODUCTS_TABLE.' as pt INNER JOIN '.CATEGORIES_TABLE.' as ct ON pt.categoryID = ct.categoryID Left join '.BRAND_TABLE.' as brand ON pt.brandID = brand.brandID where pt.Price>0 and pt.enabled=1 and ct.categoryID in ('.$set.')');
+	$q = db_query("SELECT  pt.productID, ct.name as catname, pt.name as prodname, pt.description, pt.Price, pt.picture, pt.in_stock, pt.categoryID, brand.name brand_name, pt.hurl FROM ".PRODUCTS_TABLE.' as pt INNER JOIN '.CATEGORIES_TABLE.' as ct ON pt.categoryID = ct.categoryID Left join '.BRAND_TABLE.' as brand ON pt.brandID = brand.brandID where pt.Price>0 and pt.yml=1 and pt.enabled=1 and ct.categoryID in ('.$set.')');
 	while ($row = db_assoc_q($q))
 	{
                
