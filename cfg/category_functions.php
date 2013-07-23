@@ -227,7 +227,7 @@ function products_to_show($sql)
 function options_list($id_products='',$count_opt=0)
 {
   $options=array(); $p_default=FALSE; $where='';
-  $sql_op = 'select DISTINCT P_variant.variantID, P_val.picture, P_val.productID, P_val.price_surplus,P_val.default, P_variant.name name_var, P_opt.optionID optionID, P_opt.name opt_name from ' . SS_products_opt_val_variants . ' as P_variant INNER JOIN ' . PRODUCT_OPTIONS_V_TABLE . ' as P_val USING(variantID) INNER JOIN ' . PRODUCT_OPTIONS_TABLE . ' as P_opt on (P_val.optionID=P_opt.optionID) ';
+  $sql_op = 'select DISTINCT P_variant.variantID, P_val.picture, P_val.productID, P_val.price_surplus,P_val.default, P_variant.name name_var, P_opt.optionID optionID, P_opt.name opt_name from ' . PRODUCT_OPTIONS_VAL_TABLE . ' as P_variant INNER JOIN ' . PRODUCT_OPTIONS_V_TABLE . ' as P_val USING(variantID) INNER JOIN ' . PRODUCT_OPTIONS_TABLE . ' as P_opt on (P_val.optionID=P_opt.optionID) ';
   if ($id_products) $where=' where P_val.productID in '.$id_products;
   if (!$count_opt)
     if ($where)  $where .= ' and P_val.count>0';
