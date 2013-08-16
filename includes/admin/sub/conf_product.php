@@ -57,7 +57,7 @@ if(!defined('WORKING_THROUGH_ADMIN_SCRIPT'))
                         if (isset($_POST['review_moder']) && $_POST["review_moder"]=='on') $_POST["review_moder"]=1;
                         else $_POST["review_moder"]=0; 
 
-			if ($_POST["float_quantity"] == 1) {$q = db_query("ALTER TABLE `".ORDERED_CARTS_TABLE."` CHANGE `Quantity` `Quantity` FLOAT( 11 ) NULL DEFAULT NULL ") or die (db_error());} else {$q = db_query("ALTER TABLE `SS_ordered_carts` CHANGE `Quantity` `Quantity` INT( 11 ) NULL DEFAULT NULL ") or die (db_error());}
+			if ($_POST["float_quantity"] == 1) {$q = db_query("ALTER TABLE `".ORDERED_CARTS_TABLE."` CHANGE `Quantity` `Quantity` FLOAT( 11 ) NULL DEFAULT NULL ") or die (db_error());} else {$q = db_query('ALTER TABLE `'.ORDERED_CARTS_TABLE.'` CHANGE `Quantity` `Quantity` INT( 11 ) NULL DEFAULT NULL ') or die (db_error());}
 
 			//appearence settings
 			$f = fopen("./cfg/product.inc.php","w");

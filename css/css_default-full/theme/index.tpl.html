@@ -203,12 +203,12 @@
   <div id="module_pages" class="box">
    <div class="top">{$smarty.const.ADMIN_PAGES}</div>
    <div class="middle">
-   {section name=i loop=$home_pages_list}
-   <p><span style="font-size: 10px; color: #878787;">[{$home_pages_list[i][2]}]</span><br />
-    {$home_pages_list[i][1]}<br />
-    <a href="./{$home_pages_list[i][6]}">{$smarty.const.ADMIN_NEWS_READ}</a></p>
+   {foreach from=$home_pages_list item=page}
+   <p><span style="font-size: 10px; color: #878787;">[{$page.date}]</span><br />
+    {$page.title}<br />
+    <a href="./{$page.hurl}">{$smarty.const.ADMIN_NEWS_READ}</a></p>
    <hr />
-   {/section}
+   {/foreach}
    <center><a href="./{$smarty.const.REDIRECT_PAGES}/" class="b">{$smarty.const.ADMIN_PAGE_ALL}</a></center>
    </div>
   </div>

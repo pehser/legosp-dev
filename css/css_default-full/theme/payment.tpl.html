@@ -102,6 +102,51 @@
 	  </form>
 	</div>
 {/if}
+
+{if $payment_type == "webmoney"}
+
+	{* WEBMONEY *}
+	<div class="payform" id="payform_2" style="width: 100%;">
+	  <form id="webmoney_form" action="https://merchant.webmoney.ru/lmi/payment.asp" method="post" accept-charset="windows-1251">
+	    <input type="hidden" name="LMI_PAYMENT_AMOUNT" value="{$payment.price_rub}.{$payment.price_kop}" />
+	    <input type="hidden" name="LMI_PAYMENT_NO" value="{$payment.id}" />
+	    <input type="hidden" name="LMI_PAYMENT_DESC" value="{$payment_description}" />
+	    <input type="hidden" name="LMI_PAYEE_PURSE" value="{$webmoney_merchant}" />
+	    <input type="hidden" name="LMI_MODE" value="{$webmoney_testmode}" />
+
+	    <table cellpadding="5px" cellspacing="0" width="100%">
+	      <tr>
+	        <td colspan="2" valign="top"></td>
+	      </tr>
+	      <tr>
+	        <td style="width: 150px"><b>{$smarty.const.STRING_ORDER_ID}:</b></td>
+	        <td><b>{$payment.id}</b></td>
+	      </tr>
+	      <tr>
+	        <td><b>{$smarty.const.TABLE_ORDER_TOTAL}:</b></td>
+	        <td><b>{$payment.price}</b></td>
+	      </tr>
+{if $payment.addprice}
+	      <tr>
+		<td colspan="2" style="color: #f00">{$smarty.const.STRING_PAY_ADDPRICE} {$payment.addprice} %</td>
+	      </tr>
+{/if}
+	      <tr>
+	        <td>&nbsp;</td>
+	        <td>&nbsp;</td>
+	      </tr>
+	      <tr>
+	        <td valign="top"><b>{$smarty.const.CUSTOMER_COMMENT}</b></td>
+	        <td>{$payment_description}</td>
+	      </tr>
+	      <tr>
+	        <td colspan="2" style="text-align: center;"><a onclick="$('#webmoney_form').submit();" class="button"><span>{$smarty.const.STRING_PAY}</span></a></td>
+	      </tr>
+	    </table>
+	  </form>
+	</div>
+{/if}
+
 {if $payment_type == "sbrf"}
 	{* SBERBANK *}
 	<div id="payform_4" style="width: 100%;">

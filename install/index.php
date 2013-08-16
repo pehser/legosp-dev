@@ -34,7 +34,7 @@ function ValidateAddress($address) {
     $ext_req['Mbstring']   = 'mbstring';
 
 	if (isset($_POST['install'])) {
-		$_SESSION["db_server"] = $_POST["db_server"];
+		$_SESSION["db_server"] = $_POST["db_host"];
 		$_SESSION["db_name"] = $_POST["db_name"];
 		$_SESSION["db_user"] = $_POST["db_user"];
 		$_SESSION["db_prefix"] = $_POST["db_prefix"];

@@ -14,15 +14,16 @@ if (CONF_PAGES_ONHOME == 1)
         $count_page=4;
         if (defined('CONF_PAGES_ONHOME_COUNT')) $count_page=CONF_PAGES_ONHOME_COUNT;
        
-        $q = db_query("SELECT id, title, date, brief, Pict, enable, hurl FROM ".PAGES_TABLE." WHERE enable=1 LIMIT 0,".$count_page) or die (db_error());
+        $q = db_query("SELECT * FROM ".PAGES_TABLE." WHERE enable=1 LIMIT 0,".$count_page) or die (db_error());
 	$pages=array();
         $i = 0;
-        while ($p = db_fetch_row($q))
+        while ($p = db_assoc_q($q))
             {
-		if ($p[6] != "") {$p[6] = REDIRECT_PAGES."/".$p[6];} else {$p[6]="index.php?pages=".$p[0];}
+		if ($p['hurl'] != "" && CONF_CHPU) {$p['hurl'] = REDIRECT_PAGES."/".$p['hurl'];} else {$p['hurl']="index.php?pages=".$p['id'];}
                 $pages[] = $p;
 		$i++;
             }
+        unset($p);
         $smarty->assign("home_pages_list", $pages);
     }
 

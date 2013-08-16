@@ -1,7 +1,7 @@
 <?php
 /*****************************************************************************
  *                                                                           *
- * Lego Edition SP - lego.shop-script.org                                    *
+ * Lego Edition SP - legosp.net                                              *
  * Copyright (c) 2012 Sergey Piekhota. All rights reserved.                  * 
  *                                                                           *
  ****************************************************************************/
@@ -24,8 +24,8 @@ else
 
 	} while ($curr);
 	$path = array_reverse($path);
-	$out = processCategories(0,$path,$categoryID);
-	$smarty->assign("categories_tree",$out);
-        unset($out,$path,$curr); 
+	$c = All_list_Categories($path,1);
+	$smarty->assign("categories_tree",$c);
+        unset($c,$path,$curr); 
 }
 ?>
