@@ -1,4 +1,5 @@
 <?php
+
 /*****************************************************************************
  *                                                                           *
  * Lego SP - lego.shop-script.org                                            *
@@ -12,29 +13,15 @@
 	        $out = implode("", $f);
         #if (DB_CHARSET!='cp1251') $out=win2utf($out);   
 	$smarty->assign("index", $out);  
-	        
 	//special offers
 	$result = array();
-	$q = db_query('SELECT pt.productID, name, picture, Price,list_price, brief_description, hurl FROM '.SPECIAL_OFFERS_TABLE." as st left join ".PRODUCTS_TABLE." as pt on pt.productID=st.productID where picture!=''  order by sort_order") or die (db_error());
-	while ($row1 = db_assoc_q($q))
-	{
-		
-		if (file_exists("./products_pictures/".$row1['picture']) && preg_match('/\.(jpg|jpeg|gif|png)$/i', $row1['picture'],$fend))
-		{
-		   $s=preg_replace('/\.(jpg|jpeg|gif|png)$/i','',$row1['picture']);
-		   $row1['picture'] = $s.'-S'.$fend[0];
-                   $row1['Price'] = round($row1['Price']/CURRENCY_val,2);
-		   $row1['Price'] = show_price($row1['Price']);
-                   $row1['list_price'] = round($row1['list_price']/CURRENCY_val,2);
-		   $row1['list_price'] = show_price($row1['list_price']); 
-
-		   if ($row1['hurl'] != "" && CONF_CHPU) {$row1['hurl'] = REDIRECT_PRODUCT."/".$row1['hurl'];} else {$row1['hurl'] = "index.php?productID=".$row1['productID'];}
-		   $result[] = $row1;
-		}
-		
-	}
-	unset($row1);
-	$smarty->assign("special_offers",$result);
+	$sql='SELECT P.productID, P.name, P.picture, P.Price real_PRICE, cast(P.Price+IFNULL((select sum(`price_surplus`) from `'.PRODUCT_OPTIONS_V_TABLE.'` where `productID`=P.productID and `default`=1),0) as decimal(10,2)) Price, list_price, brief_description, hurl FROM '.SPECIAL_OFFERS_TABLE." as st join ".PRODUCTS_TABLE." as P USING (productID) where picture!='' ";
+	if (!CONF_SHOW_PRODUCT_INSTOCK)
+	 $sql .=' and P.in_stock>0 ';
+	$sql .=' order by sort_order';
+	$result=products_to_show($sql);
+	unset($sql);
+	$smarty->assign("special_offers",$result['result']);
    }
 
 ?>

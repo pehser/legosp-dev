@@ -66,15 +66,13 @@ if (isset($categoryID) && !isset($productID) && $categoryID) {
     unset($row, $path);
     //show active products
     $g_count = db_r('SELECT count(P.productID) FROM `' . PRODUCTS_TABLE . '` AS P LEFT JOIN `' . CATEGORIY_PRODUCT_TABLE . '` AS CP USING (productID) INNER JOIN `' . CATEGORIES_TABLE . '` AS C ON (P.categoryID = C.categoryID) WHERE (P.categoryID =' . (int)$categoryID . ' OR CP.categoryID =' . (int)$categoryID . ') AND P.enabled =1 AND C.enabled =1');
-    $sql_show_active_products = "SELECT " . PRODUCTS_TABLE . ".categoryID, " . PRODUCTS_TABLE . ".name, brief_description, customers_rating, Price, picture, in_stock, thumbnail, customer_votes, big_picture, list_price, " . PRODUCTS_TABLE . ".productID, product_code, " . PRODUCTS_TABLE . ".hurl, items_sold, " . PRODUCTS_TABLE . ".brandID, " . BRAND_TABLE . ".name, " . BRAND_TABLE . ".hurl FROM " . PRODUCTS_TABLE . ' LEFT JOIN ' . BRAND_TABLE . " USING(brandID) WHERE " . PRODUCTS_TABLE . '.categoryID=' . (int)$categoryID . ' and enabled=1';
-    $sql_notfiltr_filtr = $sql_show_active_products;
-    $sql_show_active_products.= " GROUP BY `" . PRODUCTS_TABLE . '`.`productID` ORDER BY ' . PRODUCTS_TABLE . "." . $_SESSION["sort"] . " " . $_SESSION["order"];
     #$q_show_active_products = db_query($sql_show_active_products);
     $smarty->assign("catalog_navigator", NULL);
     $smarty->assign("products_to_show", NULL);
     $smarty->assign("products_to_show_count", NULL);
     if ($g_count) // there are products in the category
     {
+        
         if ($offset > $g_count) $offset = 0;
         //fetch all products
         $result = array();
@@ -110,6 +108,7 @@ if (isset($categoryID) && !isset($productID) && $categoryID) {
         unset($navigator, $g_count);
     } else if (CONF_SHOW_BEST_CHOICE == 1) //there are no items in the category. search for items in it's subcategories if CONF_SHOW_BEST_CHOICE is set
     {
+        
         $sub_categ = get_Subs($categoryID);
         if (count($sub_categ)) {
             $g_count = db_r('SELECT count(P.productID) FROM `' . PRODUCTS_TABLE . '` AS P LEFT JOIN `' . CATEGORIY_PRODUCT_TABLE . '` AS CP USING (productID) INNER JOIN `' . CATEGORIES_TABLE . '` AS C ON (P.categoryID = C.categoryID) WHERE (P.categoryID in (' . add_in($sub_categ) . ') OR CP.categoryID in (' . add_in($sub_categ) . ')) AND P.enabled =1 AND C.enabled =1');

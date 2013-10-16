@@ -11,7 +11,7 @@
   <div class="product_list">
    {foreach name=special from=$special_offers item=special_offer}
      <div class="pr_list_item">
-      <div class="pr_list_price"><span>{$smarty.const.TABLE_PRODUCT_COST}: </span>{$special_offer.Price}</div>
+      <div class="pr_list_price"><span>{$smarty.const.TABLE_PRODUCT_COST}: </span>{$special_offer.Price_letters}</div>
       <div class="pr_list_img"><img src="./products_pictures/{$special_offer.picture}" border="0" alt="{$special_offer.name}" /></div>
       <div class="pr_list_name"><a href="./{$special_offer.hurl}">{$special_offer.name}</a></div>
      </div>

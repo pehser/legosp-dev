@@ -24,11 +24,7 @@
 		//not empty?
 		if (isset($_SESSION["gids"]) && $c)
 		{
-                        #$esql=1;
 			//insert order into database
-		           if (preg_match('/^[\s0-9-()+]+$/',$_POST["phone"])) $post_phone = $_POST["phone"]; else $post_phone = mysql_real_escape_string($_POST["phone"]);
- 		           if (preg_match('/[.+a-zA-Z0-9_-]+@[a-zA-Z0-9-]+.[a-zA-Z]+/',$_POST["email"])) $post_email = $_POST["email"]; else $post_email = mysql_real_escape_string($_POST["email"]);
-
 			//select manager
 			   $q_m = db_query("SELECT ID, access, online_name, email FROM ".MANAGER_TABLE) or die (db_error());
 			   while ($row = mysql_fetch_row($q_m)) if ($row[1] == 1) {$man_arr[] = $row[0]; $man_name[$row[0]] = $row[2]; $man_email[$row[0]] = $row[3];}
@@ -37,8 +33,22 @@
 				shuffle($man_arr);
 				$smarty_mail->assign("manager", $man_name[$man_arr[0]]);
 			     }
- 		           db_query("INSERT INTO ".ORDERS_TABLE." (order_time, cust_firstname, cust_lastname, cust_email, cust_country, cust_zip, cust_state, cust_city, cust_address, cust_phone, comment, manager) values ('".get_current_time()."','".mysql_real_escape_string($_POST["first_name"])."','".mysql_real_escape_string($_POST["last_name"])."','".$post_email."','".mysql_real_escape_string($_POST["country"])."','".mysql_real_escape_string($_POST["zip"])."','".mysql_real_escape_string($_POST["state"])."','".mysql_real_escape_string($_POST["city"])."','".mysql_real_escape_string($_POST["address"])."','".$post_phone."','".$_POST["comment"]."', '".$man_arr[0]."');") or die (db_error());
-  		           $oid = db_insert_id(); //order ID
+ 		           $order_info=array();
+			   $order_info['order_time']=get_current_time();
+			   $order_info['cust_firstname']=$_POST["first_name"];
+			   $order_info['cust_lastname']=$_POST["last_name"];
+			   $order_info['cust_email']=$post_email;
+			   $order_info['cust_country']=$_POST["country"];
+			   $order_info['cust_zip']=$_POST["zip"];
+			   $order_info['cust_state']=$_POST["state"];
+			   $order_info['cust_city']=$_POST["city"];
+			   $order_info['cust_address']=$_POST["address"];
+			   $order_info['cust_phone']=$post_phone;
+			   $order_info['comment']=$_POST["comment"];
+			   $order_info['manager']=$man_arr[0];
+			   if (isset($_SESSION['cust_id']))
+			     $order_info['custID']=$_SESSION['cust_id'];
+			   add_field(ORDERS_TABLE, $order_info); unset($order_info);
 
 			//now move shopping cart content to the database
 

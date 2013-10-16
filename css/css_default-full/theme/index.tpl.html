@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <?xml version="1.0" encoding="{$smarty.const.DEFAULT_CHARSET}"?>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr" >
 
@@ -8,71 +8,84 @@
 <body>
 {* --[if lte IE 6]><div id="badie" class="top_err">Вами используется устаревшая версия <b>Internet Explorer.</b> Рекомендуем Вам обновить ваш браузер или воспользоваться одним из современных. <a class="close" href="#"   onclick="document.getElementById('badie').style.visibility='hidden';">Скрыть</a></div><![endif]-- *}
 {* -- меню -- *}
-<div class="black">  
-<ul id="mega-menu" class="mega-menu">
-<li><a href="./">{$smarty.const.LINK_TO_HOMEPAGE}</a></li>
-<li>
-<a>{$smarty.const.STRING_PRICELIST}</a>
- <ul>
-   <li><a href="./{if $smarty.const.CONF_CHPU}pricelist/{else}index.php?show_price=yes{/if}">{$smarty.const.STRING_PRICELIST}</a></li>
-   <li><a href="./{if $smarty.const.CONF_CHPU}price.xls{else}core/core_xls.php{/if}">{$smarty.const.DOWNLOAD_PRICE}</a></li>
- </ul>
-</li>
-<li><a>{$smarty.const.ADMIN_INFORMATION}</a>
- <ul>
-    <li><a href="./{if $smarty.const.CONF_CHPU}about/{else}index.php?aux_page=aux1{/if}">{$smarty.const.ADMIN_ABOUT_PAGE}</a></li>
-    <li><a href="./{if $smarty.const.CONF_CHPU}grafik/{else}index.php?aux_page=aux1{/if}">{$smarty.const.ADMIN_TIMES}</a></li>
-    <li><a href="./{if $smarty.const.CONF_CHPU}adress/{else}index.php?aux_page=aux1{/if}">{$smarty.const.STRING_ADRESS_INFORMATION}</a></li>
- </ul>
-</li>
-<li><a>{$smarty.const.ADMIN_MORE}</a>
- <ul>
-    <li><a href="./search_expanded/">{$smarty.const.ADVANCED_SEARCH_LINK}</a></li>
-    <li><a href="./{if $smarty.const.CONF_CHPU}{$smarty.const.REDIRECT_NEWS}/{else}index.php?news&news={/if}">{$smarty.const.ADMIN_NEWS}</a></li>
-    <li><a href="./{if $smarty.const.CONF_CHPU}{$smarty.const.REDIRECT_PAGES}/{else}index.php?pages&pages={/if}">{$smarty.const.ADMIN_PAGES}</a></li>
-    <li><a href="./{if $smarty.const.CONF_CHPU}sitemap/{else}index.php?sitemap{/if}">{$smarty.const.ADMIN_SITE_MAP}</a></li>
-  </ul>
-</li>
-<li><a href="./{if $smarty.const.CONF_CHPU}contact/{else}index.php?contact{/if}">{$smarty.const.STRING_CONTACT_INFORMATION}</a></li>
-</ul>
-</div>
-{* -- меню -- *}
-
-
-
-<div class="header">
-
-<a href="./" class="png logo" title="{$page_title}"><img src="./css/css_{$smarty.const.CONF_COLOR_SCHEME}/images/logo0000.png"/></a>
-
-<div class="contacts_panel">
-   <p>{$smarty.const.ADMIN_COMPANY_PHONE}</p>
-   <span style="color:#F00; font-style:italic;">{$smarty.const.COMPANY_PHONE}</span>
-</div>
-
-</div>
-
-<div class="header_panel">
-
-
-  <form method="get" action="/" id="search" class="png">
-  <input type="text" value="{$smarty.const.STRING_SEARCH}" onblur="if(this.value=='') this.value='{$smarty.const.STRING_SEARCH}';" onfocus="if(this.value=='{$smarty.const.STRING_SEARCH}') this.value='';" name="searchstring" class="search" id="mod_search_searchword" />
-  <input type="submit" value="" class="go" />
-  </form>
-
-     <div class="path">
-       {if $product_category_path}<a href="./">{$smarty.const.LINK_TO_HOMEPAGE}</a>{/if}
-       {section name=i loop=$product_category_path}
-          <b>&raquo;</b> <a href="./{$product_category_path[i][0]}">{$product_category_path[i][1]}</a>
-       {/section}
+<div class="navbar top_menu">
+  <div class="navbar-inner">
+    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </a>
+    <div class="nav-collapse collapse navbar-responsive-collapse">
+      <ul class="nav">
+	<li><a href="./">{$smarty.const.LINK_TO_HOMEPAGE}</a></li>
+	<li class="dropdown">
+	  <a href="#" class="dropdown-toggle" data-toggle="dropdown">{$smarty.const.STRING_PRICELIST}<b class="caret"></b></a>
+	  <ul class="dropdown-menu">
+	    <li><a href="./{if $smarty.const.CONF_CHPU}pricelist/{else}index.php?show_price=yes{/if}">{$smarty.const.STRING_PRICELIST}</a></li>
+	    <li><a href="./{if $smarty.const.CONF_CHPU}price.xls{else}core/core_xls.php{/if}">{$smarty.const.DOWNLOAD_PRICE}</a></li>
+	  </ul>
+	</li>
+	<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">{$smarty.const.ADMIN_INFORMATION}<b class="caret"></b></a>
+	  <ul class="dropdown-menu">
+	      <li><a href="./{if $smarty.const.CONF_CHPU}about/{else}index.php?aux_page=aux1{/if}">{$smarty.const.ADMIN_ABOUT_PAGE}</a></li>
+	      <li><a href="./{if $smarty.const.CONF_CHPU}grafik/{else}index.php?aux_page=aux1{/if}">{$smarty.const.ADMIN_TIMES}</a></li>
+	      <li><a href="./{if $smarty.const.CONF_CHPU}adress/{else}index.php?aux_page=aux1{/if}">{$smarty.const.STRING_ADRESS_INFORMATION}</a></li>
+	  </ul>
+	</li>
+	<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">{$smarty.const.ADMIN_MORE}<b class="caret"></b></a>
+	  <ul class="dropdown-menu">
+	      <li><a href="./search_expanded/">{$smarty.const.ADVANCED_SEARCH_LINK}</a></li>
+	      <li><a href="./{if $smarty.const.CONF_CHPU}{$smarty.const.REDIRECT_NEWS}/{else}index.php?news&news={/if}">{$smarty.const.ADMIN_NEWS}</a></li>
+	      <li><a href="./{if $smarty.const.CONF_CHPU}{$smarty.const.REDIRECT_PAGES}/{else}index.php?pages&pages={/if}">{$smarty.const.ADMIN_PAGES}</a></li>
+	      <li><a href="./{if $smarty.const.CONF_CHPU}sitemap/{else}index.php?sitemap{/if}">{$smarty.const.ADMIN_SITE_MAP}</a></li>
+	    </ul>
+	</li>
+	  <li><a href="./{if $smarty.const.CONF_CHPU}contact/{else}index.php?contact{/if}">{$smarty.const.STRING_CONTACT_INFORMATION}</a></li>
+      </ul>
+      <form method="get" action="/" id="search" class="form-search">
+	<input type="search" placeholder="{$smarty.const.STRING_SEARCH}" class="input-medium search" value="{$smarty.get.searchstring}" name="searchstring" />
+	<input type="submit" value="" class="go" />
+      </form>
     </div>
-
-
-{* Авторизация *}
-     <div id="topnav" class="panel">{include file="cust_login_info.tpl.html"}</div>
-{* Авторизация *}
-
+  </div>
 </div>
 
+ 
+    {* -- меню -- *}
+
+<div class="container-fluid">
+    <div class="row-fluid">
+      <div class="span8"> 
+	<a href="./" class="png logo" title="{$page_title}"><img src="./css/css_{$smarty.const.CONF_COLOR_SCHEME}/images/logo0000.png"/></a>
+      </div>
+      <div class="span4">
+	<div class="contacts_panel">
+	  <p>{$smarty.const.ADMIN_COMPANY_PHONE}</p>
+	  <span style="color:#F00; font-style:italic;">{$smarty.const.COMPANY_PHONE}</span>
+	</div>
+      </div>
+
+    </div>
+  
+    <div class="header_panel">
+
+
+     
+
+	<div class="path">
+	  {if $product_category_path}<a href="./">{$smarty.const.LINK_TO_HOMEPAGE}</a>{/if}
+	  {section name=i loop=$product_category_path}
+	      <b>&raquo;</b> <a href="./{$product_category_path[i][0]}">{$product_category_path[i][1]}</a>
+	  {/section}
+	</div>
+
+
+    {* Авторизация *}
+	<div id="topnav" class="panel">{include file="cust_login_info.tpl.html"}</div>
+    {* Авторизация *}
+
+    </div>
+</div>
 <div class="wrapper">
 
 <div class="f-left" id="sidebar">
