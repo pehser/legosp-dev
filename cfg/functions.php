@@ -534,7 +534,8 @@ function string_decode($s) // decodes a string encoded with string_encode()
 
 function to_url($text) {
     $text=trim($text); 
-    if (DB_CHARSET!='cp1251') $text=Utf8Win($text);  
+    if (DB_CHARSET!='cp1251') $text=Utf8Win($text);
+    $text = preg_replace("/[^a-ÿa-z0-9-s ]/i", "", $text);
     $tr = array(
         "À"=>"a","Á"=>"b","Â"=>"v","Ã"=>"g",
         "Ä"=>"d","Å"=>"e","Æ"=>"j","Ç"=>"z","È"=>"i",
@@ -549,8 +550,7 @@ function to_url($text) {
         "ñ"=>"s","ò"=>"t","ó"=>"u","ô"=>"f","õ"=>"h",
         "ö"=>"ts","÷"=>"ch","ø"=>"sh","ù"=>"sch","ú"=>"y",
         "û"=>"yi","ü"=>"","ı"=>"e","ş"=>"yu","ÿ"=>"ya", 
-        " "=> "_", "."=> "",","=>"","/"=> "_","+"=>"","«"=>"","»"=>"",
-        "\""=>"","%"=>""
+        " "=> "_"        
     );
     $text=strtr($text,$tr);
     return $text;
@@ -632,6 +632,7 @@ function img_resize($src, $dest, $width, $height, $rgb, $quality=100)
 function file_url($text) {
     $text=trim($text); 
     if (DB_CHARSET!='cp1251') $text=Utf8Win($text);   
+    $text = preg_replace("/[^a-ÿa-z0-9-s .]/i", "", $text);
     $tr = array(
         "À"=>"a","Á"=>"b","Â"=>"v","Ã"=>"g",
         "Ä"=>"d","Å"=>"e","Æ"=>"j","Ç"=>"z","È"=>"i",
@@ -646,8 +647,7 @@ function file_url($text) {
         "ñ"=>"s","ò"=>"t","ó"=>"u","ô"=>"f","õ"=>"h",
         "ö"=>"ts","÷"=>"ch","ø"=>"sh","ù"=>"sch","ú"=>"y",
         "û"=>"yi","ü"=>"","ı"=>"e","ş"=>"yu","ÿ"=>"ya", 
-        " "=> "_", "/"=> "_",":"=>"",","=>"","«"=>"","»"=>"",
-        "\""=>"","%"=>""
+        " "=> "_"
     );
     return strtr($text,$tr);
 }
