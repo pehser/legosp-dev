@@ -1,16 +1,14 @@
+<div class="thumbnail">
 {* product brief view (from a category or search) *}
 {if $product_info ne NULL}
 {assign var="id" value=$product_info.productID}
-<div class='border'>
-<table cellspacing="0" cellpadding="0" width="100%" style="text-align: left;" >
-	<tr>
-	  <td colspan="2" class="title b">
-	    <a href="./{$product_info.hurl}"><b>{$product_info.name}</b></a>
-            {if $smarty.session.access==3}
-            <a style="float: right;" id="iframe" href="admin.php?dpt=catalog&amp;sub=products_edit&amp;productID={$product_info.productID}" title="{$smarty.const.ADMIN_EDIT}"><img src="./css/css_{$smarty.const.CONF_COLOR_SCHEME}/images/prod_edit.png"></a>
-           {/if} 
-           
-            <div style="float: right;">
+{assign var="new_price" value="0"} 
+{assign var="p" value=0}   
+<h3>
+<a href="./{$product_info.hurl}"><b>{$product_info.name}</b></a>
+{if $smarty.session.access==3}
+   <a style="float: right;" id="iframe" href="admin.php?dpt=catalog&amp;sub=products_edit&amp;productID={$product_info.productID}" title="{$smarty.const.ADMIN_EDIT}"><img src="./css/css_{$smarty.const.CONF_COLOR_SCHEME}/images/prod_edit.png"></a>
+{/if} <div style="float: right;">
                 {section name=i loop=$smarty.session.comp}
 		{if $smarty.session.comp[i] == $product_info[11]}
 			{assign var="check" value="1"}
@@ -20,79 +18,73 @@
 		<img src="./css/css_{$smarty.const.CONF_COLOR_SCHEME}/images/compare.png" id="qcb_{$product_info.productID}" class="chk" style="cursor: pointer;" title="{$smarty.const.ADD_COMPARE}" alt="" />
 		<input type="hidden" id="inpc{$product_info.productID}" value="{if $check}1{else}0{/if}" />
 		<input type="hidden" id="hc{$product_info.productID}" value="{$product_info.hurl}" />
-	   </div>  
-	    <br />&nbsp;<br />
-	  </td>
-	</tr>
-	<tr>
-	  <td rowspan="8" style="padding: 5px; vertical-align: top" width="{$smarty.const.RESIZE_SMALL_Y}">
-		<a href="./{$product_info.hurl}">
- 
-{if $product_info.thumbnail || $p_default[$id]}
-		  <img id="dp{$product_info.productID}" src="./products_pictures/{if $p_default[$id]}{$p_default[$id]}-S.jpg{else}{$product_info.thumbnail}{/if}" alt="{$product_info[1]|replace:'"':'&quot;'}" />
+       </div> 
+</h3>
+<div class="pictures pull-left text-center">
+  <a href="./{$product_info.hurl}">
+    {if $product_info.thumbnail || $p_default[$id]}
+		  <img id="dp{$product_info.productID}" src="./products_pictures/{if $p_default[$id]}{$p_default[$id]}-S.jpg{else}{$product_info.thumbnail}{/if}" alt="{$product_info[1]|escape}" />
                   {assign var="pict" value=$product_info.thumbnail}
-{else}
-		  <img id="dp{$product_info.productID}" src="./products_pictures/nophoto.jpg" alt="No photo" width="120px" height="120px" />
+    {else}
+		  <img id="dp{$product_info.productID}" src="./products_pictures/nophoto.jpg" alt="No photo" />
                   {assign var="pict" value='nophoto.jpg'} 
-                  
-{/if}
-		</a>
-           <input type="hidden" id="simg{$product_info.productID}" value="{$pict}">  
-	  </td>
-	  <td style="padding: 5px; vertical-align: top"> 
-            {if $product_info.brand_name}  
+    {/if}
+  </a>
+  <input type="hidden" id="simg{$product_info.productID}" value="{$pict}">  
+</div>
+<div class="product_info">
+ {if $product_info.brand_name}  
 	      <b>{$smarty.const.STRING_MANUFACTURER}:</b>&nbsp;<a href="./{$product_info.brand_about_hurl}">{$product_info.brand_name}</a><br>
-            {/if}
-            <p>{$product_info.brief_description}</p>
-            {assign var="id" value=$product_info.productID}
-            {assign var="new_price" value="0"} 
-            {if (isset($options[$id]))} 
-             {assign var="p" value=0}   
-            
-            <table>
-             {foreach from=$options[$id] item=option key=option_name name=option}
-              <tr>
-                <td style="vertical-align: top">
-                   <b>{$option_name}: </b>
-                </td> 
-                <td>
-                  {if  count($option)>1}
-                  {assign var="i" value=$i+1}
-                    <select class="product_option_{$id}" name="product_option_{$id}_{$option[0].optionID}" id="product_option[{$id}][{$i}]" onChange="GetNewPrice_new({$id},{$i},1)">
-                       {foreach from=$option item=var}
- 	                  <option {if $var.default}selected  {math assign="p" equation="x+z" x=$var.price_surplus z=$p format="%.2f"} {/if} rel="0" value="{$var.variantID}:{$var.price_surplus}:{$var.picture}">{$var.name_var}{if $var.price_surplus!=0} {assign var="new_price" value="1"} ({if $var.price_surplus>0}+{/if}{math equation="x/y" x=$var.price_surplus y=$smarty.const.CURRENCY_val format="%.2f"}){/if}</option>
-		       {/foreach}
-                    </select>
-                  {elseif $option.or_op}  
-                   {$option.or_op}    
-                  {else}      
-                  {$option.0.name_var}
-                  {/if}
-                 <br>   
-                </td>  
-             </tr>
-             {/foreach}
-               
-           </table>
-          {/if} 
-
-<div {if !$new_price} style="display:none;" {/if}>
-{$smarty.const.STRING_NEWPRICE}: {$smarty.const.CONF_CURRENCY_ID_LEFT}<font id="vnewprice{$id}" >{math assign="newsum" equation="x+y/z" x=$product_info.Price y=$p z=$smarty.const.CURRENCY_val format="%.2f"}{$newsum|print_price}</font>{$smarty.const.CONF_CURRENCY_ID_RIGHT}
-</div > 
-<input type="hidden" id="newprice{$id}" value="{math equation="x+y" x=$product_info.real y=$p format="%.2f"}">
-<input type="hidden" id="sprice{$id}" value="{$product_info.real}">
-          </td>
-	</tr>
+ {/if}
+ <div class="description">{$product_info.brief_description}</div>
+ {if (isset($options[$id]))} 
+    <dl>
+    {foreach from=$options[$id] item=option key=option_name name=option}
+	<dt>{$option_name}:</dt>
+        <dd>
+        {if  count($option)>1}
+        {assign var="i" value=$i+1}
+           <select class="product_option_{$id}" name="product_option_{$id}_{$option[0].optionID}" id="product_option[{$id}][{$i}]" onChange="GetNewPrice_new({$id},{$i},1)">
+           {foreach from=$option item=var}
+ 	      <option {if $var.default}selected  {math assign="p" equation="x+z" x=$var.price_surplus z=$p format="%.2f"} {/if} rel="0" value="{$var.variantID}:{$var.price_surplus}:{$var.picture}">{$var.name_var}{if $var.price_surplus!=0} {assign var="new_price" value="1"} ({if $var.price_surplus>0}+{/if}{math equation="x/y" x=$var.price_surplus y=$smarty.const.CURRENCY_val format="%.2f"}){/if}</option>
+	   {/foreach}
+           </select>
+           {elseif $option.or_op}  
+             {$option.or_op}    
+           {else}      
+             {$option.0.name_var}
+           {/if}
+       </dd>  
+    {/foreach}
+    </dl>
+ {/if} 
+ <div {if !$new_price} style="display:none;" {/if}>
+  {$smarty.const.STRING_NEWPRICE}: {$smarty.const.CONF_CURRENCY_ID_LEFT}<font id="vnewprice{$id}" >{math assign="newsum" equation="x+y/z" x=$product_info.Price y=$p z=$smarty.const.CURRENCY_val format="%.2f"}{$newsum|print_price}</font>{$smarty.const.CONF_CURRENCY_ID_RIGHT}
+ </div > 
+ <input type="hidden" id="newprice{$id}" value="{math equation="x+y" x=$product_info.real y=$p format="%.2f"}">
+ <input type="hidden" id="sprice{$id}" value="{$product_info.real}">
+</div>
+<div class="clearfix"></div>
+<div class="buttons">
+ <a href="./{$product_info.hurl}" class="button"><span>{$smarty.const.MORE_ABOUT_PRODUCT}</span></a>
+ {if $product_info[28]>0}
+    <a id="tocart_{$product_info.productID}" class="ajaxcart button" href="./add2cart/{$product_info[14]}"><span>{$smarty.const.ADD_TO_CART_STRING}</span></a>
+ {/if}
+</div>
+<div class="clearfix"></div>
+</div>
+{*
+<div class='border'>
+<table cellspacing="0" cellpadding="0" width="100%" style="text-align: left;" >
 	<tr>
 	  <td style="padding: 5px; vertical-align: top">
-{if $product_info[8] > 0} {* rating *}
+{if $product_info[8] > 0} 
 	    {section name=i loop=5}{if $smarty.section.i.index<$product_info[3]}<img src="./images/icon_bes.png" alt="" />{else}<img src="./images/black_star.png" alt="" />{/if}{/section}
 {/if}
 	  </td>
 	</tr>
 	<tr>
 	  <td style="padding: 5px; vertical-align: top">
-{* show list price? *}
 {if $product_info.list_price > 0 && $product_info.list_price > $product_info.Price && $product_info.Price > 0} 
 	    {$smarty.const.LIST_PRICE}: <span  style="color: brown; text-decoration: line-through;">{$product_info.list_price_letters}</span><br />
 {/if}
@@ -112,12 +104,11 @@
 	</tr>
 	<tr>
 	  <td style="padding: 5px; vertical-align: top; text-align: right;">
-  		  <a href="./{$product_info.hurl}" class="button"><span>{$smarty.const.MORE_ABOUT_PRODUCT}</span></a>
-{if $product_info[28]>0}
-		  <a id="tocart_{$product_info.productID}" class="ajaxcart button" href="./add2cart/{$product_info[14]}"><span>{$smarty.const.ADD_TO_CART_STRING}</span></a>
-{/if}
+  		
 	  </td>
 	</tr>
 </table>
+  
 </div>
+*}
 {/if}     

@@ -7,8 +7,18 @@
 <div class="top">{$smarty.const.ADMIN_SPECIAL_OFFERS}</div>
 <div class="middle">
 
-
-  <div class="product_list">
+    <ul class="special_offer text-center">
+    {foreach name=special from=$special_offers item=special_offer}
+    <li>
+      <div class="thumbnail">
+        <a href="./{$special_offer.hurl}"><img src="./products_pictures/{$special_offer.picture}" alt="{$special_offer.name}"></a>
+        <h3><a href="./{$special_offer.hurl}">{$special_offer.name}</a></h3>
+        <p><span class="Price">{$special_offer.Price_letters}<span></p>
+      </div>
+    </li>
+    {/foreach}
+    </ul>
+  {*<div class="product_list">
    {foreach name=special from=$special_offers item=special_offer}
      <div class="pr_list_item">
       <div class="pr_list_price"><span>{$smarty.const.TABLE_PRODUCT_COST}: </span>{$special_offer.Price_letters}</div>
@@ -16,7 +26,7 @@
       <div class="pr_list_name"><a href="./{$special_offer.hurl}">{$special_offer.name}</a></div>
      </div>
    {/foreach}
-  </div>
+  </div>*}
 
 </div>
 </div>

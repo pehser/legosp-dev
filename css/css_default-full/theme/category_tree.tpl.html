@@ -10,14 +10,9 @@
         </li> 
     {/foreach}
 {/function}
-<div class="top">{$smarty.const.ADMIN_CATEGORY_TITLE}</div>
-{if $smarty.const.CONF_SHOW_MENU == 1}
-  <div class="dcjq-vertical-mega-menu box_shadow" id="vertical" style="margin-bottom:20px;">
-    <ul id="mega-1" class="menu right">
-{else}
+<div class="top visible-desktop">{$smarty.const.ADMIN_CATEGORY_TITLE}</div>
   <div id="category" class="middle">
-    <ul> 
-{/if}
+    <ul class="nav nav-tabs nav-stacked"> 
 {call name=cats_tree data=$categories_tree leval=0}
    </ul>
 </div>

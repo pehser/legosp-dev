@@ -42,10 +42,19 @@
 	</li>
 	  <li><a href="./{if $smarty.const.CONF_CHPU}contact/{else}index.php?contact{/if}">{$smarty.const.STRING_CONTACT_INFORMATION}</a></li>
       </ul>
+      {* Авторизация *}
+	<div id="topnav" class="panel"><a href="./index.php?signin=1">{if ($smarty.session.cust_login=='yes' || $smarty.session.cust_login_openID=='yes')}
+	{$smarty.const.STRING_PROFILE}
+	{else}
+	{$smarty.const.STRING_LOGIN_INFORMATION}
+	{/if}
+	</a></div>
+      {* Авторизация *}
       <form method="get" action="/" id="search" class="form-search">
 	<input type="search" placeholder="{$smarty.const.STRING_SEARCH}" class="input-medium search" value="{$smarty.get.searchstring}" name="searchstring" />
 	<input type="submit" value="" class="go" />
       </form>
+      
     </div>
   </div>
 </div>
@@ -53,7 +62,7 @@
  
     {* -- меню -- *}
 
-<div class="container-fluid">
+<div class="container-fluid head">
     <div class="row-fluid">
       <div class="span8"> 
 	<a href="./" class="png logo" title="{$page_title}"><img src="./css/css_{$smarty.const.CONF_COLOR_SCHEME}/images/logo0000.png"/></a>
@@ -67,28 +76,18 @@
 
     </div>
   
-    <div class="header_panel">
-
-
-     
-
-	<div class="path">
-	  {if $product_category_path}<a href="./">{$smarty.const.LINK_TO_HOMEPAGE}</a>{/if}
-	  {section name=i loop=$product_category_path}
-	      <b>&raquo;</b> <a href="./{$product_category_path[i][0]}">{$product_category_path[i][1]}</a>
-	  {/section}
-	</div>
-
-
-    {* Авторизация *}
-	<div id="topnav" class="panel">{include file="cust_login_info.tpl.html"}</div>
-    {* Авторизация *}
-
-    </div>
 </div>
 <div class="wrapper">
-
-<div class="f-left" id="sidebar">
+<div class="navbar">
+ <a class="btn btn-navbar" data-toggle="collapse" data-target=".left_colums">
+      <div class="pull-left">
+	<span class="icon-bar"></span>
+	<span class="icon-bar"></span>
+	<span class="icon-bar"></span>
+      </div>
+      {$smarty.const.ADMIN_CATEGORY_TITLE}
+ </a>
+<div class="f-left left_colums nav-collapse collapse colums_menu">
 
  <div class="box">
      {include file="category_tree.tpl.html"}
@@ -97,7 +96,7 @@
 
 {* brands *}
  {if $brand_list}
-      <div id="brends" class="box">
+      <div id="brends" class="box visible-desktop">
 	<div class="top">{$smarty.const.STRING_MANUFACTURER}</div>
 	<div class="middle" style="text-align: center;">
 	  <select name="brand" onchange="location=this.value" style="width: 160px; margin-top:15px;">
@@ -119,7 +118,7 @@
 
 {* Онлайн *}
 {if $smarty.const.CONF_ONLINE_ON eq 1}
-  <div class="box">
+  <div class="box visible-desktop">
    <div class="top">{$smarty.const.STRING_ONLINE}</div>
    <div id="online" class="middle">{include file="online.tpl.html"}</div>
   </div>
@@ -127,7 +126,7 @@
 {* END Онлайн *}
 
 {* Метки *}
-<div class="box" id="tags_box">
+<div class="box visible-desktop" id="tags_box">
 	<div class="top"><img src="./images/icon_bra.png" alt="{$smarty.const.ADMIN_TAGS_NAME}" />{$smarty.const.ADMIN_TAGS_NAME}</div>
 	<div class="middle" style="text-align: center;" >
          <div id="myCanvasContainer">
@@ -140,10 +139,10 @@
 </div>
 {* END Метки *}
 
-
+</div>
 </div>
 
-<div class="f-right" id="sidebar">
+<div class="f-right cart_box colums_menu">
 
 
 <div id="module_cart" class="div2 box_shadow">
@@ -170,7 +169,8 @@
      {/if}
 
 </div>
-
+</div>
+<div class="f-right visible-desktop colums_menu">
 
 {* -- Новинки -- *}
 {if $main_content_template != "new_product_list.tpl.html"}
@@ -262,6 +262,14 @@
 
 {* --#Content-- *}
 <div id="content">
+   {if $product_category_path}
+    <ul class="breadcrumb">
+     <li itemscope itemtype="http://data-vocabulary.org/Breadcrumb"><span itemprop="title"><a href="./" itemprop="url">{$smarty.const.LINK_TO_HOMEPAGE}</a></span></li>
+     {foreach from=$product_category_path item=menu_path}
+      <li itemscope itemtype="http://data-vocabulary.org/Breadcrumb"><span class="divider">&raquo;</span><span itemprop="title"><a href="./{$menu_path[0]}" itemprop="url">{$menu_path[1]}</a></span></li>
+     {/foreach}
+    </ul>
+   {/if}
    {include file="$main_content_template"}
 </div>
 {* --#Content-- *}
@@ -283,12 +291,6 @@
   <div class="foot1">Powered By <a href="http://legosp.net">Shop-Script Lego SP</a> &copy; {$smarty.now|date_format:"%Y"}</div>     
   <div class="foot2">{$live_counts}&nbsp;<a href="feed.xml" rel="nofollow"><img src="./images/rss.png" alt="RSS экспорт новых товаров" style="width: 31px; height: 31px" /></a>{if $smarty.session.access==3}&nbsp;<a href="http://validator.w3.org/check?uri=referer" rel="nofollow"><img src="./images/w3c.png" alt="w3c valid" style="width: 31px; height: 31px" /></a>{/if}</div>
 </div>
-
-
-
-
-
-
 </body>
 
 
