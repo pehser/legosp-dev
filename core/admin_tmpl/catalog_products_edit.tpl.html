@@ -38,11 +38,19 @@ function add_file(id, i) {
 
 <div class="row">
 	<div class="span12">
+	       
 		<div class="widget">
+		  
+		
 			<div class="widget-header"><i class="icon-folder-open"></i><h3>{foreach name=patch from=$patch_category item=category}{$category.name}&nbsp;&raquo;&nbsp;{/foreach}{$product_title|escape:'htmlall'}</h3>
 			<div class="buttons"><a class="btn btn-small btn-success b_save"><strong>{$smarty.const.SAVE_BUTTON}</strong></a>&nbsp;<a class="btn btn-small" href="./{$smarty.const.CONF_ADMIN_FILE}?dpt={$smarty.get.dpt}&amp;sub=products&amp;categoryID={$product_edit[0]}"><strong>{$smarty.const.CANCEL_BUTTON}</strong></a></div></div>
 			<div class="widget-content">
-			
+			{*<div class="row">
+			  <div class="span3">{$smarty.const.ADMIN_PRODUCT_CARD}:</div>
+			  <div class="span3">{$smarty.const.ADMIN_PRODUCT_CARD}:</div>
+			  <div class="span3">{$smarty.const.ADMIN_PRODUCT_CARD}:</div>
+			  <div class="span3">{$smarty.const.ADMIN_PRODUCT_CARD}:</div>
+		        </div>*}
 		<ul class="nav nav-tabs" id="myTab">
 		  <li class="active"><a href="#tab1" data-toggle="tab">{$smarty.const.ADMIN_TAB_GENERAL}</a></li>
 		  {if $options_list}<li><a href="#tab2" data-toggle="tab">{$smarty.const.ADMIN_TAB_customparams}</a></li>{/if}
@@ -64,7 +72,7 @@ function add_file(id, i) {
 				<td style="width:150px;">{$smarty.const.ADMIN_CATEGORY_PARENT}</td>
 				<td>
 				<div id="category_root" class="delivery_block">
-				<div class="delivery_list"><div id="btn"> </div><span>{$product_edit[23]}</span></div>
+				<div class="delivery_list"><div id="btn"> </div><span>{$product_edit[24]}</span></div>
 				<ul class="select_list"></ul>
 				<input type="hidden" value="{$product_edit[0]}"  name="product_info[categoryID]">
                                 </div>
@@ -109,7 +117,7 @@ function add_file(id, i) {
 				<td>{$smarty.const.ADMIN_PRODUCT_CODE}:</td>
 				<td><input type="text" name="product_code" value="{$product_edit[11]}" style="width: 145px;" /></td>
 				<td>{$smarty.const.ADMIN_MANAGER_ACCESS_1}:</td>
-				<td><select name="product_info[managerID]"><option {if $product_edit[22]==-1}selected="selected"{/if} value="-1">Все</option>
+				<td><select name="product_info[managerID]"><option {if $product_edit[22]==-1}selected="selected"{/if} value="-1"></option>
 					{foreach from=$managers item=manager}
 						<option {if (($product_edit[22] && $product_edit[22]==$manager.ID) || ( !$product_edit[22] && $smarty.session.access==1 &&  $smarty.session.manager_id==$manager.ID))}selected="selected"{/if} value="{$manager.ID}">{$manager.name}</option>
 					{/foreach}</select>

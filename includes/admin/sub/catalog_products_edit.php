@@ -76,7 +76,6 @@ if (!strcmp($sub, "products_edit")) {
             $updateproduct['description']       = $_POST["description"];
             $updateproduct['in_stock']          = $instock;
             $updateproduct['brief_description'] = $_POST["brief_description"];
-            $updateproduct['customer_votes']    = 0;
             $updateproduct['accompanyID']       = $_POST["accompany"];
             $updateproduct['list_price']        = $_POST["list_price"];
             $updateproduct['product_code']      = $_POST["product_code"];
@@ -381,7 +380,7 @@ if (!strcmp($sub, "products_edit")) {
                     unlink("./products_thumb/P_" . $_GET["thumb_delete"]);
                 $q = db_query("DELETE FROM " . THUMB_TABLE . " WHERE picture='" . $_GET["thumb_delete"] . "'") or die(db_error());
             }
-            $sql_product = "SELECT categoryID, P.name, P.description, customers_rating, Price, picture, in_stock, thumbnail, big_picture, brief_description, list_price, product_code, P.hurl, accompanyID, productID, P.brandID, P.meta_title, P.meta_keywords, P.meta_desc, P.canonical, P.h1,min_qunatity,managerID,B.name bname FROM " . PRODUCTS_TABLE . ' as P LEFT JOIN ' . BRAND_TABLE.' as B USING (brandID)  WHERE productID=' . (int) $_GET["productID"];
+            $sql_product = "SELECT P.categoryID, P.name, P.description, customers_rating, Price, P.picture, in_stock, P.thumbnail, big_picture, brief_description, list_price, product_code, P.hurl, accompanyID, productID, P.brandID, P.meta_title, P.meta_keywords, P.meta_desc, P.canonical, P.h1,min_qunatity,managerID,B.name bname,C.name category_root_name FROM " . PRODUCTS_TABLE . ' as P JOIN '.CATEGORIES_TABLE.' as C USING (categoryID) LEFT JOIN ' . BRAND_TABLE.' as B USING (brandID)  WHERE P.productID=' . (int) $_GET["productID"];
             if ($_SESSION['access'] == 1 && isset($_SESSION['manager_id']))
                 $sql_product .= ' and (managerID=\'-1\' or  managerID is NULL or managerID=' . (int) $_SESSION['manager_id'] . ')';
             $sql_product .= " ORDER BY productID ASC";
